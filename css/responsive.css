@@ -1,0 +1,114 @@
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* --- Tablet (992px) --- */
+@media (max-width: 992px) {
+  :root {
+    --container-padding: 32px;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .hero-info {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+/* --- Mobile Landscape (768px) --- */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .hero {
+    min-height: 90vh;
+  }
+
+  .hero-name-text {
+    font-size: clamp(44px, 12vw, 80px);
+  }
+
+  .work {
+    padding: 80px var(--container-padding) 60px;
+  }
+
+  .work-header {
+    margin-bottom: 40px;
+  }
+
+  .about-brief {
+    padding: 60px var(--container-padding) 80px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* --- Mobile (480px) --- */
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 20px;
+  }
+
+  .hero-name-text {
+    font-size: clamp(36px, 14vw, 56px);
+  }
+
+  .hero-tagline {
+    font-size: 16px;
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+
+  .work-card-info {
+    padding: 20px 20px 24px;
+  }
+
+  .work-card-title {
+    font-size: 18px;
+  }
+
+  .work-card-description {
+    font-size: 13px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .about-brief-text {
+    font-size: 18px;
+  }
+
+  .footer-nav {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .mobile-menu-link {
+    font-size: 24px;
+  }
+}

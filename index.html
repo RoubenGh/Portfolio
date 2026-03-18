@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rouben Ghambaryan — Engineer & Founder</title>
+  <meta name="description" content="Rouben Ghambaryan — Engineer & Founder. Turning complexity into systems that run themselves.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Albert+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+    </div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" data-transition>
+        <span class="nav-logo-name">Rouben Ghambaryan</span>
+        <span class="nav-logo-title">Engineer & Founder</span>
+      </a>
+      <div class="nav-links">
+        <a href="#work" class="nav-link" data-scroll-to>Work</a>
+        <a href="info.html" class="nav-link" data-transition>Info</a>
+        <a href="https://www.linkedin.com/" class="nav-link nav-link-external" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/RoubenGh" class="nav-link nav-link-external" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="#work" class="mobile-menu-link" data-scroll-to>Work</a>
+      <a href="info.html" class="mobile-menu-link" data-transition>Info</a>
+      <a href="https://www.linkedin.com/" class="mobile-menu-link" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/RoubenGh" class="mobile-menu-link" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main data-scroll-container id="scrollContainer">
+
+    <!-- Hero Section -->
+    <section class="hero" data-scroll-section>
+      <div class="hero-content">
+        <div class="hero-greeting" data-scroll data-scroll-speed="1">
+          <span class="hero-tag">Los Angeles, California</span>
+        </div>
+        <h1 class="hero-name" data-scroll data-scroll-speed="2">
+          <span class="hero-name-line">
+            <span class="hero-name-text reveal-text">Rouben</span>
+          </span>
+          <span class="hero-name-line">
+            <span class="hero-name-text reveal-text">Ghambaryan</span>
+          </span>
+        </h1>
+        <div class="hero-info" data-scroll data-scroll-speed="1">
+          <p class="hero-tagline">Turning complexity into systems that run themselves.</p>
+          <div class="hero-role">
+            <span class="hero-role-label">Engineer & Founder</span>
+          </div>
+        </div>
+        <div class="hero-scroll-indicator" data-scroll data-scroll-speed="-1">
+          <span class="hero-scroll-text">Scroll to explore</span>
+          <div class="hero-scroll-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selected Work Section -->
+    <section class="work" id="work" data-scroll-section>
+      <div class="work-header" data-scroll data-scroll-speed="1">
+        <span class="section-label">Selected Work</span>
+        <h2 class="section-title">Projects</h2>
+      </div>
+
+      <div class="work-grid">
+        <!-- Project 1: RLA Studios -->
+        <a href="project-rla-studios.html" class="work-card" data-transition data-scroll data-scroll-speed="1">
+          <div class="work-card-image">
+            <div class="work-card-image-inner" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+              <div class="work-card-placeholder">
+                <span class="work-card-placeholder-icon">RLA</span>
+              </div>
+            </div>
+            <div class="work-card-overlay"></div>
+          </div>
+          <div class="work-card-info">
+            <div class="work-card-meta">
+              <span class="work-card-org">RLA Studios</span>
+              <span class="work-card-year">'24 — Present</span>
+            </div>
+            <h3 class="work-card-title">Scalable content production & delivery platform</h3>
+            <p class="work-card-description">End-to-end automation system with data pipelines, AI-assisted tools, and integrated workflows for creative content at scale.</p>
+            <span class="work-card-cta">
+              View Project
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Project 2: Placeholder for future projects -->
+        <div class="work-card work-card-coming" data-scroll data-scroll-speed="1">
+          <div class="work-card-image">
+            <div class="work-card-image-inner" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
+              <div class="work-card-placeholder">
+                <span class="work-card-placeholder-icon">+</span>
+              </div>
+            </div>
+          </div>
+          <div class="work-card-info">
+            <div class="work-card-meta">
+              <span class="work-card-org">More Projects</span>
+              <span class="work-card-year">Coming Soon</span>
+            </div>
+            <h3 class="work-card-title">New work in progress</h3>
+            <p class="work-card-description">Stay tuned for more projects showcasing systems engineering, automation, and product development.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brief About Section -->
+    <section class="about-brief" data-scroll-section>
+      <div class="about-brief-content" data-scroll data-scroll-speed="1">
+        <span class="section-label">About</span>
+        <p class="about-brief-text">
+          I'm a software engineer who builds production systems at scale — from cloud infrastructure and backend services to data automation pipelines and AI-assisted tools. I founded <strong>RLA Studios</strong> to apply systems thinking to creative work.
+        </p>
+        <a href="info.html" class="about-brief-link" data-transition>
+          Learn more about me
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" data-scroll-section>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="footer-name">Rouben Ghambaryan</span>
+            <span class="footer-title">Engineer & Founder</span>
+          </div>
+          <div class="footer-nav">
+            <a href="#work" class="footer-link" data-scroll-to>Work</a>
+            <a href="info.html" class="footer-link" data-transition>Info</a>
+            <a href="https://www.linkedin.com/" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/RoubenGh" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Rouben Ghambaryan. All Rights Reserved.</span>
+          <span class="footer-note">Built with precision and too much coffee.</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

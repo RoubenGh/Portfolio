@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RLA Studios — Rouben Ghambaryan</title>
+  <meta name="description" content="RLA Studios case study — scalable content production & delivery platform built by Rouben Ghambaryan.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Albert+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/project.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+      <span class="loader-dot"></span>
+    </div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" data-transition>
+        <span class="nav-logo-name">Rouben Ghambaryan</span>
+        <span class="nav-logo-title">Engineer & Founder</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html#work" class="nav-link" data-transition>Work</a>
+        <a href="info.html" class="nav-link" data-transition>Info</a>
+        <a href="https://www.linkedin.com/" class="nav-link nav-link-external" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/RoubenGh" class="nav-link nav-link-external" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="index.html#work" class="mobile-menu-link" data-transition>Work</a>
+      <a href="info.html" class="mobile-menu-link" data-transition>Info</a>
+      <a href="https://www.linkedin.com/" class="mobile-menu-link" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/RoubenGh" class="mobile-menu-link" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main data-scroll-container id="scrollContainer">
+
+    <!-- Project Hero Banner -->
+    <section class="project-hero" data-scroll-section>
+      <div class="project-hero-banner" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #1a1a2e 100%);">
+        <div class="project-hero-banner-content">
+          <div class="project-hero-emblem">RLA</div>
+          <span class="project-hero-banner-subtitle">Content Production & Delivery Platform</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Metadata -->
+    <section class="project-meta" data-scroll-section>
+      <div class="project-meta-content">
+        <div class="project-meta-main" data-scroll data-scroll-speed="1">
+          <h1 class="project-title">RLA Studios</h1>
+          <p class="project-subtitle">Scalable content production & delivery platform</p>
+        </div>
+        <div class="project-meta-details" data-scroll data-scroll-speed="1">
+          <div class="project-meta-item">
+            <span class="project-meta-label">Role</span>
+            <span class="project-meta-value">Founder & Lead Engineer</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">Timeline</span>
+            <span class="project-meta-value">2024 — Present</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">Stack</span>
+            <span class="project-meta-value">Full-Stack — Backend, Cloud, Automation, AI</span>
+          </div>
+          <div class="project-meta-item">
+            <span class="project-meta-label">Type</span>
+            <span class="project-meta-value">Platform / SaaS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="project-toc" data-scroll-section>
+      <div class="project-toc-content" data-scroll data-scroll-speed="1">
+        <span class="section-label">Contents</span>
+        <nav class="project-toc-nav">
+          <a href="#overview" class="project-toc-link">Overview</a>
+          <a href="#problem" class="project-toc-link">The Problem</a>
+          <a href="#solution" class="project-toc-link">The Solution</a>
+          <a href="#architecture" class="project-toc-link">Architecture</a>
+          <a href="#features" class="project-toc-link">Key Features</a>
+          <a href="#outcome" class="project-toc-link">Outcome</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="project-section" id="overview" data-scroll-section>
+      <div class="project-section-content">
+        <div class="project-section-header" data-scroll data-scroll-speed="1">
+          <span class="section-label">01 — Overview</span>
+          <h2 class="section-title">The Big Picture</h2>
+        </div>
+        <div class="project-section-body" data-scroll data-scroll-speed="1">
+          <div class="project-text-block">
+            <p class="project-text-lead">RLA Studios is a full-stack platform I designed and built from the ground up to automate and streamline creative content production — from data collection and organization to final delivery and invoicing.</p>
+            <p>What started as a way to solve my own operational pain points evolved into a complete production system — one that handles the entire lifecycle of content creation, eliminating manual touchpoints and letting the work flow naturally from intake to output.</p>
+          </div>
+          <div class="project-stats-row">
+            <div class="project-stat">
+              <span class="project-stat-number">100%</span>
+              <span class="project-stat-label">Automated workflow</span>
+            </div>
+            <div class="project-stat">
+              <span class="project-stat-number">End-to-End</span>
+              <span class="project-stat-label">Data to delivery pipeline</span>
+            </div>
+            <div class="project-stat">
+              <span class="project-stat-number">SaaS</span>
+              <span class="project-stat-label">Subscription-ready architecture</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="project-section" id="problem" data-scroll-section>
+      <div class="project-section-content">
+        <div class="project-section-header" data-scroll data-scroll-speed="1">
+          <span class="section-label">02 — The Problem</span>
+          <h2 class="section-title">A Pile of Manual Work</h2>
+        </div>
+        <div class="project-section-body" data-scroll data-scroll-speed="1">
+          <div class="project-text-block">
+            <p class="project-text-lead">Content production at scale is messy. Data lives in spreadsheets, files get lost in folders, communication happens across five different tools, and invoicing is an afterthought.</p>
+            <p>Every step in the process was disconnected from the next — creating gaps where things fell through, got duplicated, or simply took too long.</p>
+          </div>
+          <div class="project-constraints">
+            <div class="project-constraint">
+              <div class="project-constraint-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div>
+                <h4 class="project-constraint-title">Fragmented Data</h4>
+                <p class="project-constraint-desc">Information scattered across spreadsheets, emails, and messaging tools with no single source of truth.</p>
+              </div>
+            </div>
+            <div class="project-constraint">
+              <div class="project-constraint-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <div>
+                <h4 class="project-constraint-title">Manual Processes</h4>
+                <p class="project-constraint-desc">Hours spent on repetitive tasks — file organization, data entry, invoice generation — that should be automated.</p>
+              </div>
+            </div>
+            <div class="project-constraint">
+              <div class="project-constraint-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div>
+                <h4 class="project-constraint-title">No Unified Platform</h4>
+                <p class="project-constraint-desc">No existing tool combined data scraping, content management, file storage, and invoicing into one cohesive system.</p>
+              </div>
+            </div>
+            <div class="project-constraint">
+              <div class="project-constraint-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div>
+                <h4 class="project-constraint-title">Scaling Bottleneck</h4>
+                <p class="project-constraint-desc">Growth was limited by human bandwidth — every new client meant more manual work instead of leveraging systems.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Solution -->
+    <section class="project-section" id="solution" data-scroll-section>
+      <div class="project-section-content">
+        <div class="project-section-header" data-scroll data-scroll-speed="1">
+          <span class="section-label">03 — The Solution</span>
+          <h2 class="section-title">One System to Run It All</h2>
+        </div>
+        <div class="project-section-body" data-scroll data-scroll-speed="1">
+          <div class="project-text-block">
+            <p class="project-text-lead">I built RLA Studios as a unified platform that connects every step of the content production pipeline — from data ingestion to final delivery — through a single admin panel.</p>
+            <p>The system automates data collection via custom scraping pipelines, organizes everything in Airtable, stores files in Dropbox, generates invoices automatically, and provides a clean admin interface to manage the entire operation.</p>
+          </div>
+          <div class="project-principles">
+            <div class="project-principle">
+              <span class="project-principle-number">01</span>
+              <h4 class="project-principle-title">Automate Everything Possible</h4>
+              <p class="project-principle-desc">If a human doesn't need to make a judgment call, a system should handle it.</p>
+            </div>
+            <div class="project-principle">
+              <span class="project-principle-number">02</span>
+              <h4 class="project-principle-title">Single Source of Truth</h4>
+              <p class="project-principle-desc">All data flows through one pipeline — no more spreadsheet chaos.</p>
+            </div>
+            <div class="project-principle">
+              <span class="project-principle-number">03</span>
+              <h4 class="project-principle-title">Built to Scale</h4>
+              <p class="project-principle-desc">Architecture designed so that adding clients doesn't add complexity.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="project-section" id="architecture" data-scroll-section>
+      <div class="project-section-content">
+        <div class="project-section-header" data-scroll data-scroll-speed="1">
+          <span class="section-label">04 — Architecture</span>
+          <h2 class="section-title">How It's Built</h2>
+        </div>
+        <div class="project-section-body" data-scroll data-scroll-speed="1">
+          <div class="project-text-block">
+            <p class="project-text-lead">The platform is built with a modular architecture where each component handles a specific part of the pipeline and communicates through well-defined interfaces.</p>
+          </div>
+          <div class="project-arch-grid">
+            <div class="project-arch-card">
+              <div class="project-arch-card-header">
+                <span class="project-arch-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </span>
+                <h4>Data Pipeline</h4>
+              </div>
+              <p>Custom scraping engine that collects, cleans, and structures data from multiple sources into Airtable.</p>
+            </div>
+            <div class="project-arch-card">
+              <div class="project-arch-card-header">
+                <span class="project-arch-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
+                <h4>Admin Panel</h4>
+              </div>
+              <p>Full-featured dashboard for managing projects, clients, content status, and system configuration.</p>
+            </div>
+            <div class="project-arch-card">
+              <div class="project-arch-card-header">
+                <span class="project-arch-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                </span>
+                <h4>File Management</h4>
+              </div>
+              <p>Automated Dropbox integration for organized file storage, delivery, and client access.</p>
+            </div>
+            <div class="project-arch-card">
+              <div class="project-arch-card-header">
+                <span class="project-arch-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                </span>
+                <h4>Invoicing Engine</h4>
+              </div>
+              <p>Automatic invoice generation based on project data — no manual billing work required.</p>
+            </div>
+            <div class="project-arch-card">
+              <div class="project-arch-card-header">
+                <span class="project-arch-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                <h4>AI-Assisted Tools</h4>
+              </div>
+              <p>Intelligent automation for content categorization, quality checks, and workflow optimization.</p>
+            </div>
+            <div class="project-arch-card">
+              <div class="project-arch-card-header">
+                <span class="project-arch-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </span>
+                <h4>Cloud Infrastructure</h4>
+              </div>
+              <p>Self-hosted on dedicated VPS with Dokploy for deployment, monitoring, and zero-downtime updates.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="project-section" id="features" data-scroll-section>
+      <div class="project-section-content">
+        <div class="project-section-header" data-scroll data-scroll-speed="1">
+          <span class="section-label">05 — Key Features</span>
+          <h2 class="section-title">What It Does</h2>
+        </div>
+        <div class="project-section-body">
+          <div class="project-features">
+            <div class="project-feature" data-scroll data-scroll-speed="1">
+              <span class="project-feature-number">01</span>
+              <div class="project-feature-content">
+                <h3 class="project-feature-title">Automated Data Scraping</h3>
+                <p class="project-feature-desc">Custom-built scraping pipelines that collect and structure data from multiple sources, feeding directly into the production workflow without human intervention.</p>
+              </div>
+            </div>
+            <div class="project-feature" data-scroll data-scroll-speed="1">
+              <span class="project-feature-number">02</span>
+              <div class="project-feature-content">
+                <h3 class="project-feature-title">Airtable Integration</h3>
+                <p class="project-feature-desc">Bidirectional sync with Airtable as the central data layer — project tracking, content metadata, client information, and delivery status all in one place.</p>
+              </div>
+            </div>
+            <div class="project-feature" data-scroll data-scroll-speed="1">
+              <span class="project-feature-number">03</span>
+              <div class="project-feature-content">
+                <h3 class="project-feature-title">Dropbox File Automation</h3>
+                <p class="project-feature-desc">Automated file organization and delivery through Dropbox — content is sorted, named, and stored according to project structure without manual file management.</p>
+              </div>
+            </div>
+            <div class="project-feature" data-scroll data-scroll-speed="1">
+              <span class="project-feature-number">04</span>
+              <div class="project-feature-content">
+                <h3 class="project-feature-title">Invoice Generation</h3>
+                <p class="project-feature-desc">Automatic invoice creation based on project data — rates, deliverables, and client details are pulled from the system to generate professional invoices instantly.</p>
+              </div>
+            </div>
+            <div class="project-feature" data-scroll data-scroll-speed="1">
+              <span class="project-feature-number">05</span>
+              <div class="project-feature-content">
+                <h3 class="project-feature-title">Admin Dashboard</h3>
+                <p class="project-feature-desc">Full admin panel with real-time project status, client management, content pipeline visibility, and system health monitoring — all from a single interface.</p>
+              </div>
+            </div>
+            <div class="project-feature" data-scroll data-scroll-speed="1">
+              <span class="project-feature-number">06</span>
+              <div class="project-feature-content">
+                <h3 class="project-feature-title">Demo Mode</h3>
+                <p class="project-feature-desc">Portfolio-ready demo mode that lets visitors explore all features and capabilities without affecting production data.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outcome -->
+    <section class="project-section" id="outcome" data-scroll-section>
+      <div class="project-section-content">
+        <div class="project-section-header" data-scroll data-scroll-speed="1">
+          <span class="section-label">06 — Outcome</span>
+          <h2 class="section-title">What I Learned</h2>
+        </div>
+        <div class="project-section-body" data-scroll data-scroll-speed="1">
+          <div class="project-text-block">
+            <p class="project-text-lead">Building RLA Studios reinforced a core belief: the best systems are the ones that make themselves invisible. When the automation works, you forget it's there — and that's the point.</p>
+          </div>
+          <div class="project-takeaways">
+            <div class="project-takeaway">
+              <span class="project-takeaway-number">01</span>
+              <h4 class="project-takeaway-title">Systems Thinking Scales</h4>
+              <p class="project-takeaway-desc">Approaching the problem as an interconnected system rather than individual tools meant each component made the others stronger.</p>
+            </div>
+            <div class="project-takeaway">
+              <span class="project-takeaway-number">02</span>
+              <h4 class="project-takeaway-title">Automate the Boring Parts</h4>
+              <p class="project-takeaway-desc">Every hour spent building automation saved dozens of hours of repetitive work — the ROI compounds over time.</p>
+            </div>
+            <div class="project-takeaway">
+              <span class="project-takeaway-number">03</span>
+              <h4 class="project-takeaway-title">Build for the Next Version</h4>
+              <p class="project-takeaway-desc">Designing with SaaS potential from the start meant the architecture was ready to serve multiple clients, not just one.</p>
+            </div>
+            <div class="project-takeaway">
+              <span class="project-takeaway-number">04</span>
+              <h4 class="project-takeaway-title">Psychology Informs Engineering</h4>
+              <p class="project-takeaway-desc">Understanding how people process information and make decisions directly improved the UX of the admin panel and workflow design.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to Work CTA -->
+    <section class="project-back" data-scroll-section>
+      <div class="project-back-content" data-scroll data-scroll-speed="1">
+        <a href="index.html#work" class="project-back-link" data-transition>
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Back to all work
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" data-scroll-section>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="footer-name">Rouben Ghambaryan</span>
+            <span class="footer-title">Engineer & Founder</span>
+          </div>
+          <div class="footer-nav">
+            <a href="index.html#work" class="footer-link" data-transition>Work</a>
+            <a href="info.html" class="footer-link" data-transition>Info</a>
+            <a href="https://www.linkedin.com/" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/RoubenGh" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span class="footer-copy">&copy; 2026 Rouben Ghambaryan. All Rights Reserved.</span>
+          <span class="footer-note">Built with precision and too much coffee.</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
