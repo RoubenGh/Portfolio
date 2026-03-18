@@ -13,14 +13,18 @@
     gap: 24px;
   }
 
-  .hero-info {
+  .footer-top {
     flex-direction: column;
     gap: 24px;
   }
 
-  .footer-top {
-    flex-direction: column;
-    gap: 24px;
+  .nav-external {
+    display: none;
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
   }
 }
 
@@ -42,8 +46,16 @@
     min-height: 90vh;
   }
 
-  .hero-name-text {
-    font-size: clamp(44px, 12vw, 80px);
+  .hero-browser-content {
+    padding: 40px 32px 48px;
+  }
+
+  .hero-tagline-main {
+    font-size: clamp(28px, 6vw, 48px);
+  }
+
+  .hero-bio {
+    align-items: flex-start;
   }
 
   .work {
@@ -71,16 +83,17 @@
     --container-padding: 20px;
   }
 
-  .hero-name-text {
-    font-size: clamp(36px, 14vw, 56px);
+  .hero-browser-content {
+    padding: 28px 24px 36px;
   }
 
-  .hero-tagline {
-    font-size: 16px;
+  .hero-tagline-main {
+    font-size: clamp(24px, 8vw, 36px);
   }
 
-  .hero-scroll-indicator {
-    display: none;
+  .hero-bio-text,
+  .hero-bio-sub {
+    font-size: 14px;
   }
 
   .work-card-info {
