@@ -238,14 +238,20 @@ button {
   font-weight: 400;
   color: var(--color-text-secondary);
   letter-spacing: 0.02em;
-  padding: 8px 20px;
+  padding: 8px 24px;
   border-radius: 100px;
-  transition: color 0.3s ease, background 0.3s ease;
+  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-pill-link:hover {
   color: var(--color-text-primary);
   background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-pill-link.active {
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 /* External links with arrow */
