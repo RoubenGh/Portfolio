@@ -422,31 +422,52 @@ button {
   position: relative;
 }
 
+/* --- Card Surface: outer outline wrapper --- */
 .window-outline {
   border-radius: 24px;
   padding: 8px;
-  outline: 1px solid rgba(242, 242, 242, 0.15);
+  outline: 1px solid rgba(242, 242, 242, 0.12);
   outline-offset: -1px;
-  background-image: radial-gradient(circle farthest-side at 50% 0, rgba(242, 242, 242, 0.2), rgba(0, 0, 0, 0));
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 0, 0, 0.2), 0 30px 120px rgba(0, 0, 0, 0.8);
+  background-image:
+    radial-gradient(circle farthest-side at 50% 0%, rgba(242, 242, 242, 0.18), transparent 70%),
+    radial-gradient(ellipse at 50% 100%, rgba(242, 242, 242, 0.04), transparent 60%);
+  box-shadow:
+    inset 0 0 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(242, 242, 242, 0.06),
+    0 0 80px rgba(0, 0, 0, 0.25),
+    0 40px 140px rgba(0, 0, 0, 0.8),
+    0 8px 30px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   backdrop-filter: none;
 }
 
+/* --- Card Surface: inner card body --- */
 .window-main {
   border-radius: 16px;
-  border: 1px solid rgba(242, 242, 242, 0.3);
+  border: 1px solid rgba(242, 242, 242, 0.18);
+  border-top-color: rgba(242, 242, 242, 0.28);
   overflow: hidden;
-  background-color: rgba(16, 16, 16, 0.7);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(242, 242, 242, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 60%, rgba(242, 242, 242, 0.015) 0%, transparent 50%),
+    rgba(16, 16, 16, 0.75);
+  box-shadow: inset 0 1px 0 rgba(242, 242, 242, 0.08);
 }
 
+/* --- Browser Top Bar --- */
 .window-bar {
   display: flex;
   align-items: center;
   padding: 14px 20px;
-  height: 40px;
-  background: linear-gradient(to right, rgba(242, 242, 242, 0.1), rgba(242, 242, 242, 0.5) 50%, rgba(242, 242, 242, 0.1));
-  box-shadow: 0 10px 20px 4px rgba(0, 0, 0, 0.2);
+  height: 42px;
+  background:
+    linear-gradient(180deg, rgba(242, 242, 242, 0.07) 0%, rgba(242, 242, 242, 0.02) 100%),
+    linear-gradient(to right, rgba(242, 242, 242, 0.05), rgba(242, 242, 242, 0.12) 50%, rgba(242, 242, 242, 0.05));
+  border-bottom: 1px solid rgba(242, 242, 242, 0.08);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(242, 242, 242, 0.06);
   position: relative;
   z-index: 2;
 }
@@ -460,26 +481,30 @@ button {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
 }
 
 .dot-red {
-  background-color: #ff5f57;
-  box-shadow: 0 0 20px 2px rgba(255, 95, 87, 0.5);
+  background: radial-gradient(circle at 35% 35%, #ff8a84, #ff5f57 60%, #e0453d);
+  box-shadow: 0 0 12px 2px rgba(255, 95, 87, 0.35);
 }
 
 .dot-yellow {
-  background-color: #febc2e;
-  box-shadow: 0 0 20px 2px rgba(254, 188, 46, 0.5);
+  background: radial-gradient(circle at 35% 35%, #fdd56a, #febc2e 60%, #e0a21a);
+  box-shadow: 0 0 12px 2px rgba(254, 188, 46, 0.35);
 }
 
 .dot-green {
-  background-color: #28c840;
-  box-shadow: 0 0 20px 2px rgba(40, 200, 64, 0.5);
+  background: radial-gradient(circle at 35% 35%, #5ee075, #28c840 60%, #1aa832);
+  box-shadow: 0 0 12px 2px rgba(40, 200, 64, 0.35);
 }
 
+/* --- Card Content Area --- */
 .window-content {
   padding: 80px 56px 192px;
-  background-color: rgba(16, 16, 16, 0.7);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(242, 242, 242, 0.03) 0%, transparent 60%),
+    rgba(16, 16, 16, 0.7);
   position: relative;
 }
 
@@ -499,16 +524,16 @@ button {
   z-index: 2;
 }
 
-/* Hero Heading */
+/* --- Hero Heading --- */
 .hero-heading {
   font-family: var(--font-secondary);
-  font-size: 80px;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-size: 78px;
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: -0.025em;
   color: var(--color-text-primary);
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.08);
-  margin-bottom: 60px;
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.06);
+  margin-bottom: 64px;
 }
 
 .hero-heading em {
@@ -517,15 +542,17 @@ button {
   font-weight: 400;
   background: linear-gradient(
     to bottom,
-    var(--color-text-primary) 50%,
-    transparent 90%
+    rgba(242, 242, 242, 0.95) 0%,
+    rgba(242, 242, 242, 0.7) 45%,
+    rgba(242, 242, 242, 0.2) 85%,
+    transparent 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Bio 2-column grid inside browser */
+/* --- Bio Grid --- */
 .hero-bio-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -540,22 +567,26 @@ button {
 
 .hero-bio-text {
   font-family: var(--font-primary);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 400;
-  color: var(--color-text-primary);
-  line-height: 1.6;
+  color: rgba(242, 242, 242, 0.92);
+  line-height: 1.7;
+  letter-spacing: 0.005em;
 }
 
 .hero-bio-text strong {
   font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 .hero-bio-sub {
   font-family: var(--font-primary);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 300;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
+  color: rgba(242, 242, 242, 0.5);
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+  margin-top: 2px;
 }
 
 /* Scroll arrow */
