@@ -25,36 +25,20 @@
     }
     requestAnimationFrame(raf);
 
-    // Nav behavior on scroll
+    // Nav hide/show on scroll direction
     let lastScroll = 0;
+    const nav = document.getElementById('nav');
+
     lenis.on('scroll', ({ scroll }) => {
-      const nav = document.getElementById('nav');
-      const heroSection = document.querySelector('.hero');
-      const heroBottom = heroSection ? heroSection.offsetHeight : 600;
-      const workSection = document.getElementById('work');
-      const workBottom = workSection ? workSection.offsetTop + workSection.offsetHeight : Infinity;
-
-      // Add scrolled background after 50px
-      if (scroll > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-
-      // Hide nav in the "work" zone, show it at top or when scrolling past work
-      if (scroll > heroBottom * 0.7 && scroll < workBottom - 200) {
-        // In work section: hide on scroll down, show on scroll up
-        if (scroll > lastScroll && scroll - lastScroll > 5) {
+      // Hide nav when scrolling down past 300px, show when scrolling up
+      if (scroll > 300) {
+        if (scroll > lastScroll + 5) {
           nav.classList.add('nav-hidden');
-          nav.classList.remove('nav-visible');
-        } else if (lastScroll - scroll > 5) {
+        } else if (scroll < lastScroll - 5) {
           nav.classList.remove('nav-hidden');
-          nav.classList.add('nav-visible');
         }
       } else {
-        // At hero or past work: always show
         nav.classList.remove('nav-hidden');
-        nav.classList.add('nav-visible');
       }
       lastScroll = scroll;
     });
