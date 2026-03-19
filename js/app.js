@@ -1,40 +1,38 @@
 /* ============================================
    ROUBEN GHAMBARYAN — PORTFOLIO
-   Main Application Script
+   Main Application Script (Lenis + IntersectionObserver)
    ============================================ */
 
 (function () {
   'use strict';
 
-  // --- Locomotive Scroll ---
-  let scroll;
+  // --- Lenis Smooth Scroll ---
+  let lenis;
 
-  function initScroll() {
-    const container = document.querySelector('#scrollContainer');
-    if (!container) return;
-
-    scroll = new LocomotiveScroll({
-      el: container,
-      smooth: true,
-      multiplier: 0.8,
-      lerp: 0.08,
-      smartphone: { smooth: true, multiplier: 1.2 },
-      tablet: { smooth: true, multiplier: 1 },
+  function initLenis() {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.8,
+      touchMultiplier: 1.5,
     });
 
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
     // Nav background on scroll
-    scroll.on('scroll', (args) => {
+    lenis.on('scroll', ({ scroll }) => {
       const nav = document.getElementById('nav');
-      if (args.scroll.y > 50) {
+      if (scroll > 50) {
         nav.classList.add('scrolled');
       } else {
         nav.classList.remove('scrolled');
       }
-    });
-
-    // Update scroll after images/fonts load
-    window.addEventListener('load', () => {
-      setTimeout(() => scroll.update(), 500);
     });
   }
 
@@ -47,26 +45,37 @@
       setTimeout(() => {
         loader.classList.add('loaded');
         revealHero();
-      }, 800);
+      }, 600);
     });
   }
 
   // --- Hero Reveal ---
   function revealHero() {
-    const nameTexts = document.querySelectorAll('.reveal-text');
-    const heroInfo = document.querySelector('.hero-info');
-
-    nameTexts.forEach((el, i) => {
+    const heroElements = document.querySelectorAll('.hero-browser, .hero-bio, .hero-scroll-arrow');
+    heroElements.forEach((el, i) => {
       setTimeout(() => {
-        el.classList.add('visible');
-      }, 200 + i * 150);
+        el.classList.add('revealed');
+      }, 200 + i * 200);
+    });
+  }
+
+  // --- Scroll-triggered reveal animations ---
+  function initScrollReveal() {
+    const reveals = document.querySelectorAll('[data-scroll]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-inview');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -60px 0px',
     });
 
-    if (heroInfo) {
-      setTimeout(() => {
-        heroInfo.classList.add('visible');
-      }, 600);
-    }
+    reveals.forEach((el) => observer.observe(el));
   }
 
   // --- Page Transitions ---
@@ -88,7 +97,6 @@
       });
     });
 
-    // Reveal on page entry
     window.addEventListener('pageshow', () => {
       transitionOverlay.classList.remove('active');
     });
@@ -106,7 +114,6 @@
       document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
     });
 
-    // Close menu on link click
     const menuLinks = menu.querySelectorAll('.mobile-menu-link');
     menuLinks.forEach((link) => {
       link.addEventListener('click', () => {
@@ -128,8 +135,8 @@
         if (!target || target === '#') return;
 
         const el = document.querySelector(target);
-        if (el && scroll) {
-          scroll.scrollTo(el);
+        if (el && lenis) {
+          lenis.scrollTo(el, { offset: -80 });
         } else if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
@@ -137,7 +144,7 @@
     });
   }
 
-  // --- Cursor Effect (subtle glow following mouse) ---
+  // --- Cursor Glow ---
   function initCursorGlow() {
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
@@ -174,36 +181,15 @@
     animateGlow();
   }
 
-  // --- Scroll-based reveal for elements without Locomotive ---
-  function initIntersectionObserver() {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-inview');
-        }
-      });
-    }, observerOptions);
-
-    // Fallback for non-locomotive elements
-    document.querySelectorAll('.fade-in').forEach((el) => {
-      observer.observe(el);
-    });
-  }
-
   // --- Initialize ---
   function init() {
     initLoader();
-    initScroll();
+    initLenis();
     initTransitions();
     initMobileMenu();
     initScrollTo();
+    initScrollReveal();
     initCursorGlow();
-    initIntersectionObserver();
   }
 
   if (document.readyState === 'loading') {

@@ -41,7 +41,18 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 body {
@@ -389,26 +400,27 @@ button {
   width: 100%;
   max-width: 1100px;
   border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(20, 20, 22, 0.9);
   box-shadow:
-    0 40px 80px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 0 120px rgba(255, 255, 255, 0.03),
-    0 0 240px rgba(255, 255, 255, 0.015);
+    0 2px 0 rgba(255, 255, 255, 0.04),
+    0 40px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 80px rgba(255, 255, 255, 0.025),
+    0 0 200px rgba(255, 255, 255, 0.015);
   position: relative;
 }
 
 .hero-browser::before {
   content: '';
   position: absolute;
-  top: -80px;
+  top: -100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
-  height: 200px;
-  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+  width: 80%;
+  height: 250px;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.07) 0%, transparent 65%);
   pointer-events: none;
   z-index: -1;
 }
@@ -416,12 +428,12 @@ button {
 .hero-browser::after {
   content: '';
   position: absolute;
-  bottom: -60px;
+  bottom: -80px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
-  height: 120px;
-  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+  width: 90%;
+  height: 160px;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.04) 0%, transparent 65%);
   pointer-events: none;
   z-index: -1;
 }
@@ -430,9 +442,20 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.hero-browser-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(255, 255, 255, 0.15) 50%, transparent 90%);
 }
 
 .hero-browser-dots {
@@ -477,9 +500,11 @@ button {
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.7) 30%,
-    rgba(200, 200, 200, 0.5) 60%,
-    rgba(160, 160, 160, 0.3) 100%
+    rgba(240, 240, 240, 0.95) 15%,
+    rgba(180, 180, 185, 0.7) 40%,
+    rgba(120, 120, 130, 0.45) 65%,
+    rgba(80, 80, 90, 0.25) 85%,
+    rgba(60, 60, 70, 0.15) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -832,8 +857,8 @@ button {
 /* --- Scroll Animations --- */
 [data-scroll] {
   opacity: 0;
-  transform: translateY(48px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transform: translateY(40px);
+  transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
 }
 
 [data-scroll].is-inview {
@@ -841,13 +866,44 @@ button {
   transform: translateY(0);
 }
 
-/* Work cards get special stagger */
 .work-card[data-scroll] {
   transition-duration: 1s;
 }
 
 .work-card:nth-child(2)[data-scroll] {
   transition-delay: 0.15s;
+}
+
+/* Hero reveal animations */
+.hero-browser {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+}
+
+.hero-browser.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-bio {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-out-expo) 0.1s, transform 0.8s var(--ease-out-expo) 0.1s;
+}
+
+.hero-bio.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-scroll-arrow {
+  opacity: 0 !important;
+  transition: opacity 0.8s var(--ease-out-expo) 0.2s;
+}
+
+.hero-scroll-arrow.revealed {
+  opacity: 1 !important;
 }
 
 /* --- Selection --- */
