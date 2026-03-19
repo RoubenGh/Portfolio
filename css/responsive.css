@@ -46,18 +46,17 @@
     min-height: 90vh;
   }
 
-  .hero-browser-content {
-    padding: 36px 28px 32px;
+  .window-content {
+    padding: 48px 32px 80px;
   }
 
-  .hero-tagline-main {
+  .hero-heading {
     font-size: clamp(28px, 6vw, 48px);
     margin-bottom: 32px;
   }
 
-  .hero-bio {
-    align-items: flex-start;
-    text-align: left;
+  .hero-bio-grid {
+    grid-template-columns: 1fr;
   }
 
   .work {
@@ -85,11 +84,11 @@
     --container-padding: 20px;
   }
 
-  .hero-browser-content {
-    padding: 24px 20px 24px;
+  .window-content {
+    padding: 24px 20px 48px;
   }
 
-  .hero-tagline-main {
+  .hero-heading {
     font-size: clamp(24px, 8vw, 36px);
     margin-bottom: 24px;
   }

@@ -51,7 +51,7 @@
 
   // --- Hero Reveal ---
   function revealHero() {
-    const heroElements = document.querySelectorAll('.hero-browser, .hero-bio, .hero-scroll-arrow');
+    const heroElements = document.querySelectorAll('.hero-browser, .hero-bio-grid, .hero-scroll-arrow');
     heroElements.forEach((el, i) => {
       setTimeout(() => {
         el.classList.add('revealed');
