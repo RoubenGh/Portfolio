@@ -398,74 +398,35 @@ button {
 /* Browser Mockup */
 .hero-browser {
   width: 100%;
-  max-width: 1100px;
-  border-radius: 12px;
-  overflow: visible;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(20, 20, 22, 0.9);
+  max-width: 1060px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #161618;
   box-shadow:
-    0 2px 0 rgba(255, 255, 255, 0.04),
-    0 40px 80px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 0 80px rgba(255, 255, 255, 0.025),
-    0 0 200px rgba(255, 255, 255, 0.015);
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 0.5px rgba(255, 255, 255, 0.08);
   position: relative;
-}
-
-.hero-browser::before {
-  content: '';
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 250px;
-  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.07) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-.hero-browser::after {
-  content: '';
-  position: absolute;
-  bottom: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  height: 160px;
-  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.04) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: -1;
 }
 
 .hero-browser-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-}
-
-.hero-browser-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 10%, rgba(255, 255, 255, 0.15) 50%, transparent 90%);
+  padding: 10px 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .hero-browser-dots {
   display: flex;
-  gap: 8px;
+  gap: 7px;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
 }
 
@@ -474,23 +435,24 @@ button {
 .dot-green { background: #28c840; }
 
 .hero-browser-plus {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.2);
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.15);
   font-weight: 300;
   line-height: 1;
 }
 
 .hero-browser-content {
-  padding: 72px 64px 88px;
+  padding: 56px 60px 48px;
 }
 
 .hero-tagline-main {
   font-family: var(--font-secondary);
-  font-size: clamp(40px, 6vw, 80px);
+  font-size: clamp(40px, 5.8vw, 76px);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
   color: var(--color-text-primary);
+  margin-bottom: 48px;
 }
 
 .hero-tagline-main em {
@@ -500,31 +462,27 @@ button {
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(240, 240, 240, 0.95) 15%,
-    rgba(180, 180, 185, 0.7) 40%,
-    rgba(120, 120, 130, 0.45) 65%,
-    rgba(80, 80, 90, 0.25) 85%,
-    rgba(60, 60, 70, 0.15) 100%
+    rgba(255, 255, 255, 0.85) 20%,
+    rgba(170, 170, 175, 0.55) 50%,
+    rgba(100, 100, 110, 0.3) 75%,
+    rgba(60, 60, 65, 0.15) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Bio below browser */
+/* Bio inside browser, bottom-right */
 .hero-bio {
-  width: 100%;
-  max-width: 1100px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: 32px;
-  padding-right: 8px;
+  text-align: right;
 }
 
 .hero-bio-text {
   font-family: var(--font-primary);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   color: var(--color-text-primary);
   line-height: 1.5;
@@ -536,7 +494,7 @@ button {
 
 .hero-bio-sub {
   font-family: var(--font-primary);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
   color: var(--color-text-secondary);
   line-height: 1.5;
@@ -886,16 +844,6 @@ button {
   transform: translateY(0);
 }
 
-.hero-bio {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s var(--ease-out-expo) 0.1s, transform 0.8s var(--ease-out-expo) 0.1s;
-}
-
-.hero-bio.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .hero-scroll-arrow {
   opacity: 0 !important;
