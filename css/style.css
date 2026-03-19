@@ -427,6 +427,10 @@ button {
   padding: 8px;
   outline: 1px solid rgba(242, 242, 242, 0.15);
   outline-offset: -1px;
+  background-image: radial-gradient(circle farthest-side at 50% 0, rgba(242, 242, 242, 0.2), rgba(0, 0, 0, 0));
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 0, 0, 0.2), 0 30px 120px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  backdrop-filter: none;
 }
 
 .window-main {
@@ -434,9 +438,6 @@ button {
   border: 1px solid rgba(242, 242, 242, 0.3);
   overflow: hidden;
   background-color: rgba(16, 16, 16, 0.7);
-  box-shadow:
-    0 60px 80px rgba(0, 0, 0, 0.3),
-    0 0 120px rgba(0, 0, 0, 0.2);
 }
 
 .window-bar {
