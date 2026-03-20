@@ -4,15 +4,21 @@
 
 /* --- Info Hero --- */
 .info-hero {
-  padding: 200px var(--container-padding) 80px;
+  background-image: radial-gradient(circle closest-corner at 50% 0, rgba(242, 242, 242, 0.15), transparent);
+  padding: 172px var(--container-padding) 120px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .info-hero-content {
+  z-index: 1;
   max-width: var(--content-width);
   width: 100%;
+  position: relative;
 }
 
 .info-hero-title {
@@ -334,7 +340,17 @@
 }
 
 /* --- Info Responsive --- */
-@media (max-width: 992px) {
+@media (max-width: 991px) {
+  .info-hero {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .info-hero-content {
+    max-width: none;
+    width: auto;
+  }
+
   .info-bio-content {
     grid-template-columns: 1fr;
     gap: 48px;
@@ -345,9 +361,9 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .info-hero {
-    padding: 160px var(--container-padding) 60px;
+    padding: 144px var(--container-padding) 60px;
   }
 
   .info-exp-item {
@@ -367,7 +383,11 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479px) {
+  .info-hero {
+    padding: 112px 16px 48px;
+  }
+
   .info-hero-title {
     font-size: 28px;
     letter-spacing: -0.5px;

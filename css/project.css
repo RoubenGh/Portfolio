@@ -4,7 +4,13 @@
 
 /* --- Project Hero Banner --- */
 .project-hero {
-  padding-top: var(--nav-height);
+  z-index: 1;
+  padding-top: 104px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .project-hero-banner {
@@ -493,7 +499,7 @@
 }
 
 /* --- Project Responsive --- */
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .project-meta-content {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -521,7 +527,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .project-hero-banner {
     aspect-ratio: 16 / 9;
     max-height: 320px;
@@ -553,7 +559,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479px) {
   .project-hero-emblem {
     font-size: 36px;
   }
