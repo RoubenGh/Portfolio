@@ -420,12 +420,24 @@ button {
 .window-outline {
   backdrop-filter: none;
   outline-offset: -1px;
-  background-image: radial-gradient(circle farthest-side at 50% 0, rgba(242, 242, 242, 0.2), transparent);
+  background-image: radial-gradient(circle farthest-side at 50% 0, rgba(242, 242, 242, 0.2), rgba(0, 0, 0, 0));
   border-radius: 24px;
   outline: 1px solid rgba(242, 242, 242, 0.15);
   padding: 8px;
   overflow: hidden;
   box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 0, 0, 0.2), 0 30px 120px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+/* Glare light streak at top of window */
+.window-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: 1;
+  background-image: linear-gradient(to right, transparent 5%, rgba(255, 255, 255, 0.8) 35%, #fff 50%, rgba(255, 255, 255, 0.8) 65%, transparent 95%);
 }
 
 .window-main {
@@ -455,7 +467,15 @@ button {
 
 .window-dots {
   display: flex;
-  gap: 8px;
+  gap: 10px;
+}
+
+.window-bar-plus {
+  opacity: 0.2;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--color-text-primary);
 }
 
 .dot {
@@ -516,7 +536,7 @@ button {
   letter-spacing: -2px;
   color: var(--color-text-primary);
   text-shadow: 0 5px 10px rgba(0, 87, 255, 0.15), 0 -5px 10px rgba(255, 90, 0, 0.1), 0 -5px 25px rgba(255, 255, 255, 0.3);
-  margin-bottom: 56px;
+  margin-bottom: 64px;
 }
 
 .hero-heading em {
@@ -564,12 +584,24 @@ button {
   letter-spacing: 0.2px;
 }
 
-/* Scroll arrow */
+/* Hero fade at bottom of section */
+.hero-fade {
+  z-index: 5;
+  background-image: linear-gradient(to bottom, rgba(16, 16, 16, 0), var(--color-bg) 60%);
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  padding-top: 48px;
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Scroll arrow (inside hero-fade) */
 .hero-scroll-arrow {
-  margin-top: 48px;
   color: var(--color-text-tertiary);
-  opacity: 0;
-  animation: fadeInUp 0.8s var(--ease-out-expo) 1.2s forwards;
 }
 
 .hero-scroll-arrow svg {
@@ -962,14 +994,7 @@ button {
   transform: translateY(0) scale(1);
 }
 
-.hero-scroll-arrow {
-  opacity: 0 !important;
-  transition: opacity 0.8s var(--ease-out-expo) 0.2s;
-}
-
-.hero-scroll-arrow.revealed {
-  opacity: 1 !important;
-}
+/* Scroll arrow is now inside hero-fade, no reveal needed */
 
 /* --- Selection --- */
 ::selection {
