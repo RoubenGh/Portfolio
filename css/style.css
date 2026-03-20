@@ -511,15 +511,43 @@ button {
   position: relative;
 }
 
-/* Glare light streak at top of window */
-.window-glare {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+/* Glare line at top of outer outline */
+.glare-item-top {
+  background-image: linear-gradient(to right, transparent 10%, #fff 50%, transparent 90%);
   height: 1px;
+  margin-bottom: -1px;
+}
+
+.glare-item-top.outer-edge {
   z-index: 1;
   background-image: linear-gradient(to right, transparent 5%, rgba(255, 255, 255, 0.8) 35%, #fff 50%, rgba(255, 255, 255, 0.8) 65%, transparent 95%);
+  position: absolute;
+  inset: 0% 0% auto;
+}
+
+.glare-item-top.hero-inner {
+  height: 2px;
+  margin-bottom: -2px;
+}
+
+.glare-item-top.inner-edge {
+  z-index: 1;
+  background-image: linear-gradient(to right, transparent 20%, #fff 50%, transparent 80%);
+  position: absolute;
+  inset: 0% 0% auto;
+}
+
+/* Noise overlay on hero */
+.hero-noise {
+  z-index: 0;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
 .window-main {
@@ -593,15 +621,16 @@ button {
   position: relative;
 }
 
-/* Subtle grain texture overlay */
-.window-content::before {
-  content: '';
+/* Window grain texture */
+.window-grain {
+  z-index: 0;
+  opacity: 0.25;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.5;
 }
 
 .window-content-inner {
@@ -639,7 +668,7 @@ button {
 .hero-bio-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  grid-column-gap: 24px;
 }
 
 .hero-bio-right {
@@ -650,20 +679,18 @@ button {
 
 .hero-bio-text {
   font-family: var(--font-primary);
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 500;
   color: var(--color-text-primary);
-  line-height: 20px;
-  letter-spacing: 0.2px;
+  line-height: 140%;
 }
 
 .hero-bio-sub {
   font-family: var(--font-primary);
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 400;
-  color: var(--color-text-secondary);
-  line-height: 20px;
-  letter-spacing: 0.2px;
+  color: rgba(242, 242, 242, 0.5);
+  line-height: 140%;
 }
 
 /* Hero fade at bottom of section */
@@ -683,10 +710,13 @@ button {
 
 /* Scroll arrow (inside hero-fade) */
 .hero-scroll-arrow {
-  color: var(--color-text-tertiary);
+  opacity: 0.5;
+  color: var(--color-text-primary);
 }
 
 .hero-scroll-arrow svg {
+  width: 40px;
+  height: 40px;
   animation: bounceArrow 2s ease-in-out infinite;
 }
 
@@ -759,20 +789,33 @@ button {
   max-width: var(--content-width);
 }
 
+/* --- Project Card Outline (outer shell) --- */
+.work-card-outline {
+  outline-offset: -1px;
+  background-color: rgba(242, 242, 242, 0.04);
+  border-radius: 24px;
+  outline: 1px solid rgba(242, 242, 242, 0.05);
+  align-self: stretch;
+  padding: 8px;
+  position: relative;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+
 /* --- Project Card — Perry Wang style --- */
 .work-card {
   display: flex;
   flex-direction: column;
   gap: 56px;
-  background-image: linear-gradient(190deg, #252525, #101010);
+  background-image: linear-gradient(190deg, #252525, var(--color-bg));
+  color: var(--color-text-primary);
   border: 1px solid #3d3d3d;
   border-radius: 16px;
   height: 588px;
   padding: 32px 28px 0;
+  text-decoration: none;
   transition: border-color 0.4s var(--ease-smooth);
   position: relative;
   overflow: hidden;
-  cursor: pointer;
 }
 
 .work-card:hover {
@@ -1056,11 +1099,11 @@ button {
   transform: translateY(0);
 }
 
-.work-card[data-scroll] {
+.work-card-outline[data-scroll] {
   transition-duration: 1s;
 }
 
-.work-card:nth-child(2)[data-scroll] {
+.work-card-outline:nth-child(2)[data-scroll] {
   transition-delay: 0.15s;
 }
 

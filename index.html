@@ -72,17 +72,16 @@
 
     <!-- Hero Section -->
     <section class="hero" data-scroll-section>
-      <!-- Hero fade gradient at bottom with scroll arrow -->
       <div class="hero-fade">
         <div class="hero-scroll-arrow">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
       </div>
       <div class="hero-content">
-        <!-- Browser Mockup with double-outline structure -->
         <div class="hero-browser" data-scroll data-scroll-speed="1">
+          <div class="glare-item-top outer-edge"></div>
           <div class="window-outline">
-            <div class="window-glare"></div>
+            <div class="glare-item-top hero-inner"></div>
             <div class="window-main">
               <div class="window-bar">
                 <div class="window-dots">
@@ -107,11 +106,13 @@
                     </div>
                   </div>
                 </div>
+                <div class="window-grain"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="hero-noise"></div>
     </section>
 
     <!-- Selected Work Section -->
@@ -123,36 +124,43 @@
 
       <div class="work-grid">
         <!-- Project 1: RLA Studios -->
-        <a href="project-rla-studios.html" class="work-card" data-transition data-scroll data-scroll-speed="1">
-          <div class="work-card-header">
-            <div class="work-card-header-left">
-              <h3 class="work-card-title">RLA Studios</h3>
-              <p class="work-card-description">RLA Studios, '24 &mdash; Scalable content production & delivery platform</p>
-            </div>
-            <span class="work-card-arrow">&rarr;</span>
-          </div>
-          <div class="work-card-image">
-            <div class="work-card-image-inner" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
-              <div class="work-card-placeholder">
-                <span class="work-card-placeholder-icon">RLA</span>
+        <div class="work-card-outline" data-scroll data-scroll-speed="1">
+          <div class="glare-item-top outer-edge"></div>
+          <a href="project-rla-studios.html" class="work-card" data-transition>
+            <div class="glare-item-top inner-edge"></div>
+            <div class="work-card-header">
+              <div class="work-card-header-left">
+                <h3 class="work-card-title">RLA Studios</h3>
+                <p class="work-card-description">RLA Studios, '24 &mdash; Scalable content production & delivery platform</p>
               </div>
+              <span class="work-card-arrow">&rarr;</span>
             </div>
-            <div class="work-card-overlay"></div>
-          </div>
-        </a>
+            <div class="work-card-image">
+              <div class="work-card-image-inner" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+                <div class="work-card-placeholder">
+                  <span class="work-card-placeholder-icon">RLA</span>
+                </div>
+              </div>
+              <div class="work-card-overlay"></div>
+            </div>
+          </a>
+        </div>
 
         <!-- Project 2: Coming Soon -->
-        <div class="work-card work-card-coming" data-scroll data-scroll-speed="1">
-          <div class="work-card-header">
-            <div class="work-card-header-left">
-              <h3 class="work-card-title">More Projects</h3>
-              <p class="work-card-description">Coming Soon &mdash; New work in progress</p>
+        <div class="work-card-outline" data-scroll data-scroll-speed="1">
+          <div class="glare-item-top outer-edge"></div>
+          <div class="work-card work-card-coming">
+            <div class="work-card-header">
+              <div class="work-card-header-left">
+                <h3 class="work-card-title">More Projects</h3>
+                <p class="work-card-description">Coming Soon &mdash; New work in progress</p>
+              </div>
             </div>
-          </div>
-          <div class="work-card-image">
-            <div class="work-card-image-inner" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
-              <div class="work-card-placeholder">
-                <span class="work-card-placeholder-icon">+</span>
+            <div class="work-card-image">
+              <div class="work-card-image-inner" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
+                <div class="work-card-placeholder">
+                  <span class="work-card-placeholder-icon">+</span>
+                </div>
               </div>
             </div>
           </div>
