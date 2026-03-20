@@ -29,7 +29,11 @@
     --container-padding: 24px;
   }
 
-  .nav-links {
+  .nav-pill-wrapper {
+    display: none;
+  }
+
+  .nav-external {
     display: none;
   }
 

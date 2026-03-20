@@ -29,24 +29,32 @@
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" data-transition>
-        <span class="nav-logo-name">Rouben Ghambaryan</span>
-        <span class="nav-logo-title">Engineer & Founder</span>
-      </a>
-      <div class="nav-links">
+      <div class="nav-left">
+        <a href="index.html" class="nav-logo" data-transition>
+          <div class="nav-logo-text">
+            <span class="nav-logo-name">Rouben Ghambaryan</span>
+            <span class="nav-logo-title">Engineer & Founder</span>
+          </div>
+        </a>
+      </div>
+      <div class="nav-pill-wrapper">
+        <div class="nav-indicator-glow"></div>
         <div class="nav-pill">
-          <a href="index.html#work" class="nav-pill-link active" data-transition>Work</a>
+          <div class="nav-indicator-pill"></div>
+          <a href="index.html#work" class="nav-pill-link work" data-transition>Work</a>
           <a href="info.html" class="nav-pill-link" data-transition>Info</a>
         </div>
+      </div>
+      <div class="nav-right">
         <div class="nav-external">
           <a href="https://www.linkedin.com/" class="nav-link-ext" target="_blank" rel="noopener">LinkedIn <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a href="https://github.com/RoubenGh" class="nav-link-ext" target="_blank" rel="noopener">GitHub <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+        </button>
       </div>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </nav>
 

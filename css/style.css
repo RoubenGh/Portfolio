@@ -171,40 +171,49 @@ button {
 }
 
 /* ============================================
-   NAVIGATION — Perry Wang style
+   NAVIGATION — Perry Wang exact values
    ============================================ */
 .nav {
+  z-index: 10;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent);
+  height: var(--nav-height);
+  padding-top: 24px;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: var(--nav-height);
-  z-index: 100;
-  padding: 24px var(--container-padding) 0;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), transparent);
-  display: flex;
-  justify-content: center;
+  right: 0;
+  pointer-events: none;
   transition: opacity 0.5s ease;
 }
 
 .nav.nav-hidden {
   opacity: 0;
-  pointer-events: none;
 }
 
 .nav-inner {
-  width: 100%;
-  max-width: var(--content-width);
-  height: 56px;
-  display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
+  height: 56px;
+  display: flex;
+}
+
+/* Left section: logo */
+.nav-left {
+  flex: 1;
+  align-items: center;
+  height: 56px;
+  display: flex;
+  pointer-events: all;
 }
 
 .nav-logo {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  gap: 12px;
+  pointer-events: all;
   transition: opacity 0.3s ease;
 }
 
@@ -212,11 +221,20 @@ button {
   opacity: 0.7;
 }
 
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1px;
+}
+
 .nav-logo-name {
   font-family: var(--font-primary);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 20px;
   color: var(--color-text-primary);
 }
 
@@ -224,29 +242,54 @@ button {
   font-family: var(--font-primary);
   font-size: 12px;
   font-weight: 400;
-  color: var(--color-text-secondary);
+  color: rgba(242, 242, 242, 0.5);
   letter-spacing: 0.2px;
+  line-height: 12px;
 }
 
-.nav-links {
-  display: contents;
-}
-
-/* Pill-shaped nav group */
-.nav-pill {
-  display: flex;
-  align-items: center;
-  gap: 0;
+/* Center section: pill */
+.nav-pill-wrapper {
+  flex-direction: column;
+  justify-content: center;
   width: 180px;
-  height: 48px;
+  height: 56px;
+  display: flex;
+  position: relative;
+  pointer-events: all;
+}
+
+/* Glow indicator bar above pill */
+.nav-indicator-glow {
+  background-color: var(--color-text-primary);
+  border-radius: 2px;
+  width: 24px;
+  height: 4px;
+  margin-bottom: -2px;
+  margin-left: 33px;
+  box-shadow: 0 2px 25px 2px #fff;
+  transition: margin-left 0.4s var(--ease-smooth);
+}
+
+.nav-indicator-glow.info {
+  margin-left: 121px;
+}
+
+.nav-pill {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   background-color: rgba(242, 242, 242, 0.05);
   border: 1px solid rgba(242, 242, 242, 0.1);
   border-radius: 24px;
-  padding: 0 6px;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  justify-content: space-between;
+  align-items: center;
+  width: 180px;
+  height: 48px;
+  padding-left: 6px;
+  padding-right: 6px;
   transition: box-shadow 1s var(--ease-out-expo), border-color 0.6s var(--ease-smooth);
+  display: flex;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 .nav-pill:hover {
@@ -255,67 +298,106 @@ button {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
+/* Sliding background indicator inside pill */
+.nav-indicator-pill {
+  z-index: 0;
+  background-color: rgba(242, 242, 242, 0.05);
+  border-radius: 18px;
+  width: 80px;
+  height: 36px;
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  transition: left 0.4s var(--ease-smooth), right 0.4s var(--ease-smooth);
+}
+
+.nav-indicator-pill.info {
+  left: auto;
+  right: 6px;
+}
+
 .nav-pill-link {
   font-family: var(--font-primary);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   letter-spacing: 0.2px;
+  line-height: 18px;
+  text-align: center;
   border-radius: 18px;
-  height: 36px;
-  display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  width: 80px;
+  height: 36px;
+  display: flex;
   transition: all 0.2s var(--ease-smooth);
+  position: relative;
+  z-index: 1;
 }
 
 .nav-pill-link:hover {
-  color: var(--color-text-primary);
+  background-image: linear-gradient(to right, transparent, rgba(242, 242, 242, 0.05));
 }
 
-.nav-pill-link.active {
-  color: var(--color-text-primary);
-  background: rgba(242, 242, 242, 0.1);
+.nav-pill-link.work:hover {
+  background-image: linear-gradient(to left, transparent, rgba(242, 242, 242, 0.05));
 }
 
-/* External links */
+/* Right section: social links */
+.nav-right {
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  height: 56px;
+  display: flex;
+  pointer-events: all;
+}
+
 .nav-external {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 8px;
 }
 
 .nav-link-ext {
   font-family: var(--font-primary);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   letter-spacing: 0.2px;
-  display: inline-flex;
+  line-height: 18px;
+  display: flex;
   align-items: center;
   gap: 4px;
-  transition: color 0.3s ease;
+  border-radius: 24px;
+  height: 48px;
+  padding-left: 16px;
+  padding-right: 12px;
+  transition: background-color 0.3s var(--ease-smooth);
 }
 
 .nav-link-ext:hover {
-  color: var(--color-text-primary);
+  background-color: rgba(242, 242, 242, 0.05);
 }
 
 .nav-link-ext svg {
-  transition: transform 0.3s var(--ease-out-expo);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
 .nav-link-ext:hover svg {
-  transform: translate(1px, -1px);
+  opacity: 0.8;
 }
 
+/* Mobile nav toggle (hidden on desktop) */
 .nav-toggle {
   display: none;
   flex-direction: column;
   gap: 6px;
   padding: 8px;
   z-index: 110;
+  pointer-events: all;
 }
 
 .nav-toggle span {
