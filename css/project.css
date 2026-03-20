@@ -22,7 +22,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 10, 10, 0.4) 100%);
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(16, 16, 16, 0.4) 100%);
   pointer-events: none;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .project-hero-emblem {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 72px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.12);
@@ -55,11 +55,14 @@
 /* --- Project Metadata --- */
 .project-meta {
   padding: 64px var(--container-padding) 48px;
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .project-meta-content {
+  max-width: var(--content-width);
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
@@ -67,19 +70,21 @@
 }
 
 .project-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: clamp(36px, 5vw, 56px);
-  font-weight: 300;
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  letter-spacing: -2px;
   color: var(--color-text-primary);
   margin-bottom: 12px;
 }
 
 .project-subtitle {
-  font-size: 16px;
-  font-weight: 300;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.6;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
 
 .project-meta-details {
@@ -103,18 +108,26 @@
 }
 
 .project-meta-value {
+  font-family: var(--font-primary);
   font-size: 14px;
   font-weight: 400;
   color: var(--color-text-primary);
   line-height: 1.4;
+  letter-spacing: 0.2px;
 }
 
 /* --- Table of Contents --- */
 .project-toc {
   padding: 0 var(--container-padding) 64px;
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   border-bottom: 1px solid var(--color-border);
+}
+
+.project-toc-content {
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .project-toc-nav {
@@ -140,13 +153,19 @@
 /* --- Project Sections --- */
 .project-section {
   padding: 80px var(--container-padding);
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   border-bottom: 1px solid var(--color-border);
 }
 
 .project-section:last-of-type {
   border-bottom: none;
+}
+
+.project-section-content {
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .project-section-header {
@@ -159,18 +178,21 @@
 }
 
 .project-text-lead {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   color: var(--color-text-primary);
   margin-bottom: 16px;
+  letter-spacing: 0.2px;
 }
 
 .project-text-block p {
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.8;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2px;
   color: var(--color-text-secondary);
   margin-bottom: 16px;
 }
@@ -183,19 +205,24 @@
 .project-stats-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 24px;
 }
 
 .project-stat {
   padding: 32px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  background-image: linear-gradient(190deg, #252525, #101010);
+  border: 1px solid #3d3d3d;
+  border-radius: 16px;
   text-align: center;
+  transition: border-color 0.4s var(--ease-smooth);
+}
+
+.project-stat:hover {
+  border-color: #888;
 }
 
 .project-stat-number {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 28px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -221,9 +248,14 @@
   display: flex;
   gap: 20px;
   padding: 28px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  background-image: linear-gradient(190deg, #252525, #101010);
+  border: 1px solid #3d3d3d;
+  border-radius: 16px;
+  transition: border-color 0.4s var(--ease-smooth);
+}
+
+.project-constraint:hover {
+  border-color: #888;
 }
 
 .project-constraint-icon {
@@ -233,7 +265,7 @@
 }
 
 .project-constraint-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 16px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -241,10 +273,12 @@
 }
 
 .project-constraint-desc {
+  font-family: var(--font-primary);
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
 
 /* --- Design Principles --- */
@@ -256,9 +290,14 @@
 
 .project-principle {
   padding: 32px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  background-image: linear-gradient(190deg, #252525, #101010);
+  border: 1px solid #3d3d3d;
+  border-radius: 16px;
+  transition: border-color 0.4s var(--ease-smooth);
+}
+
+.project-principle:hover {
+  border-color: #888;
 }
 
 .project-principle-number {
@@ -271,7 +310,7 @@
 }
 
 .project-principle-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 17px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -279,10 +318,12 @@
 }
 
 .project-principle-desc {
+  font-family: var(--font-primary);
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
 
 /* --- Architecture Grid --- */
@@ -294,15 +335,14 @@
 
 .project-arch-card {
   padding: 32px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  transition: border-color 0.4s ease, transform 0.6s var(--ease-out-expo);
+  background-image: linear-gradient(190deg, #252525, #101010);
+  border: 1px solid #3d3d3d;
+  border-radius: 16px;
+  transition: border-color 0.4s var(--ease-smooth);
 }
 
 .project-arch-card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
+  border-color: #888;
 }
 
 .project-arch-card-header {
@@ -317,17 +357,19 @@
 }
 
 .project-arch-card-header h4 {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 16px;
   font-weight: 500;
   color: var(--color-text-primary);
 }
 
 .project-arch-card p {
+  font-family: var(--font-primary);
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
 
 /* --- Features --- */
@@ -359,7 +401,7 @@
 }
 
 .project-feature-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 20px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -367,10 +409,12 @@
 }
 
 .project-feature-desc {
+  font-family: var(--font-primary);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
   max-width: 640px;
 }
 
@@ -383,9 +427,14 @@
 
 .project-takeaway {
   padding: 32px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
+  background-image: linear-gradient(190deg, #252525, #101010);
+  border: 1px solid #3d3d3d;
+  border-radius: 16px;
+  transition: border-color 0.4s var(--ease-smooth);
+}
+
+.project-takeaway:hover {
+  border-color: #888;
 }
 
 .project-takeaway-number {
@@ -398,7 +447,7 @@
 }
 
 .project-takeaway-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 17px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -406,17 +455,25 @@
 }
 
 .project-takeaway-desc {
+  font-family: var(--font-primary);
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
 
 /* --- Back Link --- */
 .project-back {
   padding: 48px var(--container-padding);
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.project-back-content {
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .project-back-link {
@@ -503,6 +560,7 @@
 
   .project-title {
     font-size: 28px;
+    letter-spacing: -0.5px;
   }
 
   .project-meta-details {

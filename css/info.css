@@ -4,21 +4,23 @@
 
 /* --- Info Hero --- */
 .info-hero {
-  padding: 180px var(--container-padding) 80px;
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  padding: 200px var(--container-padding) 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .info-hero-content {
-  max-width: 900px;
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .info-hero-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: clamp(36px, 6vw, 72px);
-  font-weight: 300;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  font-weight: 500;
+  line-height: 90%;
+  letter-spacing: -2px;
   color: var(--color-text-primary);
   margin-top: 24px;
 }
@@ -31,18 +33,21 @@
 /* --- Bio Section --- */
 .info-bio {
   padding: 40px var(--container-padding) 100px;
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .info-bio-content {
+  max-width: var(--content-width);
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
 }
 
 .info-bio-heading {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 14px;
   font-weight: 600;
   color: var(--color-text-tertiary);
@@ -53,9 +58,10 @@
 
 .info-bio-text p {
   font-family: var(--font-primary);
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.8;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2px;
   color: var(--color-text-secondary);
   margin-bottom: 20px;
 }
@@ -72,9 +78,15 @@
 /* --- Skills Section --- */
 .info-skills {
   padding: 100px var(--container-padding);
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   border-top: 1px solid var(--color-border);
+}
+
+.info-skills-content {
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .info-skills-header {
@@ -84,20 +96,19 @@
 .info-skills-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  gap: 24px;
 }
 
 .info-skill-card {
-  padding: 40px;
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  padding: 32px;
+  background-image: linear-gradient(190deg, #252525, #101010);
+  border: 1px solid #3d3d3d;
   border-radius: 16px;
-  transition: border-color 0.4s ease, transform 0.6s var(--ease-out-expo);
+  transition: border-color 0.4s var(--ease-smooth);
 }
 
 .info-skill-card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-2px);
+  border-color: #888;
 }
 
 .info-skill-number {
@@ -110,7 +121,7 @@
 }
 
 .info-skill-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 20px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -119,18 +130,26 @@
 }
 
 .info-skill-desc {
+  font-family: var(--font-primary);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
 }
 
 /* --- Experience Section --- */
 .info-experience {
   padding: 100px var(--container-padding);
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   border-top: 1px solid var(--color-border);
+}
+
+.info-experience-content {
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .info-experience-header {
@@ -163,7 +182,7 @@
 }
 
 .info-exp-company {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 22px;
   font-weight: 500;
   color: var(--color-text-primary);
@@ -180,21 +199,26 @@
 }
 
 .info-exp-desc {
+  font-family: var(--font-primary);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+  line-height: 20px;
+  letter-spacing: 0.2px;
   max-width: 600px;
 }
 
 /* --- Philosophy Section --- */
 .info-philosophy {
   padding: 100px var(--container-padding);
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .info-philosophy-content {
+  max-width: var(--content-width);
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -206,7 +230,7 @@
 }
 
 .info-philosophy-mark {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 120px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.06);
@@ -216,7 +240,7 @@
 }
 
 .info-philosophy-quote blockquote {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: clamp(24px, 4vw, 36px);
   font-weight: 300;
   font-style: italic;
@@ -238,9 +262,15 @@
 /* --- Connect Section --- */
 .info-connect {
   padding: 100px var(--container-padding);
-  max-width: calc(var(--container-max) + var(--container-padding) * 2);
-  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   border-top: 1px solid var(--color-border);
+}
+
+.info-connect-content {
+  max-width: var(--content-width);
+  width: 100%;
 }
 
 .info-connect-header {
@@ -271,9 +301,9 @@
 }
 
 .info-connect-link-label {
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color-text-primary);
 }
 
@@ -317,7 +347,7 @@
 
 @media (max-width: 768px) {
   .info-hero {
-    padding: 140px var(--container-padding) 60px;
+    padding: 160px var(--container-padding) 60px;
   }
 
   .info-exp-item {
@@ -340,6 +370,7 @@
 @media (max-width: 480px) {
   .info-hero-title {
     font-size: 28px;
+    letter-spacing: -0.5px;
   }
 
   .info-philosophy-mark {
