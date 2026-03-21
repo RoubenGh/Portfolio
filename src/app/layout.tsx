@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Rouben Ghambaryan | Systems Engineer & Founder",
+  title: "Rouben Ghambaryan — Systems Engineer & Founder",
   description:
     "I build scalable systems, automation pipelines, and production-grade infrastructure.",
 };
@@ -22,11 +22,11 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body className="noise-overlay">{children}</body>
     </html>
   );
 }

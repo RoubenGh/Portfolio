@@ -3,70 +3,117 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const links = [
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "GitHub", href: "https://github.com/RoubenGh", external: true },
-  { label: "LinkedIn", href: "https://www.linkedin.com/", external: true },
-];
+const ArrowIcon = () => (
+  <svg
+    width="11"
+    height="11"
+    viewBox="0 0 12 12"
+    fill="none"
+    className="opacity-50 group-hover:opacity-100 transition-opacity"
+  >
+    <path
+      d="M2 10L10 2M10 2H5M10 2v5"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto max-w-[1100px] px-6 flex items-center justify-between h-16">
-        <a href="#" className="text-[15px] font-medium tracking-tight text-black">
-          Rouben Ghambaryan
-        </a>
+    <nav className="fixed top-0 left-0 right-0 z-50" style={{
+      backgroundImage: "linear-gradient(rgba(10, 10, 10, 0.6), transparent)",
+      height: "140px",
+      pointerEvents: "none",
+    }}>
+      <div
+        className="mx-auto max-w-[960px] px-6 md:px-12 flex items-center justify-between"
+        style={{ paddingTop: "28px", pointerEvents: "auto" }}
+      >
+        {/* Left — Identity */}
+        <div className="flex items-center gap-3">
+          <div>
+            <span className="block text-[15px] font-medium tracking-[-0.01em] text-[var(--color-fg)]">
+              Rouben Ghambaryan
+            </span>
+            <span className="block text-[11px] tracking-[0.2px] text-[var(--color-fg-50)] mt-0.5">
+              Systems Engineer & Founder
+            </span>
+          </div>
+        </div>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
+        {/* Center — Pill nav */}
+        <div className="hidden md:flex items-center">
+          <div
+            className="relative flex items-center gap-0 rounded-full border px-1 py-1"
+            style={{
+              background: "rgba(242,242,242,0.04)",
+              borderColor: "rgba(242,242,242,0.08)",
+              backdropFilter: "blur(15px)",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+            }}
+          >
             <a
-              key={link.label}
-              href={link.href}
-              {...(link.external
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-              className="text-[14px] text-[#666] hover:text-black transition-colors duration-200"
+              href="#work"
+              className="relative z-10 px-5 py-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg)] transition-colors hover:text-white"
             >
-              {link.label}
-              {link.external && (
-                <svg
-                  className="inline-block ml-1 -mt-0.5"
-                  width="10"
-                  height="10"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                >
-                  <path
-                    d="M2 10L10 2M10 2H5M10 2v5"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              )}
+              Work
             </a>
-          ))}
+            <a
+              href="#about"
+              className="relative z-10 px-5 py-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] transition-colors hover:text-[var(--color-fg)]"
+            >
+              About
+            </a>
+          </div>
+        </div>
+
+        {/* Right — Social links */}
+        <div className="hidden md:flex items-center gap-5">
+          <a
+            href="https://www.linkedin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] transition-colors hover:text-[var(--color-fg)]"
+          >
+            LinkedIn <ArrowIcon />
+          </a>
+          <a
+            href="https://github.com/RoubenGh"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] transition-colors hover:text-[var(--color-fg)]"
+          >
+            GitHub <ArrowIcon />
+          </a>
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="md:hidden flex flex-col gap-[5px] p-2 rounded-full"
+          style={{
+            background: "rgba(242,242,242,0.05)",
+            backdropFilter: "blur(8px)",
+          }}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-5 h-[1.5px] bg-black transition-transform duration-200 ${
-              mobileOpen ? "rotate-45 translate-y-[4.5px]" : ""
+            className={`block w-4 h-[1.5px] bg-[var(--color-fg)] transition-all duration-300 ${
+              mobileOpen
+                ? "rotate-45 translate-y-[3.25px]"
+                : ""
             }`}
           />
           <span
-            className={`block w-5 h-[1.5px] bg-black transition-transform duration-200 ${
-              mobileOpen ? "-rotate-45 -translate-y-[1.5px]" : ""
+            className={`block w-4 h-[1.5px] bg-[var(--color-fg)] transition-all duration-300 ${
+              mobileOpen
+                ? "-rotate-45 -translate-y-[3.25px]"
+                : ""
             }`}
           />
         </button>
@@ -76,25 +123,39 @@ export default function Nav() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden border-t border-[#eee] bg-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 md:hidden"
+            style={{
+              background: "rgba(10, 10, 10, 0.95)",
+              backdropFilter: "blur(5px)",
+              pointerEvents: "auto",
+            }}
           >
-            <div className="mx-auto max-w-[1100px] px-6 py-6 flex flex-col gap-4">
-              {links.map((link) => (
-                <a
+            <div className="flex flex-col items-start justify-center h-full px-8 gap-8">
+              {[
+                { label: "Work", href: "#work" },
+                { label: "About", href: "#about" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/" },
+                { label: "GitHub", href: "https://github.com/RoubenGh" },
+              ].map((link, i) => (
+                <motion.a
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  {...(link.external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className="text-[16px] text-[#666] hover:text-black transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.1 + i * 0.06,
+                    duration: 0.5,
+                    ease: [0.165, 0.84, 0.44, 1],
+                  }}
+                  className="text-[32px] font-light tracking-[-0.5px] text-[var(--color-fg)] hover:text-white transition-colors"
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>
