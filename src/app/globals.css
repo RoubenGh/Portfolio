@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --color-primary: #000000;
+  --color-secondary: #666666;
+  --color-border: #eeeeee;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+  background: #ffffff;
+}
+
+::selection {
+  background: #000000;
+  color: #ffffff;
+}
