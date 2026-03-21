@@ -11,81 +11,97 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(10,10,10,0.5), transparent)",
-        height: "100px",
+          "linear-gradient(rgba(10,10,10,0.55), transparent)",
+        height: "120px",
         pointerEvents: "none",
       }}
     >
       <div
-        className="mx-auto max-w-[880px] px-5 md:px-10 flex items-center justify-between"
+        className="mx-auto max-w-[960px] px-6 md:px-10 flex items-center justify-between"
         style={{ paddingTop: "24px", pointerEvents: "auto" }}
       >
-        {/* Left — name only, no subtitle */}
-        <a
-          href="#"
-          className="text-[14px] font-medium tracking-[-0.01em] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors duration-300"
-        >
-          Rouben Ghambaryan
+        {/* Left — Identity */}
+        <a href="#" className="flex flex-col gap-0.5 group">
+          <span className="text-[14px] font-medium tracking-[-0.01em] text-[var(--color-fg)] group-hover:text-white transition-colors duration-300">
+            Rouben Ghambaryan
+          </span>
+          <span className="text-[11px] tracking-[0.15px] text-[var(--color-fg-30)]">
+            Systems Engineer
+          </span>
         </a>
 
-        {/* Center — minimal pill */}
+        {/* Center — Floating pill */}
         <div className="hidden md:flex items-center">
           <div
-            className="flex items-center rounded-full px-0.5 py-0.5"
+            className="relative flex items-center rounded-full px-1 py-1"
             style={{
-              background: "rgba(242,242,242,0.03)",
-              border: "1px solid rgba(242,242,242,0.06)",
-              backdropFilter: "blur(12px)",
+              background: "rgba(242,242,242,0.04)",
+              border: "1px solid rgba(242,242,242,0.07)",
+              backdropFilter: "blur(20px)",
+              boxShadow:
+                "0 4px 24px rgba(0,0,0,0.25), inset 0 0.5px 0 rgba(242,242,242,0.06)",
             }}
           >
+            {/* Glow indicator */}
+            <div
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-[3px] rounded-full"
+              style={{
+                background: "white",
+                boxShadow: "0 0 12px 2px rgba(255,255,255,0.4)",
+                opacity: 0.6,
+              }}
+            />
             <a
               href="#work"
-              className="px-4 py-1 text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors duration-300"
+              className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg)] hover:text-white transition-colors duration-300"
             >
               Work
             </a>
             <a
               href="#about"
-              className="px-4 py-1 text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
+              className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] transition-colors duration-300"
             >
               About
             </a>
           </div>
         </div>
 
-        {/* Right — quiet links */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Right — Full words */}
+        <div className="hidden md:flex items-center gap-1">
           <a
             href="https://www.linkedin.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
+            className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
           >
-            Li
+            LinkedIn
           </a>
           <a
-            href="https://github.com/RoubenGh"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
+            href="#"
+            className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
           >
-            Gh
+            Resume
           </a>
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2"
+          className="md:hidden p-2.5 rounded-full"
+          style={{
+            background: "rgba(242,242,242,0.05)",
+            backdropFilter: "blur(12px)",
+            border: "1px solid rgba(242,242,242,0.06)",
+          }}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-4 h-[1px] bg-[var(--color-fg-50)] transition-all duration-300 ${
-              mobileOpen ? "rotate-45 translate-y-[3px]" : ""
+            className={`block w-4 h-[1.5px] bg-[var(--color-fg-80)] transition-all duration-300 ${
+              mobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
             }`}
           />
           <span
-            className={`block w-4 h-[1px] bg-[var(--color-fg-50)] transition-all duration-300 mt-[5px] ${
+            className={`block w-4 h-[1.5px] bg-[var(--color-fg-80)] transition-all duration-300 mt-[5px] ${
               mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""
             }`}
           />
@@ -103,7 +119,7 @@ export default function Nav() {
             className="fixed inset-0 z-40 md:hidden"
             style={{
               background: "rgba(10,10,10,0.96)",
-              backdropFilter: "blur(4px)",
+              backdropFilter: "blur(8px)",
               pointerEvents: "auto",
             }}
           >
@@ -112,7 +128,7 @@ export default function Nav() {
                 { label: "Work", href: "#work" },
                 { label: "About", href: "#about" },
                 { label: "LinkedIn", href: "https://www.linkedin.com/" },
-                { label: "GitHub", href: "https://github.com/RoubenGh" },
+                { label: "Resume", href: "#" },
               ].map((link, i) => (
                 <motion.a
                   key={link.label}

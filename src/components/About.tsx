@@ -4,10 +4,19 @@ import FadeIn from "./FadeIn";
 
 export default function About() {
   return (
-    <section id="about" className="relative py-32 md:py-44">
-      <div className="mx-auto max-w-[840px] px-4 md:px-0">
+    <section id="about" className="relative py-36 md:py-52">
+      {/* Ambient light */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(242,242,242,0.012), transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-[880px] px-4 md:px-0">
         <FadeIn>
-          <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] block mb-12 md:mb-14">
+          <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] block mb-14">
             About
           </span>
         </FadeIn>
@@ -45,7 +54,7 @@ export default function About() {
               </p>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <p className="mt-4 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
+              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
                 I founded{" "}
                 <span className="text-[var(--color-fg-80)]">RLA Studios</span>{" "}
                 to apply systems thinking to creative work — turning manual

@@ -10,6 +10,7 @@ interface FadeInProps {
   delay?: number;
   className?: string;
   y?: number;
+  scale?: boolean;
 }
 
 export default function FadeIn({
@@ -17,13 +18,14 @@ export default function FadeIn({
   delay = 0,
   className,
   y = 60,
+  scale = false,
 }: FadeInProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.9, delay, ease }}
+      initial={{ opacity: 0, y, ...(scale ? { scale: 0.97 } : {}) }}
+      whileInView={{ opacity: 1, y: 0, ...(scale ? { scale: 1 } : {}) }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 1, delay, ease }}
       className={className}
     >
       {children}
