@@ -3,117 +3,90 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ArrowIcon = () => (
-  <svg
-    width="11"
-    height="11"
-    viewBox="0 0 12 12"
-    fill="none"
-    className="opacity-50 group-hover:opacity-100 transition-opacity"
-  >
-    <path
-      d="M2 10L10 2M10 2H5M10 2v5"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export default function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50" style={{
-      backgroundImage: "linear-gradient(rgba(10, 10, 10, 0.6), transparent)",
-      height: "140px",
-      pointerEvents: "none",
-    }}>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(10,10,10,0.5), transparent)",
+        height: "100px",
+        pointerEvents: "none",
+      }}
+    >
       <div
-        className="mx-auto max-w-[960px] px-6 md:px-12 flex items-center justify-between"
-        style={{ paddingTop: "28px", pointerEvents: "auto" }}
+        className="mx-auto max-w-[880px] px-5 md:px-10 flex items-center justify-between"
+        style={{ paddingTop: "24px", pointerEvents: "auto" }}
       >
-        {/* Left — Identity */}
-        <div className="flex items-center gap-3">
-          <div>
-            <span className="block text-[15px] font-medium tracking-[-0.01em] text-[var(--color-fg)]">
-              Rouben Ghambaryan
-            </span>
-            <span className="block text-[11px] tracking-[0.2px] text-[var(--color-fg-50)] mt-0.5">
-              Systems Engineer & Founder
-            </span>
-          </div>
-        </div>
+        {/* Left — name only, no subtitle */}
+        <a
+          href="#"
+          className="text-[14px] font-medium tracking-[-0.01em] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors duration-300"
+        >
+          Rouben Ghambaryan
+        </a>
 
-        {/* Center — Pill nav */}
+        {/* Center — minimal pill */}
         <div className="hidden md:flex items-center">
           <div
-            className="relative flex items-center gap-0 rounded-full border px-1 py-1"
+            className="flex items-center rounded-full px-0.5 py-0.5"
             style={{
-              background: "rgba(242,242,242,0.04)",
-              borderColor: "rgba(242,242,242,0.08)",
-              backdropFilter: "blur(15px)",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+              background: "rgba(242,242,242,0.03)",
+              border: "1px solid rgba(242,242,242,0.06)",
+              backdropFilter: "blur(12px)",
             }}
           >
             <a
               href="#work"
-              className="relative z-10 px-5 py-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg)] transition-colors hover:text-white"
+              className="px-4 py-1 text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors duration-300"
             >
               Work
             </a>
             <a
               href="#about"
-              className="relative z-10 px-5 py-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] transition-colors hover:text-[var(--color-fg)]"
+              className="px-4 py-1 text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
             >
               About
             </a>
           </div>
         </div>
 
-        {/* Right — Social links */}
-        <div className="hidden md:flex items-center gap-5">
+        {/* Right — quiet links */}
+        <div className="hidden md:flex items-center gap-4">
           <a
             href="https://www.linkedin.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] transition-colors hover:text-[var(--color-fg)]"
+            className="text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
           >
-            LinkedIn <ArrowIcon />
+            Li
           </a>
           <a
             href="https://github.com/RoubenGh"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-1.5 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] transition-colors hover:text-[var(--color-fg)]"
+            className="text-[12px] font-medium tracking-[0.3px] text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
           >
-            GitHub <ArrowIcon />
+            Gh
           </a>
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden flex flex-col gap-[5px] p-2 rounded-full"
-          style={{
-            background: "rgba(242,242,242,0.05)",
-            backdropFilter: "blur(8px)",
-          }}
+          className="md:hidden p-2"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-4 h-[1.5px] bg-[var(--color-fg)] transition-all duration-300 ${
-              mobileOpen
-                ? "rotate-45 translate-y-[3.25px]"
-                : ""
+            className={`block w-4 h-[1px] bg-[var(--color-fg-50)] transition-all duration-300 ${
+              mobileOpen ? "rotate-45 translate-y-[3px]" : ""
             }`}
           />
           <span
-            className={`block w-4 h-[1.5px] bg-[var(--color-fg)] transition-all duration-300 ${
-              mobileOpen
-                ? "-rotate-45 -translate-y-[3.25px]"
-                : ""
+            className={`block w-4 h-[1px] bg-[var(--color-fg-50)] transition-all duration-300 mt-[5px] ${
+              mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""
             }`}
           />
         </button>
@@ -129,12 +102,12 @@ export default function Nav() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 md:hidden"
             style={{
-              background: "rgba(10, 10, 10, 0.95)",
-              backdropFilter: "blur(5px)",
+              background: "rgba(10,10,10,0.96)",
+              backdropFilter: "blur(4px)",
               pointerEvents: "auto",
             }}
           >
-            <div className="flex flex-col items-start justify-center h-full px-8 gap-8">
+            <div className="flex flex-col items-start justify-center h-full px-8 gap-7">
               {[
                 { label: "Work", href: "#work" },
                 { label: "About", href: "#about" },
@@ -145,14 +118,14 @@ export default function Nav() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.1 + i * 0.06,
+                    delay: 0.08 + i * 0.05,
                     duration: 0.5,
-                    ease: [0.165, 0.84, 0.44, 1],
+                    ease: [0.165, 0.84, 0.44, 1] as const,
                   }}
-                  className="text-[32px] font-light tracking-[-0.5px] text-[var(--color-fg)] hover:text-white transition-colors"
+                  className="text-[28px] font-light tracking-[-0.5px] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors"
                 >
                   {link.label}
                 </motion.a>
