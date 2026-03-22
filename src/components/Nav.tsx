@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Nav() {
@@ -21,14 +22,14 @@ export default function Nav() {
         style={{ paddingTop: "24px", pointerEvents: "auto" }}
       >
         {/* Left — Identity */}
-        <a href="#" className="flex flex-col gap-0.5 group">
+        <Link href="/" className="flex flex-col gap-0.5 group">
           <span className="text-[14px] font-medium tracking-[-0.01em] text-[var(--color-fg)] group-hover:text-white transition-colors duration-300">
             Rouben Ghambaryan
           </span>
           <span className="text-[11px] tracking-[0.15px] text-[var(--color-fg-30)]">
             Systems Engineer
           </span>
-        </a>
+        </Link>
 
         {/* Center — Floating pill */}
         <div className="hidden md:flex items-center">
@@ -42,7 +43,6 @@ export default function Nav() {
                 "0 4px 24px rgba(0,0,0,0.25), inset 0 0.5px 0 rgba(242,242,242,0.06)",
             }}
           >
-            {/* Glow indicator */}
             <div
               className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-[3px] rounded-full"
               style={{
@@ -51,22 +51,22 @@ export default function Nav() {
                 opacity: 0.6,
               }}
             />
-            <a
-              href="#work"
+            <Link
+              href="/#work"
               className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg)] hover:text-white transition-colors duration-300"
             >
               Work
-            </a>
-            <a
-              href="#about"
+            </Link>
+            <Link
+              href="/#about"
               className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] transition-colors duration-300"
             >
               About
-            </a>
+            </Link>
           </div>
         </div>
 
-        {/* Right — Full words */}
+        {/* Right */}
         <div className="hidden md:flex items-center gap-1">
           <a
             href="https://www.linkedin.com/"
@@ -125,8 +125,8 @@ export default function Nav() {
           >
             <div className="flex flex-col items-start justify-center h-full px-8 gap-7">
               {[
-                { label: "Work", href: "#work" },
-                { label: "About", href: "#about" },
+                { label: "Work", href: "/#work" },
+                { label: "About", href: "/#about" },
                 { label: "LinkedIn", href: "https://www.linkedin.com/" },
                 { label: "Resume", href: "#" },
               ].map((link, i) => (
