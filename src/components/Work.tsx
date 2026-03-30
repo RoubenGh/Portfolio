@@ -11,7 +11,7 @@ const projects = [
     title: "RLA Studios",
     meta: "Founder — 2024",
     description:
-      "End-to-end media automation platform for real estate content production. Data scraping, file management, invoicing — one admin panel.",
+      "Full-stack business operations platform for a real estate videography company. Lead scraping, invoicing, CRM, commission tracking — one admin panel.",
     href: "/work/rla-studios",
     color:
       "radial-gradient(circle at 50% 0%, rgba(127,207,255,0.2), transparent 70%), radial-gradient(circle at 50% 0%, rgba(0,51,85,0.6), transparent)",
@@ -26,7 +26,7 @@ const projects = [
     title: "AI Ticketing System",
     meta: "Internal Tool — 2024",
     description:
-      "Email parsing and automated response system using internal knowledge bases. Tickets classified, routed, and answered intelligently.",
+      "AI-powered system that transforms unstructured emails into structured, prioritized tickets with auto-generated task breakdowns and knowledge base integration.",
     href: "/work/ai-ticketing",
     color:
       "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.1), transparent 60%)",
@@ -35,36 +35,6 @@ const projects = [
       bg: "linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)",
       label: "AI",
       labelColor: "rgba(242,242,242,0.5)",
-    },
-  },
-  {
-    title: "Infrastructure Systems",
-    meta: "Ongoing — 2023",
-    description:
-      "Production-grade cloud infrastructure. Kubernetes, AWS, SSL automation, CI/CD pipelines, and zero-downtime deployments at scale.",
-    href: "/work/infrastructure",
-    color:
-      "radial-gradient(circle at 50% 0%, rgba(8,144,251,0.15), transparent 60%), radial-gradient(circle at 50% 0%, rgba(158,5,214,0.1), transparent)",
-    accent: "rgba(8,144,251,0.3)",
-    preview: {
-      bg: "linear-gradient(135deg, #0d0a1a 0%, #120e22 40%, #0a0818 100%)",
-      label: "INFRA",
-      labelColor: "rgba(8,144,251,0.6)",
-    },
-  },
-  {
-    title: "ChefPickle",
-    meta: "Client — 2024",
-    description:
-      "Deep debugging and legacy system stabilization. Root cause analysis, performance profiling, and systematic resolution of critical issues.",
-    href: "/work/chefpickle",
-    color:
-      "radial-gradient(circle at 50% 0%, rgba(0,106,195,0.2), transparent 60%)",
-    accent: "rgba(0,106,195,0.3)",
-    preview: {
-      bg: "linear-gradient(135deg, #0a1520 0%, #071018 40%, #050c14 100%)",
-      label: "CP",
-      labelColor: "rgba(0,106,195,0.6)",
     },
   },
 ];

@@ -200,12 +200,14 @@ export function VisualFrame({
   labelColor,
   caption,
   aspectRatio = "16/9",
+  imageSrc,
 }: {
   bg: string;
   label: string;
   labelColor: string;
   caption?: string;
   aspectRatio?: string;
+  imageSrc?: string;
 }) {
   return (
     <FadeIn>
@@ -214,20 +216,29 @@ export function VisualFrame({
           className="relative rounded-[12px] overflow-hidden"
           style={{
             background: bg,
-            aspectRatio,
+            aspectRatio: imageSrc ? undefined : aspectRatio,
             boxShadow:
               "0 24px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(242,242,242,0.03)",
             border: "1px solid rgba(242,242,242,0.04)",
           }}
         >
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span
-              className="text-[24px] md:text-[32px] font-medium tracking-[-0.5px] select-none"
-              style={{ color: labelColor }}
-            >
-              {label}
-            </span>
-          </div>
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              alt={label}
+              className="w-full h-auto block"
+              loading="lazy"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span
+                className="text-[24px] md:text-[32px] font-medium tracking-[-0.5px] select-none"
+                style={{ color: labelColor }}
+              >
+                {label}
+              </span>
+            </div>
+          )}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{ boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)" }}

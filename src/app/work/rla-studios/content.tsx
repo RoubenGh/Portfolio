@@ -22,13 +22,12 @@ const ease = [0.165, 0.84, 0.44, 1] as const;
 
 const tocSections = [
   { id: "overview", label: "Overview" },
-  { id: "highlights", label: "Highlights" },
   { id: "problem", label: "The Problem" },
   { id: "architecture", label: "Architecture" },
-  { id: "workflow", label: "Workflow Design" },
-  { id: "automation", label: "Automation Pipeline" },
+  { id: "scraper", label: "Scraper Pipeline" },
+  { id: "invoicing", label: "Invoicing Engine" },
   { id: "crm", label: "CRM & Admin" },
-  { id: "delivery", label: "Client Delivery" },
+  { id: "automation", label: "Automation" },
   { id: "decisions", label: "Design Decisions" },
   { id: "challenges", label: "Challenges" },
   { id: "outcomes", label: "Outcomes" },
@@ -41,12 +40,10 @@ export default function RLAStudiosContent() {
       <Nav />
       <main className="pt-28 md:pt-32">
         <div className="mx-auto max-w-[960px] px-5 md:px-10">
-          {/* Back button */}
           <div className="mb-10">
             <BackButton />
           </div>
 
-          {/* Project title */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -56,11 +53,10 @@ export default function RLAStudiosContent() {
               RLA Studios
             </h1>
             <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--color-fg-30)] max-w-[600px]">
-              End-to-end media operations platform for real estate content production — from lead intake to final delivery.
+              Full-stack business operations platform for a real estate videography company &mdash; from lead scraping to invoice delivery.
             </p>
           </motion.div>
 
-          {/* Hero banner */}
           <div className="mt-10 md:mt-12">
             <ProjectHero
               bannerBg="linear-gradient(135deg, #0f1a2e 0%, #0a1628 40%, #061020 100%)"
@@ -69,399 +65,358 @@ export default function RLAStudiosContent() {
             />
           </div>
 
-          {/* Metadata */}
           <div className="mt-8">
             <ProjectMeta
               items={[
                 { label: "Role", value: "Founder & Lead Engineer" },
                 { label: "Timeline", value: "2024 — Present" },
-                { label: "Stack", value: "Full-Stack, Cloud, AI, Automation" },
-                { label: "Type", value: "Platform / SaaS" },
+                { label: "Stack", value: "Node, FastAPI, React, PostgreSQL" },
+                { label: "Type", value: "Business Platform" },
               ]}
             />
           </div>
 
-          {/* Main content with sidebar TOC */}
+          <div className="mt-6">
+            <a
+              href="https://rlastudios.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-30)] hover:text-[var(--color-fg)] transition-colors duration-300"
+            >
+              <span>Visit live site</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H10M17 7v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
+
           <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-[160px_1fr] gap-12 lg:gap-16">
             <TableOfContents sections={tocSections} />
 
             <div>
-              {/* ─── 01 OVERVIEW ─── */}
+              {/* 01 OVERVIEW */}
               <section id="overview" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
                   number="01"
                   title="The Big Picture"
-                  subtitle="RLA Studios is a full-stack platform built from the ground up to automate and streamline creative content production."
+                  subtitle="A dual-runtime platform that automates lead scraping, client management, invoice generation, file delivery, and commission tracking — replacing spreadsheets, manual Airtable entry, and disconnected tools."
                 />
                 <SectionBody>
                   <p>
-                    What started as a way to solve my own operational pain points evolved into a complete production system — one that handles the entire lifecycle of content creation for real estate media, eliminating manual touchpoints and letting the work flow naturally from intake to output.
+                    RLA Studios is a full-stack business operations platform built for a real estate videography company. It&apos;s a dual-runtime monolith &mdash; a Node/Express frontend server and a Python/FastAPI backend sidecar &mdash; deployed as three Docker containers (Express, FastAPI, PostgreSQL) behind Traefik on a VPS via Dokploy.
                   </p>
                   <p>
-                    The platform connects lead intake, CRM management, listing workflows, automation, file collection, client communication, editor handoff, delivery, invoicing, and operations structure — all through a single admin interface.
+                    The platform connects lead intake, CRM management, invoice generation, file delivery, commission tracking, and admin operations through a single interface &mdash; replacing what was previously a tangle of 4&ndash;5 disconnected tools.
                   </p>
                 </SectionBody>
 
                 <StatBlock
                   items={[
-                    { value: "100%", label: "Automated workflow" },
-                    { value: "End-to-End", label: "Data to delivery pipeline" },
-                    { value: "SaaS", label: "Subscription-ready architecture" },
-                  ]}
-                />
-              </section>
-
-              {/* ─── 02 HIGHLIGHTS ─── */}
-              <section id="highlights" className="mb-20 md:mb-28 scroll-mt-32">
-                <SectionHeading
-                  number="02"
-                  title="Highlights"
-                />
-                <PrincipleCards
-                  items={[
-                    {
-                      number: "01",
-                      title: "Automated Data Pipeline",
-                      description:
-                        "Custom scraping engine that collects, cleans, and structures data from multiple sources — no human intervention required.",
-                    },
-                    {
-                      number: "02",
-                      title: "Unified Admin Panel",
-                      description:
-                        "Full-featured dashboard for managing projects, clients, content status, and system configuration from one place.",
-                    },
-                    {
-                      number: "03",
-                      title: "Zero-Touch Invoicing",
-                      description:
-                        "Automatic invoice generation based on project data — rates, deliverables, and client details pulled from the system.",
-                    },
+                    { value: "1,963", label: "Leads managed" },
+                    { value: "54", label: "API endpoints" },
+                    { value: "17.5K", label: "Lines of source code" },
                   ]}
                 />
 
                 <VisualFrame
-                  bg="linear-gradient(135deg, #0c1520 0%, #0a1628 50%, #081224 100%)"
-                  label="Admin Dashboard"
-                  labelColor="rgba(127,207,255,0.4)"
-                  caption="1.0 — Admin panel overview showing project pipeline and system status."
+                  bg="#ffffff"
+                  label="RLA Studios Website"
+                  labelColor="rgba(0,0,0,0.3)"
+                  caption="1.0 — rlastudios.com — the public-facing marketing site with lead capture, built alongside the platform."
+                  imageSrc="/images/rla-studios/website.png"
                 />
               </section>
 
-              {/* ─── 03 THE PROBLEM ─── */}
+              {/* 02 THE PROBLEM */}
               <section id="problem" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="03"
+                  number="02"
                   title="The Problem"
-                  subtitle="Content production at scale is messy. Every step in the process was disconnected from the next."
+                  subtitle="Every step in the business workflow was a context-switch between disconnected tools."
                 />
                 <SectionBody>
                   <p>
-                    Data lived in spreadsheets. Files got lost in folders. Communication happened across five different tools. Invoicing was an afterthought. Every step was disconnected, creating gaps where things fell through, got duplicated, or simply took too long.
+                    Before this platform, the workflow was entirely manual: browse Redfin and Compass listings one-by-one, copy-paste agent contact info into Airtable, generate invoices in Canva or Google Docs, manually upload PDFs to Dropbox, then remember who sold which client and who&apos;s owed commission.
                   </p>
                   <p>
-                    Growth was limited by human bandwidth — every new client meant more manual work instead of leveraging systems. The industry needed a platform that could handle the full production lifecycle without the friction.
+                    Scaling past a handful of clients meant drowning in admin work instead of shooting videos. Every new client added more manual steps, not less.
                   </p>
                 </SectionBody>
 
                 <ConstraintList
                   items={[
-                    {
-                      title: "Fragmented Data",
-                      description:
-                        "Information scattered across spreadsheets, emails, and messaging tools with no single source of truth.",
-                    },
-                    {
-                      title: "Manual Processes",
-                      description:
-                        "Hours spent on repetitive tasks — file organization, data entry, invoice generation — that should be automated.",
-                    },
-                    {
-                      title: "No Unified Platform",
-                      description:
-                        "No existing tool combined data scraping, content management, file storage, and invoicing into one system.",
-                    },
-                    {
-                      title: "Scaling Bottleneck",
-                      description:
-                        "Growth was limited by human bandwidth — every new client meant more manual work instead of leveraging systems.",
-                    },
+                    { title: "Manual Lead Research", description: "Browsing listing sites one-by-one, copy-pasting agent contact info into spreadsheets and Airtable by hand." },
+                    { title: "Disconnected Invoicing", description: "Creating invoices in Canva/Google Docs, manually uploading to Dropbox, then tracking payment status separately." },
+                    { title: "No Commission Tracking", description: "Remembering who sold which client and who's owed what — tracked in someone's head, not a system." },
+                    { title: "Tool Sprawl", description: "Every step required context-switching between Redfin, Airtable, Canva, Dropbox, and spreadsheets." },
                   ]}
                 />
               </section>
 
-              {/* ─── 04 ARCHITECTURE ─── */}
+              {/* 03 ARCHITECTURE */}
               <section id="architecture" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="04"
+                  number="03"
                   title="System Architecture"
-                  subtitle="A modular architecture where each component handles a specific part of the pipeline."
+                  subtitle="A dual-runtime monolith — Node gateway + Python sidecar — deployed as three Docker containers behind Traefik."
                 />
                 <SectionBody>
                   <p>
-                    The platform is built with a modular architecture where each component handles a specific part of the pipeline and communicates through well-defined interfaces. This separation of concerns means individual modules can be updated, scaled, or replaced independently.
+                    Express acts as the gateway and proxy &mdash; it handles auth, sessions, audit logging, and commission interception, then forwards business-logic requests to FastAPI via internal HTTP. The Python sidecar is never publicly exposed; an internal API key guard enforces this. WebSocket connections for the scraper are upgraded and piped through raw TCP.
+                  </p>
+                  <p>
+                    PostgreSQL handles platform state (users, leads, settings, services, audit logs, commissions) across 8 tables with Drizzle ORM for type-safe queries. Airtable serves as the external CRM for client records, and Dropbox handles file storage for generated invoices.
                   </p>
                 </SectionBody>
 
                 <VisualFrame
-                  bg="linear-gradient(135deg, #0a0e14 0%, #0d1218 50%, #080c12 100%)"
-                  label="System Architecture"
-                  labelColor="rgba(127,207,255,0.3)"
-                  caption="2.0 — High-level system architecture showing module interconnections."
-                  aspectRatio="16/10"
+                  bg="#f5f5f5"
+                  label="Admin Dashboard"
+                  labelColor="rgba(0,0,0,0.3)"
+                  caption="2.0 — Admin dashboard showing integration status, quick actions, and lead management."
+                  imageSrc="/images/rla-studios/dashboard.png"
                 />
 
                 <PrincipleCards
                   items={[
-                    {
-                      number: "01",
-                      title: "Data Pipeline",
-                      description:
-                        "Custom scraping engine that collects, cleans, and structures data from multiple sources into Airtable.",
-                    },
-                    {
-                      number: "02",
-                      title: "File Management",
-                      description:
-                        "Automated Dropbox integration for organized file storage, delivery, and client access.",
-                    },
-                    {
-                      number: "03",
-                      title: "Invoicing Engine",
-                      description:
-                        "Automatic invoice generation based on project data — no manual billing work required.",
-                    },
+                    { number: "01", title: "Express Gateway", description: "Handles auth, sessions, audit logging, WebSocket proxy, and commission interception. Forwards business logic to FastAPI via internal HTTP." },
+                    { number: "02", title: "FastAPI Sidecar", description: "Scraping engine, invoice generator, Airtable CRUD, Dropbox uploads, and address geocoding. Never publicly exposed — guarded by internal API key." },
+                    { number: "03", title: "Dual Database", description: "PostgreSQL for platform state (8 tables via Drizzle ORM). Airtable as external CRM — preserved the existing workflow while adding automation on top." },
                   ]}
                 />
               </section>
 
-              {/* ─── 05 WORKFLOW DESIGN ─── */}
-              <section id="workflow" className="mb-20 md:mb-28 scroll-mt-32">
+              {/* 04 SCRAPER PIPELINE */}
+              <section id="scraper" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
+                  number="04"
+                  title="Scraper Pipeline"
+                  subtitle="Paste listing URLs, get structured agent data in Airtable — with real-time WebSocket progress."
+                />
+                <SectionBody>
+                  <p>
+                    Paste one or more Redfin or Compass listing URLs into the scraper UI. The Python backend auto-detects the platform and scrapes each page using BeautifulSoup with a multi-strategy extraction pipeline: first tries regex on the &ldquo;Listed by&rdquo; section, then falls back to JSON-LD structured data extraction, then uses DuckDuckGo HTML search as a last resort to find listings by address.
+                  </p>
+                  <p>
+                    Results stream back via WebSocket in real-time with structured message types (log, result, complete, error), so each URL&apos;s progress is visible as it happens. Deduplication checks against existing Airtable records prevent duplicate entries. New leads are written directly to Airtable with agent name, phone, email, listing address, listed date, and days on market.
+                  </p>
+                  <p>
+                    Partial street addresses extracted from listing URLs are auto-geocoded via Nominatim (OpenStreetMap) to full street, city, state, ZIP format. An in-memory cache prevents redundant lookups.
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="#f5f5f5"
+                  label="Lead Scraper"
+                  labelColor="rgba(0,0,0,0.3)"
+                  caption="3.0 — Paste Redfin/Compass URLs, watch real-time WebSocket progress as each listing is scraped and written to Airtable."
+                  imageSrc="/images/rla-studios/scraper.png"
+                />
+              </section>
+
+              {/* 05 INVOICING ENGINE */}
+              <section id="invoicing" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
                   number="05"
-                  title="Workflow Design"
-                  subtitle="The entire production lifecycle, from lead intake to final delivery, designed as one continuous pipeline."
+                  title="Invoicing Engine"
+                  subtitle="Generate branded PDF invoices, auto-upload to Dropbox, sync to Airtable, and track commissions — all in one click."
                 />
                 <SectionBody>
                   <p>
-                    The workflow is designed as a linear pipeline with parallel processing capabilities. A new listing enters the system through automated data scraping, gets enriched with metadata, flows through content assignment and production, and exits as a delivered package with an invoice — all without manual handoffs.
+                    Select a client, pick services from a configurable catalog, and generate a branded PDF invoice using ReportLab with custom Montserrat typography and background template overlays. The output is a two-page PDF: page one is the invoice with pixel-precise coordinate-based layout, page two is an auto-populated Video Ownership Agreement with the client&apos;s name injected into legal text.
                   </p>
                   <p>
-                    Each stage has clear entry and exit criteria, automated quality gates, and error handling that routes exceptions to the right person instead of dropping them silently.
+                    The PDF is auto-uploaded to Dropbox and the share link is synced back to the client&apos;s Airtable record. Marking an invoice as paid overlays a PAID stamp via PyMuPDF without regenerating the original, re-uploads the stamped version, and creates a commission ledger entry. The Express proxy layer transparently captures payment events and writes audit + commission entries without the Python backend needing to know.
                   </p>
                 </SectionBody>
 
                 <VisualFrame
-                  bg="linear-gradient(135deg, #0c1520 0%, #081018 50%, #060c14 100%)"
-                  label="Production Pipeline"
-                  labelColor="rgba(127,207,255,0.25)"
-                  caption="3.0 — Listing workflow from intake to delivery."
+                  bg="#f5f5f5"
+                  label="Invoice Generator"
+                  labelColor="rgba(0,0,0,0.3)"
+                  caption="4.0 — Select services from the catalog, preview the branded PDF in real-time, then generate and auto-upload to Dropbox."
+                  imageSrc="/images/rla-studios/invoice.png"
                 />
               </section>
 
-              {/* ─── 06 AUTOMATION PIPELINE ─── */}
-              <section id="automation" className="mb-20 md:mb-28 scroll-mt-32">
-                <SectionHeading
-                  number="06"
-                  title="Automation Pipeline"
-                  subtitle="If a human doesn't need to make a judgment call, a system handles it."
-                />
-                <SectionBody>
-                  <p>
-                    The automation layer is the backbone of RLA Studios. Custom scraping pipelines collect listing data from MLS feeds, property databases, and public records. The data is cleaned, normalized, and structured automatically before flowing into the production pipeline.
-                  </p>
-                  <p>
-                    Airtable serves as the central data layer — bidirectional sync ensures project tracking, content metadata, client information, and delivery status all stay consistent. Dropbox integration handles file organization and delivery automatically, sorting and naming content according to project structure.
-                  </p>
-                </SectionBody>
-
-                <VisualFrame
-                  bg="linear-gradient(135deg, #0d1220 0%, #0a0e18 50%, #070a14 100%)"
-                  label="Automation Engine"
-                  labelColor="rgba(127,207,255,0.25)"
-                  caption="4.0 — Data scraping and automation pipeline overview."
-                />
-
-                <VisualFrame
-                  bg="linear-gradient(135deg, #0c1018 0%, #080c14 50%, #050810 100%)"
-                  label="Airtable Integration"
-                  labelColor="rgba(127,207,255,0.2)"
-                  caption="4.1 — Bidirectional sync architecture with Airtable as central data layer."
-                />
-              </section>
-
-              {/* ─── 07 CRM & ADMIN ─── */}
+              {/* 06 CRM & ADMIN */}
               <section id="crm" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
+                  number="06"
+                  title="CRM & Admin Panel"
+                  subtitle="Role-based admin panel with lead management, client CRM, commission tracking, and a sandboxed demo mode."
+                />
+                <SectionBody>
+                  <p>
+                    The CRM manages nearly 2,000 real estate agent leads with full outreach pipeline tracking. Each record stores contact info, listing details (address, URL), and tracks the entire outreach lifecycle &mdash; when they were texted, days since last contact, follow-up dates, and response status.
+                  </p>
+                  <p>
+                    Quick-action buttons let the team send templated messages with one tap: opener texts, follow-ups, pricing info, questions, and emails. Each button generates a pre-filled SMS deep link with the agent&apos;s first name, listing address, and a customizable message template pulled directly from the CRM &mdash; no copy-pasting, no app switching.
+                  </p>
+                  <p>
+                    Lead status flows through a defined pipeline: New Lead, Interested, Need to Follow Up, Followed Up, Not Interested, Ghosted, or Hired. Video production status is tracked per lead (Not Started, In Progress, Completed), and invoices attach directly to completed work. Team attribution tracks who scraped each lead for commission purposes.
+                  </p>
+                  <p>
+                    The admin panel layers on top with role-based access control (superadmin, admin, viewer, demo), rate-limited login (5 attempts per 15 minutes), bcrypt hashing, session-based auth, and audit logging. A sandboxed demo mode lets prospects explore the full panel &mdash; all mutations are intercepted and short-circuited so demo users can click every button without touching real data.
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="#1a1a1a"
+                  label="Client CRM"
+                  labelColor="rgba(255,255,255,0.3)"
+                  caption="5.0 — Nearly 2,000 agent leads with outreach status, follow-up tracking, and one-tap templated messaging."
+                  imageSrc="/images/rla-studios/crm.png"
+                />
+
+                {/* Click-to-text demo video */}
+                <FadeIn>
+                  <div className="my-10 md:my-14">
+                    <div
+                      className="relative rounded-[12px] overflow-hidden"
+                      style={{
+                        boxShadow: "0 24px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(242,242,242,0.03)",
+                        border: "1px solid rgba(242,242,242,0.04)",
+                      }}
+                    >
+                      <video
+                        className="w-full"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        style={{ aspectRatio: "16/9", objectFit: "cover", background: "#0a0a0a" }}
+                      >
+                        <source src="/images/rla-studios/clicktotext.MP4" type="video/mp4" />
+                      </video>
+                    </div>
+                    <p className="mt-3 text-[12px] tracking-[0.1px] text-[var(--color-fg-15)]">
+                      5.1 &mdash; One-tap outreach: click a button, get a pre-filled SMS with the agent&apos;s name and listing address pulled from the CRM.
+                    </p>
+                  </div>
+                </FadeIn>
+
+                <VisualFrame
+                  bg="#f5f5f5"
+                  label="Commission Tracking"
+                  labelColor="rgba(0,0,0,0.3)"
+                  caption="5.2 — Commission ledger with invoice links, sold-by attribution, and payment status toggling."
+                  imageSrc="/images/rla-studios/commissions.png"
+                />
+              </section>
+
+              {/* 07 AUTOMATION */}
+              <section id="automation" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
                   number="07"
-                  title="CRM & Admin Experience"
-                  subtitle="A single interface to manage the entire operation."
-                />
-                <SectionBody>
-                  <p>
-                    The admin panel provides real-time visibility into every aspect of the production pipeline. Project status, client management, content pipeline health, editor assignments, and system configuration — all accessible from a single dashboard.
-                  </p>
-                  <p>
-                    The CRM module tracks client relationships, communication history, project preferences, and billing information. Automated notifications keep clients informed about their content status without requiring manual updates.
-                  </p>
-                </SectionBody>
-
-                <VisualFrame
-                  bg="linear-gradient(135deg, #0c1520 0%, #0a1220 50%, #081020 100%)"
-                  label="CRM Dashboard"
-                  labelColor="rgba(127,207,255,0.3)"
-                  caption="5.0 — Client management interface with real-time project tracking."
-                  aspectRatio="16/10"
-                />
-
-                <VisualFrame
-                  bg="linear-gradient(135deg, #0a1018 0%, #0c1420 50%, #080e18 100%)"
-                  label="Project Manager"
-                  labelColor="rgba(127,207,255,0.25)"
-                  caption="5.1 — Individual project view with status timeline and deliverables."
-                />
-              </section>
-
-              {/* ─── 08 CLIENT DELIVERY ─── */}
-              <section id="delivery" className="mb-20 md:mb-28 scroll-mt-32">
-                <SectionHeading
-                  number="08"
-                  title="Client Delivery Flow"
-                  subtitle="Content gets to clients automatically, organized and on time."
-                />
-                <SectionBody>
-                  <p>
-                    The delivery pipeline connects directly to Dropbox for organized file storage and client access. Content is automatically sorted, named according to project conventions, and placed in client-specific folders with the right permissions.
-                  </p>
-                  <p>
-                    Invoice generation happens automatically once content is marked as delivered — pulling rates, deliverable counts, and client billing details from the system to produce professional invoices without any manual data entry.
-                  </p>
-                </SectionBody>
-
-                <VisualFrame
-                  bg="linear-gradient(135deg, #0c1218 0%, #0a1020 50%, #080c16 100%)"
-                  label="Delivery Pipeline"
-                  labelColor="rgba(127,207,255,0.25)"
-                  caption="6.0 — Automated delivery and invoicing flow."
-                />
-              </section>
-
-              {/* ─── 09 DESIGN DECISIONS ─── */}
-              <section id="decisions" className="mb-20 md:mb-28 scroll-mt-32">
-                <SectionHeading
-                  number="09"
-                  title="Design Decisions"
-                  subtitle="The principles that shaped how the system was built."
+                  title="Automation"
+                  subtitle="If a human doesn't need to make a judgment call, a system handles it."
                 />
                 <PrincipleCards
                   items={[
-                    {
-                      number: "01",
-                      title: "Automate Everything Possible",
-                      description:
-                        "If a human doesn't need to make a judgment call, a system should handle it. This freed up time for the work that actually matters.",
-                    },
-                    {
-                      number: "02",
-                      title: "Single Source of Truth",
-                      description:
-                        "All data flows through one pipeline — no more spreadsheet chaos, no more conflicting versions, no more manual reconciliation.",
-                    },
-                    {
-                      number: "03",
-                      title: "Built to Scale",
-                      description:
-                        "Architecture designed so that adding clients doesn't add complexity. The system should get more efficient as it grows.",
-                    },
+                    { number: "01", title: "Scraper → Airtable", description: "Paste URLs → auto-detect platform → scrape agent info → deduplicate → write to Airtable. Real-time WebSocket streaming shows each URL's progress." },
+                    { number: "02", title: "Invoice Lifecycle", description: "Generate PDF → upload to Dropbox → sync link to Airtable → mark paid → overlay PAID stamp → re-upload → create commission entry. One click." },
+                    { number: "03", title: "Address Completion", description: "Partial addresses from listing URLs are auto-geocoded via Nominatim to full street, city, state, ZIP format. In-memory cache prevents redundant lookups." },
                   ]}
                 />
                 <SectionBody>
                   <p>
-                    Every technical decision was evaluated against these principles. When choosing between Airtable and a custom database, Airtable won because it provided a visual interface for non-technical team members while still exposing a rich API for automation. When designing the invoicing system, automatic generation won over manual templates because it removed a human touchpoint without sacrificing accuracy.
+                    On first startup, the system auto-creates a default superadmin user and seeds a 7-item service catalog &mdash; zero manual setup needed post-deploy. The configurable service catalog lets admins add, edit, and reorder line items that populate invoice generation, so pricing changes don&apos;t require code changes.
                   </p>
                 </SectionBody>
               </section>
 
-              {/* ─── 10 CHALLENGES ─── */}
-              <section id="challenges" className="mb-20 md:mb-28 scroll-mt-32">
+              {/* 08 DESIGN DECISIONS */}
+              <section id="decisions" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="10"
-                  title="Challenges & Constraints"
-                  subtitle="Building a platform like this meant solving problems that don't have off-the-shelf answers."
+                  number="08"
+                  title="Design Decisions"
+                  subtitle="Intentional architectural choices and the reasoning behind them."
+                />
+                <PrincipleCards
+                  items={[
+                    { number: "01", title: "Dual Runtime", description: "Python has better scraping and PDF libraries (BeautifulSoup, ReportLab, PyMuPDF). Node has better session middleware and Drizzle ORM. Each runtime handles what it's best at." },
+                    { number: "02", title: "Airtable as CRM", description: "The business was already running on Airtable. Rather than forcing a migration, the platform wraps Airtable's API with retry/backoff and uses it as the source of truth for client data." },
+                    { number: "03", title: "Commission Interceptor", description: "Rather than modifying the Python backend, the Express proxy intercepts successful mark-paid responses and writes commission entries as a side effect. Zero cross-service coupling." },
+                  ]}
                 />
                 <SectionBody>
                   <p>
-                    Integrating with third-party APIs (MLS feeds, Dropbox, Airtable, payment processors) meant building resilient error handling for services I couldn&apos;t control. Rate limiting, API changes, and service outages all had to be handled gracefully.
+                    WebSockets were chosen over polling for scraper progress because scraping multiple URLs takes 5&ndash;30 seconds each. Polling would add latency and complexity. WebSockets give instant per-URL feedback with structured message types, making the scraper feel interactive rather than batch-oriented.
                   </p>
                   <p>
-                    Data quality from scraped sources was inconsistent — addresses formatted differently, missing fields, duplicate entries. The data pipeline needed robust cleaning and deduplication logic that improved over time.
-                  </p>
-                  <p>
-                    Balancing automation with flexibility was an ongoing tension. Too much automation and edge cases break silently. Too little and you&apos;re back to manual work. The system needed escape hatches — ways for humans to intervene when the automation couldn&apos;t handle something.
+                    Multi-stage Docker builds with Alpine cut the final image size significantly &mdash; the builder stage installs all dev dependencies and runs Vite + esbuild, then the runtime stage copies only build output and production deps.
                   </p>
                 </SectionBody>
               </section>
 
-              {/* ─── 11 OUTCOMES ─── */}
+              {/* 09 CHALLENGES */}
+              <section id="challenges" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
+                  number="09"
+                  title="Challenges"
+                  subtitle="The hardest problems encountered and how they were solved."
+                />
+                <SectionBody>
+                  <p>
+                    <strong className="text-[var(--color-fg-80)]">Scraping reliability across platforms.</strong> Redfin and Compass have completely different HTML structures and no consistent API. The scraper uses a multi-strategy pipeline: regex on the &ldquo;Listed by&rdquo; section first, then JSON-LD structured data, then DuckDuckGo HTML search as a fallback. Property type detection filters out land/lots to avoid irrelevant leads.
+                  </p>
+                  <p>
+                    <strong className="text-[var(--color-fg-80)]">Invoice PDF pixel alignment.</strong> Overlaying dynamic text on branded background templates (Canva-exported PNGs) required a manual coordinate system with per-field (x, y) tuning. A debug grid mode draws 10/50/100-point gridlines to help align text visually. Text wrapping for long service descriptions uses ReportLab&apos;s simpleSplit with column-width constraints to prevent overlap.
+                  </p>
+                  <p>
+                    <strong className="text-[var(--color-fg-80)]">Airtable rate limits.</strong> Airtable enforces 5 requests/second. The service layer implements exponential backoff with 3 retries on 429 responses and connection errors. Pagination handles bases with 100+ records via offset tokens.
+                  </p>
+                  <p>
+                    <strong className="text-[var(--color-fg-80)]">WebSocket proxy through Express.</strong> The scraper&apos;s WebSocket connection originates from the browser, hits Express, and needs to reach FastAPI. The httpServer upgrade handler manually pipes the TCP connection through, forwarding the internal API key.
+                  </p>
+                </SectionBody>
+              </section>
+
+              {/* 10 OUTCOMES */}
               <section id="outcomes" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="11"
-                  title="Outcomes & Impact"
+                  number="10"
+                  title="Outcomes"
                 />
                 <StatBlock
                   items={[
-                    { value: "90%", label: "Reduction in manual work" },
-                    { value: "3x", label: "Client capacity without new hires" },
-                    { value: "< 24h", label: "Lead intake to content delivery" },
+                    { value: "129", label: "Source files" },
+                    { value: "8", label: "PostgreSQL tables" },
+                    { value: "3", label: "Docker services" },
                   ]}
                 />
                 <SectionBody>
                   <p>
-                    The platform transformed what was a series of disconnected manual processes into a coherent, automated system. Content production that used to require constant manual oversight now runs largely on its own, with humans focusing on creative decisions and client relationships rather than data entry and file management.
+                    The platform replaced a workflow that required constant context-switching between 4&ndash;5 disconnected tools with a single interface that handles the entire business lifecycle. Lead research that used to take hours of manual browsing now happens in seconds with the scraper. Invoicing that required Canva, manual uploads, and spreadsheet tracking is now a one-click pipeline.
                   </p>
                   <p>
-                    The SaaS-ready architecture means the platform can serve multiple production companies — each getting their own instance of the admin panel, automation pipelines, and client management tools.
+                    The dual-database architecture means the business can continue using Airtable as a familiar CRM interface while the platform adds automation, commission tracking, and audit logging on top &mdash; a pragmatic bridge between existing workflow and full automation.
                   </p>
                 </SectionBody>
               </section>
 
-              {/* ─── 12 RETROSPECTIVE ─── */}
+              {/* 11 RETROSPECTIVE */}
               <section id="retrospective" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="12"
+                  number="11"
                   title="Retrospective"
-                  subtitle="The best systems are the ones that make themselves invisible. When the automation works, you forget it's there — and that's the point."
+                  subtitle="What worked, what I'd change, and what I learned."
                 />
                 <PrincipleCards
                   items={[
-                    {
-                      number: "01",
-                      title: "Systems Thinking Scales",
-                      description:
-                        "Approaching the problem as an interconnected system rather than individual tools meant each component made the others stronger.",
-                    },
-                    {
-                      number: "02",
-                      title: "Automate the Boring Parts",
-                      description:
-                        "Every hour spent building automation saved dozens of hours of repetitive work — the ROI compounds over time.",
-                    },
-                    {
-                      number: "03",
-                      title: "Build for the Next Version",
-                      description:
-                        "Designing with SaaS potential from the start meant the architecture was ready to serve multiple clients, not just one.",
-                    },
+                    { number: "01", title: "Use the Right Runtime", description: "The dual-runtime approach was the fastest path to production. Python for scraping/PDFs, Node for auth/sessions/ORM. Pragmatism over purity." },
+                    { number: "02", title: "Wrap, Don't Replace", description: "Wrapping Airtable instead of migrating away from it preserved the existing workflow and reduced adoption friction. Meet the business where it is." },
+                    { number: "03", title: "Automate the Full Loop", description: "Half-automating a workflow just moves the bottleneck. The invoice lifecycle works because it's automated end-to-end — generation through commission tracking." },
                   ]}
                 />
                 <SectionBody>
                   <p>
-                    Building RLA Studios reinforced a core belief: the highest-leverage engineering work isn&apos;t writing code — it&apos;s designing systems that eliminate the need for code. Every automation pipeline, every integration, every workflow decision was made with the goal of making the system do more so that people could do less of the work that doesn&apos;t require human judgment.
+                    If rebuilding from scratch: replace Airtable with PostgreSQL entirely to eliminate the dual-database complexity, add a task queue like BullMQ for durable scraping jobs, unify to a single Node runtime with Puppeteer and pdf-lib, and invest in E2E tests. The platform works, but refactoring is riskier than it needs to be without automated test coverage.
                   </p>
                 </SectionBody>
               </section>
 
-              {/* Next project */}
               <NextProject
                 title="AI Ticketing System"
                 meta="Internal Tool — 2024"

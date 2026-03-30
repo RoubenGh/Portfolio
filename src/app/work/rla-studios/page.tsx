@@ -4,7 +4,7 @@ import RLAStudiosContent from "./content";
 export const metadata: Metadata = {
   title: "RLA Studios — Case Study | Rouben Ghambaryan",
   description:
-    "End-to-end media operations platform for real estate content production.",
+    "Full-stack business operations platform for a real estate videography company — lead scraping, invoicing, CRM, and commission tracking.",
 };
 
 export default function RLAStudiosPage() {

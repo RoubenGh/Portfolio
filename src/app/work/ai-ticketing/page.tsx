@@ -3,7 +3,7 @@ import AITicketingContent from "./content";
 
 export const metadata: Metadata = {
   title: "AI Ticketing System — Case Study | Rouben Ghambaryan",
-  description: "Email parsing and automated response system using internal knowledge bases.",
+  description: "AI-powered ticketing assistant that transforms unstructured emails into structured, prioritized tickets with auto-generated task breakdowns.",
 };
 
 export default function AITicketingPage() {
