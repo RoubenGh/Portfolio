@@ -197,7 +197,7 @@ export default function AITicketingContent() {
                 />
                 <SectionBody>
                   <p>
-                    The frontend is a React 18 SPA built with Vite, using React Router across 13 pages with Framer Motion transitions and Headless UI for accessible components. The backend is an Express 5 API server with JWT-based session auth, workspace-scoping middleware, and 50+ REST endpoints.
+                    The frontend is a React 18 SPA built with Vite, using React Router across 13 pages with Framer Motion transitions, Headless UI for accessible components, and full light/dark mode theming. The backend is an Express 5 API server with JWT-based session auth, workspace-scoping middleware, and 50+ REST endpoints.
                   </p>
                   <p>
                     Each workspace gets its own isolated data directory with completely separate tickets, documents, and wiki databases. The service layer follows a domain-driven pattern (AuthService, TicketService, WikiService, DocumentService, OpenAIService), each self-contained with its own persistence, cached per workspace.
