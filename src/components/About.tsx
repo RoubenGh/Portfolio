@@ -1,10 +1,246 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import FadeIn from "./FadeIn";
+import { motion } from "framer-motion";
+
+const ease = [0.165, 0.84, 0.44, 1] as const;
+
+/* ── Terminal log lines ── */
+const terminalLines = [
+  { prompt: true, text: "ssh deploy@prod-web-03" },
+  { prompt: false, text: "Welcome to Ubuntu 22.04.3 LTS" },
+  { prompt: false, text: "Last login: Mon Mar 31 02:14:08 from 10.0.1.42" },
+  { prompt: true, text: "docker ps --format 'table {{.Names}}\\t{{.Status}}'" },
+  { prompt: false, text: "NAME              STATUS" },
+  { prompt: false, text: "nginx-proxy       Up 14 days" },
+  { prompt: false, text: "api-gateway       Up 14 days" },
+  { prompt: false, text: "postgres-main     Up 31 days" },
+  { prompt: false, text: "redis-cache       Up 31 days" },
+  { prompt: true, text: "systemctl status traefik" },
+  { prompt: false, text: "\u25cf traefik.service - Traefik Proxy" },
+  { prompt: false, text: "   Active: active (running) since Mar 01" },
+  { prompt: true, text: "tail -f /var/log/nginx/access.log" },
+  { prompt: false, text: '200 GET /api/tickets 12ms' },
+  { prompt: false, text: '200 POST /api/scrape/run 847ms' },
+  { prompt: false, text: '200 GET /api/leads?page=3 8ms' },
+  { prompt: false, text: '200 GET /api/tickets/42 6ms' },
+  { prompt: false, text: '201 POST /api/tickets 134ms' },
+  { prompt: false, text: '200 GET /api/companies 9ms' },
+];
+
+/* ── Code lines (longer for scrolling) ── */
+const codeLines = [
+  { text: "import { OpenAI } from 'openai';", color: "var(--color-fg-15)" },
+  { text: "import { WikiService } from './WikiService';", color: "var(--color-fg-15)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "const ai = new OpenAI({", color: "var(--color-fg-30)" },
+  { text: '  baseURL: "https://generativelanguage.googleapis.com",', color: "var(--color-fg-15)" },
+  { text: "  apiKey: process.env.GEMINI_KEY,", color: "var(--color-fg-15)" },
+  { text: "});", color: "var(--color-fg-30)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "async function *streamGuidance(ticket) {", color: "var(--color-fg-80)" },
+  { text: "  const wiki = WikiService.getInstance(ticket.workspaceId);", color: "var(--color-fg-30)" },
+  { text: "  const pages = await wiki.findRelevantPages(ticket.subject);", color: "var(--color-fg-30)" },
+  { text: "  const docs = await docService.findRelevant(ticket.subject);", color: "var(--color-fg-30)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "  const context = buildPrompt({", color: "var(--color-fg-30)" },
+  { text: "    ticket,", color: "var(--color-fg-15)" },
+  { text: "    wikiPages: pages.slice(0, 5),", color: "var(--color-fg-15)" },
+  { text: "    documents: docs.slice(0, 5),", color: "var(--color-fg-15)" },
+  { text: "  });", color: "var(--color-fg-30)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "  const stream = await ai.chat.completions.create({", color: "var(--color-fg-30)" },
+  { text: '    model: "gemini-2.0-flash",', color: "var(--color-fg-15)" },
+  { text: "    stream: true,", color: "var(--color-fg-15)" },
+  { text: "    messages: context.messages,", color: "var(--color-fg-15)" },
+  { text: "  });", color: "var(--color-fg-30)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "  for await (const chunk of stream) {", color: "var(--color-fg-30)" },
+  { text: "    const token = chunk.choices[0]?.delta?.content;", color: "var(--color-fg-50)" },
+  { text: "    if (token) yield token;", color: "var(--color-fg-50)" },
+  { text: "  }", color: "var(--color-fg-30)" },
+  { text: "}", color: "var(--color-fg-80)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "export async function handleGuidanceRequest(req, res) {", color: "var(--color-fg-80)" },
+  { text: '  res.setHeader("Content-Type", "text/plain");', color: "var(--color-fg-30)" },
+  { text: '  res.setHeader("Transfer-Encoding", "chunked");', color: "var(--color-fg-30)" },
+  { text: "", color: "var(--color-fg-15)" },
+  { text: "  const ticket = await TicketService.getById(req.params.id);", color: "var(--color-fg-30)" },
+  { text: "  for await (const token of streamGuidance(ticket)) {", color: "var(--color-fg-30)" },
+  { text: "    res.write(token);", color: "var(--color-fg-50)" },
+  { text: "  }", color: "var(--color-fg-30)" },
+  { text: "  res.end();", color: "var(--color-fg-30)" },
+  { text: "}", color: "var(--color-fg-80)" },
+];
+
+const cardBase = {
+  background: "linear-gradient(190deg, #1c1c1c, #0e0e0e)",
+  border: "1px solid rgba(242,242,242,0.06)",
+  boxShadow:
+    "0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04), inset 0 0 20px rgba(0,0,0,0.2)",
+};
+
+/* ── Animated terminal ── */
+function AnimatedTerminal() {
+  const [visibleLines, setVisibleLines] = useState(0);
+  const [typingIndex, setTypingIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasStarted = useRef(false);
+
+  useEffect(() => {
+    if (hasStarted.current) return;
+    hasStarted.current = true;
+
+    let lineIdx = 0;
+
+    const showNextLine = () => {
+      if (lineIdx >= terminalLines.length) {
+        // Loop: reset after a pause
+        setTimeout(() => {
+          setVisibleLines(0);
+          setTypingIndex(0);
+          setIsTyping(false);
+          hasStarted.current = false;
+          lineIdx = 0;
+          // Re-trigger
+          setTimeout(() => {
+            hasStarted.current = true;
+            showNextLine();
+          }, 800);
+        }, 4000);
+        return;
+      }
+
+      const line = terminalLines[lineIdx];
+
+      if (line.prompt) {
+        // Type out prompt lines character by character
+        setIsTyping(true);
+        setTypingIndex(0);
+        const chars = line.text.length;
+        let charIdx = 0;
+
+        const typeChar = () => {
+          charIdx++;
+          setTypingIndex(charIdx);
+          if (charIdx < chars) {
+            setTimeout(typeChar, 25 + Math.random() * 35);
+          } else {
+            // Done typing, show this line fully and pause
+            setTimeout(() => {
+              setIsTyping(false);
+              lineIdx++;
+              setVisibleLines(lineIdx);
+              setTimeout(showNextLine, 200);
+            }, 300);
+          }
+        };
+        setTimeout(typeChar, 400);
+      } else {
+        // Output lines appear instantly
+        lineIdx++;
+        setVisibleLines(lineIdx);
+        setTimeout(showNextLine, 60 + Math.random() * 40);
+      }
+    };
+
+    setTimeout(showNextLine, 1500);
+  }, []);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [visibleLines, typingIndex]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="px-3.5 py-3 font-mono text-[9.5px] leading-[1.7] overflow-hidden"
+      style={{ height: "200px" }}
+    >
+      {terminalLines.slice(0, visibleLines).map((line, i) => (
+        <div key={i}>
+          {line.prompt ? (
+            <span>
+              <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
+              <span className="text-[var(--color-fg-50)]">{line.text}</span>
+            </span>
+          ) : (
+            <span className="text-[var(--color-fg-15)]">{line.text}</span>
+          )}
+        </div>
+      ))}
+      {/* Currently typing line */}
+      {isTyping && visibleLines < terminalLines.length && terminalLines[visibleLines]?.prompt && (
+        <div>
+          <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
+          <span className="text-[var(--color-fg-50)]">
+            {terminalLines[visibleLines].text.slice(0, typingIndex)}
+          </span>
+          <span
+            className="inline-block w-[5px] h-[11px] ml-[1px] align-middle"
+            style={{
+              background: "rgba(242,242,242,0.5)",
+              animation: "blink 1s step-end infinite",
+            }}
+          />
+        </div>
+      )}
+      {/* Blinking cursor at end when idle */}
+      {!isTyping && visibleLines > 0 && visibleLines < terminalLines.length && (
+        <div>
+          <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
+          <span
+            className="inline-block w-[5px] h-[11px] ml-[1px] align-middle"
+            style={{
+              background: "rgba(242,242,242,0.5)",
+              animation: "blink 1s step-end infinite",
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Scrolling code ── */
+function ScrollingCode() {
+  // Duplicate lines for seamless loop
+  const doubled = [...codeLines, ...codeLines];
+  const lineHeight = 15.2; // ~9.5px font * 1.6 leading
+  const totalHeight = codeLines.length * lineHeight;
+
+  return (
+    <div className="overflow-hidden" style={{ height: "170px" }}>
+      <motion.div
+        animate={{ y: [0, -totalHeight] }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="px-3.5 py-3 font-mono text-[9.5px] leading-[1.6]"
+      >
+        {doubled.map((line, i) => (
+          <div key={i} style={{ color: line.color, height: `${lineHeight}px` }}>
+            {line.text || "\u00A0"}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
 
 export default function About() {
   return (
     <section id="about" className="relative py-36 md:py-52">
+      {/* Blink keyframe */}
+      <style>{`@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }`}</style>
+
       {/* Ambient light */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none"
@@ -42,6 +278,118 @@ export default function About() {
                 </span>
               </p>
             </FadeIn>
+
+            {/* ── Overlapping cards ── */}
+            <div className="hidden md:block relative mt-12 group/cards" style={{ height: "440px" }}>
+              {/* Card 1: Terminal — animated typing */}
+              <FadeIn delay={0.2} y={40}>
+                <motion.div
+                  className="absolute rounded-[14px] overflow-hidden z-[3]"
+                  style={{
+                    ...cardBase,
+                    top: "0px",
+                    left: "0px",
+                    width: "300px",
+                  }}
+                  whileHover={{ scale: 1.03, zIndex: 10 }}
+                  transition={{ duration: 0.4, ease }}
+                >
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-1 group-hover/cards:-translate-y-2">
+                    {/* Title bar */}
+                    <div
+                      className="flex items-center gap-1.5 px-3.5 py-2.5"
+                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                    >
+                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
+                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
+                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
+                      <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                        prod-web-03
+                      </span>
+                    </div>
+                    <AnimatedTerminal />
+                    {/* Glow */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(ellipse at 30% 20%, rgba(127,207,255,0.03), transparent 60%)",
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              </FadeIn>
+
+              {/* Card 2: Dashboard — overlapping right */}
+              <FadeIn delay={0.35} y={40}>
+                <motion.div
+                  className="absolute rounded-[14px] overflow-hidden z-[2]"
+                  style={{
+                    ...cardBase,
+                    top: "80px",
+                    left: "180px",
+                    width: "220px",
+                  }}
+                  whileHover={{ scale: 1.03, zIndex: 10 }}
+                  transition={{ duration: 0.4, ease }}
+                >
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-2 group-hover/cards:-translate-y-1">
+                    <div
+                      className="px-3.5 py-2.5"
+                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                    >
+                      <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                        Dashboard
+                      </span>
+                    </div>
+                    <div className="rounded-b-[14px] overflow-hidden">
+                      <img
+                        src="/images/ai-ticketing/dashboard.png"
+                        alt=""
+                        className="w-full h-auto block"
+                        style={{ opacity: 0.8 }}
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              </FadeIn>
+
+              {/* Card 3: Code — scrolling */}
+              <FadeIn delay={0.5} y={40}>
+                <motion.div
+                  className="absolute rounded-[14px] overflow-hidden z-[4]"
+                  style={{
+                    ...cardBase,
+                    top: "250px",
+                    left: "20px",
+                    width: "270px",
+                  }}
+                  whileHover={{ scale: 1.03, zIndex: 10 }}
+                  transition={{ duration: 0.4, ease }}
+                >
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-0.5 group-hover/cards:translate-y-2">
+                    <div
+                      className="flex items-center gap-1.5 px-3.5 py-2.5"
+                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                    >
+                      <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                        streamGuidance.ts
+                      </span>
+                    </div>
+                    <ScrollingCode />
+                    {/* Fade edges */}
+                    <div
+                      className="absolute top-[30px] left-0 right-0 h-[20px] pointer-events-none"
+                      style={{ background: "linear-gradient(180deg, #181818, transparent)" }}
+                    />
+                    <div
+                      className="absolute bottom-0 left-0 right-0 h-[30px] pointer-events-none"
+                      style={{ background: "linear-gradient(0deg, #0e0e0e, transparent)" }}
+                    />
+                  </div>
+                </motion.div>
+              </FadeIn>
+            </div>
           </div>
 
           <div className="md:col-span-6 md:col-start-7">
