@@ -36,6 +36,7 @@ const projects = [
       bg: "linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)",
       label: "AI",
       labelColor: "rgba(242,242,242,0.5)",
+      imageSrc: "/images/ai-ticketing/dashboard.png",
     },
   },
 ];

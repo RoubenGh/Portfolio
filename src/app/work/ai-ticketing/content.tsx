@@ -23,10 +23,13 @@ const tocSections = [
   { id: "problem", label: "The Problem" },
   { id: "pipeline", label: "How It Works" },
   { id: "architecture", label: "Architecture" },
-  { id: "features", label: "Key Features" },
+  { id: "tickets", label: "Ticket Management" },
+  { id: "guidance", label: "Technical Guidance AI" },
+  { id: "wiki", label: "Wiki & Knowledge Base" },
+  { id: "companies", label: "Companies" },
+  { id: "billing", label: "Billing & Reports" },
   { id: "decisions", label: "Design Decisions" },
   { id: "challenges", label: "Challenges" },
-  { id: "outcomes", label: "Outcomes" },
   { id: "retrospective", label: "Retrospective" },
 ];
 
@@ -47,25 +50,26 @@ export default function AITicketingContent() {
             </p>
           </motion.div>
 
-          {/* Hero placeholder - will be replaced with collage when screenshots are uploaded */}
+          {/* Hero: Dashboard screenshot */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease }}
+            transition={{ duration: 1, delay: 0.2, ease }}
             className="mt-10 md:mt-12 relative rounded-[16px] overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)",
-              aspectRatio: "21/9",
               boxShadow: "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
               border: "1px solid rgba(242,242,242,0.05)",
             }}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[48px] md:text-[72px] font-semibold tracking-[-2px] select-none" style={{ color: "rgba(242,242,242,0.4)" }}>
-                AI
-              </span>
-            </div>
-            <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }} />
+            <img
+              src="/images/ai-ticketing/dashboard.png"
+              alt="AI Ticketing System Dashboard"
+              className="w-full h-auto block"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none rounded-[16px]"
+              style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }}
+            />
           </motion.div>
 
           <div className="mt-8">
@@ -107,7 +111,7 @@ export default function AITicketingContent() {
                     IT support teams receive a constant stream of unstructured requests: emails with vague subjects, screenshots with no context, forwarded threads with multiple asks buried in one message. This system ingests all of it, uses Google Gemini to extract structured tickets with prioritized task lists, and lets operators refine results through real-time AI chat before saving.
                   </p>
                   <p>
-                    The platform includes a full wiki system with version control, a knowledge base with document-aware Q&A, streaming AI guidance per task, and a multi-workspace architecture where each tenant&apos;s data is completely isolated.
+                    The platform includes a full wiki system with version control, a knowledge base with document-aware Q&A, streaming AI guidance per task, auto-organized company tracking, and a multi-workspace architecture where each tenant&apos;s data is completely isolated.
                   </p>
                 </SectionBody>
 
@@ -147,26 +151,41 @@ export default function AITicketingContent() {
                 <SectionHeading
                   number="03"
                   title="How It Works"
-                  subtitle="A five-stage pipeline from raw email to completed ticket."
+                  subtitle="A multi-stage pipeline from raw email to completed ticket."
                 />
                 <SectionBody>
                   <p>
-                    A user pastes an email or support request into the ingestion page, optionally attaching images, PDFs, or Word documents via drag-and-drop. The Express backend processes attachments through a type-aware pipeline. Images are base64-encoded for Gemini&apos;s vision input, PDFs extracted via pdf2json, Word docs via mammoth.
-                  </p>
-                  <p>
-                    Everything is bundled into a multimodal prompt enriched with relevant internal documents and wiki pages. Gemini analyzes the full input, identifies distinct issues, assigns priority, extracts the company name, and generates 5-20 granular actionable tasks. Before saving, the user can chat with the AI in real-time via SSE streaming to adjust tasks, add context, or ask clarifying questions.
-                  </p>
-                  <p>
-                    On confirmation, the ticket and tasks are persisted to the workspace&apos;s data store. From the dashboard, users check off tasks, request AI-generated technical guidance (also streamed), and query the knowledge base which searches across uploaded documents and wiki pages to answer questions with cited sources.
+                    A user pastes an email or support request into the ingestion page, optionally attaching images, PDFs, or Word documents via drag-and-drop. The Express backend processes attachments through a type-aware pipeline: images are base64-encoded for Gemini&apos;s vision input, PDFs extracted via pdf2json, Word docs via mammoth.
                   </p>
                 </SectionBody>
 
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
-                  label="Processing Pipeline"
+                  label="Email Ingestion"
                   labelColor="rgba(242,242,242,0.25)"
-                  caption="1.0 - Email + attachments > Parse > Enrich with KB context > Gemini classification > Task generation > Chat refinement > Save."
+                  imageSrc="/images/ai-ticketing/ingestion.png"
+                  caption="3.0 - The ingestion page where raw emails and attachments are pasted for AI processing."
                 />
+
+                <SectionBody>
+                  <p>
+                    Everything is bundled into a multimodal prompt enriched with relevant internal documents and wiki pages. Gemini analyzes the full input, identifies distinct issues, assigns priority, extracts the company name from context clues and email signatures, and generates 5-20 granular actionable tasks. Before saving, the user can chat with the AI in real-time via SSE streaming to adjust tasks, add context, or ask clarifying questions.
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Task Generation & Refinement"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/ticket-creation.png"
+                  caption="3.1 - AI-generated tasks and the streaming chat refinement interface. Users can modify tasks, adjust priorities, and ask follow-up questions before saving."
+                />
+
+                <SectionBody>
+                  <p>
+                    On confirmation, the ticket and tasks are persisted to the workspace&apos;s data store. The AI acts as a &quot;Project Manager&quot; during ingestion, parsing work and proposing structure. It can add or remove tasks, change the subject, adjust priority, and update the company name through the chat interface, all before the ticket is committed.
+                  </p>
+                </SectionBody>
               </section>
 
               {/* 04 ARCHITECTURE */}
@@ -188,14 +207,6 @@ export default function AITicketingContent() {
                   </p>
                 </SectionBody>
 
-                <VisualFrame
-                  bg="linear-gradient(135deg, #0a0e14 0%, #0d1218 50%, #080c12 100%)"
-                  label="System Architecture"
-                  labelColor="rgba(242,242,242,0.2)"
-                  caption="2.0 - React SPA > Express API (JWT + workspace middleware) > Service layer > Hybrid storage (sql.js + JSON files) + Gemini API."
-                  aspectRatio="16/10"
-                />
-
                 <PrincipleCards items={[
                   { number: "01", title: "Multi-Workspace Isolation", description: "Each workspace gets its own data directory with separate tickets, docs, and wiki databases. Middleware resolves the active workspace per-user on every request." },
                   { number: "02", title: "Hybrid Storage", description: "sql.js (WASM SQLite) for the wiki where relational queries matter. JSON files for tickets, docs, users, and config where simplicity wins." },
@@ -203,33 +214,152 @@ export default function AITicketingContent() {
                 ]} />
               </section>
 
-              {/* 05 KEY FEATURES */}
-              <section id="features" className="mb-20 md:mb-28 scroll-mt-32">
+              {/* 05 TICKET MANAGEMENT */}
+              <section id="tickets" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
                   number="05"
-                  title="Key Features"
-                  subtitle="The capabilities that make this more than a simple ticket tracker."
+                  title="Ticket Management"
+                  subtitle="A full ticket lifecycle with nested tasks, cascading status updates, and inline editing."
                 />
-                <PrincipleCards items={[
-                  { number: "01", title: "Multimodal Email Parsing", description: "Paste an email with screenshots, PDFs, and Word docs. Gemini processes text and images together with vision understanding to extract structured tickets." },
-                  { number: "02", title: "AI Task Decomposition", description: "A single email automatically becomes 5-20 granular, actionable tasks. When the email references lists, the AI cross-references internal docs to generate explicit per-item tasks." },
-                  { number: "03", title: "Context-Aware AI", description: "Every AI call is enriched with relevant internal documents and wiki pages. A custom relevance engine scores and ranks docs, injecting up to 16KB of context into each prompt." },
-                ]} />
-
                 <SectionBody>
                   <p>
-                    The platform includes four distinct streaming AI interfaces: ingestion refinement, per-ticket technical guidance, knowledge base Q&A, and document context chat. The wiki system supports full version control with rollback, categories, tags, and chunked storage for long documents, all backed by in-process SQLite and queryable via SQL.
+                    Each ticket is a tabbed interface with views for Tasks, Original Email, Technical Guidance, Resolution Summary, and Job Description. The task list renders as a checklist with drag-and-drop reordering, nested subtasks, bulk selection, and search filtering.
                   </p>
                   <p>
-                    Other features include multi-workspace multi-tenant isolation, an admin onboarding flow with temporary passwords, and a monthly billing export that generates CSV reports of completed tasks by company for a date range, ready for invoicing.
+                    Task completion triggers cascading logic: checking a parent task auto-completes all children, completing all siblings auto-completes the parent, and when every top-level task is done, the ticket status transitions to &quot;Done&quot; automatically. Unchecking a task on a completed ticket reverts it to &quot;In Progress.&quot; Each completion records a timestamp used for billing reports.
+                  </p>
+                  <p>
+                    When a task is marked complete, the system checks if any wiki pages might be outdated by the completed work. If matches are found, a suggestion banner offers to preview and apply AI-generated updates to those pages, linked back to the ticket.
                   </p>
                 </SectionBody>
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Ticket Detail"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/ticketdetail.png"
+                  caption="5.0 - Ticket detail view with task checklist, priority badge, company name, and inline editing."
+                />
               </section>
 
-              {/* 06 DESIGN DECISIONS */}
-              <section id="decisions" className="mb-20 md:mb-28 scroll-mt-32">
+              {/* 06 TECHNICAL GUIDANCE AI */}
+              <section id="guidance" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
                   number="06"
+                  title="Technical Guidance AI"
+                  subtitle="A streaming AI advisor that generates implementation guides and answers follow-up questions per ticket."
+                />
+                <SectionBody>
+                  <p>
+                    After a ticket is created, the system auto-generates a step-by-step technical implementation guide. The AI acts as a &quot;Senior Technical Lead,&quot; breaking down tasks, suggesting commands and tools, highlighting risks, and providing code snippets. If relevant internal docs or wiki pages exist, they&apos;re injected into the prompt so the AI prefers citing internal procedures over generic advice.
+                  </p>
+                  <p>
+                    Users can then ask follow-up questions in a streaming chat interface. Each message includes the full context: ticket subject, all task descriptions, the previously generated guidance, relevant internal docs, and the complete chat history. Responses stream token-by-token via SSE, making the interface feel responsive even on complex queries.
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Technical Guidance"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/technicalguidance.png"
+                  caption="6.0 - AI-generated technical guidance with streaming follow-up chat. Context includes the ticket, tasks, and relevant wiki pages."
+                />
+              </section>
+
+              {/* 07 WIKI & KNOWLEDGE BASE */}
+              <section id="wiki" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
+                  number="07"
+                  title="Wiki & Knowledge Base"
+                  subtitle="A full internal knowledge base with version control, chunked search, and automatic AI context injection."
+                />
+                <SectionBody>
+                  <p>
+                    The wiki is backed by sql.js, an in-process SQLite database compiled to WASM. The schema includes six tables: pages, tags, page versions, chunks, categories, and files. Every content edit creates a versioned snapshot with editor name, change summary, and an optional link back to the source ticket that triggered the update.
+                  </p>
+                  <p>
+                    Search works without vector embeddings. Long pages are split into chunks targeting ~800 tokens each. Queries are tokenized, stop-words filtered, and chunks scored by keyword density with bonuses for title matches, category matches, tag matches, and phrase proximity. Pinned pages bypass scoring and are always included in AI context.
+                  </p>
+                  <p>
+                    Every AI call in the system (ingestion, guidance, chat) first queries the wiki and document store for relevant content. Up to 5 wiki pages and 5 documents are scored, and the top excerpts (capped at 4KB each) are injected into the system prompt as &quot;Internal Documentation Reference.&quot;
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Wiki"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/wiki.png"
+                  caption="7.0 - Wiki page list with categories, tags, and search."
+                />
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Wiki Document"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/wiki2.png"
+                  caption="7.1 - A wiki document with version history and content editing."
+                />
+              </section>
+
+              {/* 08 COMPANIES */}
+              <section id="companies" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
+                  number="08"
+                  title="Companies & Auto-Organization"
+                  subtitle="Zero-config client tracking. The AI extracts company names from emails and the system auto-organizes tickets by client."
+                />
+                <SectionBody>
+                  <p>
+                    During email parsing, Gemini extracts the company name from signatures, domain names, and context clues in the email body. This is stored as a plain string on each ticket. There is no separate companies table or CRM-style setup.
+                  </p>
+                  <p>
+                    The Companies page aggregates all tickets client-side, building a map of every company with stats: total tickets, active tickets, completed tickets, and last active date. Clicking a company filters to that client&apos;s tickets with full search, sort, and status filtering. Company names can also be manually edited on any ticket via inline editing.
+                  </p>
+                  <p>
+                    For MSPs managing dozens of clients, this eliminates the overhead of maintaining a separate CRM. Every email automatically organizes itself by client with zero configuration.
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Companies"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/companies.png"
+                  caption="8.0 - Auto-organized company list with ticket counts, active/completed stats, and last activity."
+                />
+              </section>
+
+              {/* 09 BILLING & REPORTS */}
+              <section id="billing" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
+                  number="09"
+                  title="Billing & Reports"
+                  subtitle="AI-generated job summaries and monthly CSV exports for invoicing."
+                />
+                <SectionBody>
+                  <p>
+                    When tasks are completed, the system can generate a chronological, past-tense billing description of all work performed on a ticket. The AI takes completed tasks with their timestamps, sorts them by date, and produces a cohesive summary formatted for copy-paste into time-tracking or billing software. Descriptions start with the user&apos;s sign-off name, avoid first person, and organize work chronologically.
+                  </p>
+                  <p>
+                    The Monthly Report page filters all &quot;Done&quot; tickets for a selected month, groups them by date, and displays each with its company name, subject, and billing description. A CSV export generates a downloadable file with columns for date, company, subject, and description. There&apos;s also a Markdown export and a &quot;Copy All&quot; button for clipboard paste. If a ticket is missing its description, a &quot;Generate&quot; button triggers on-demand AI generation.
+                  </p>
+                </SectionBody>
+
+                <VisualFrame
+                  bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
+                  label="Job Description"
+                  labelColor="rgba(242,242,242,0.25)"
+                  imageSrc="/images/ai-ticketing/description.png"
+                  caption="9.0 - AI-generated billing description summarizing completed work in past tense for invoicing."
+                />
+              </section>
+
+              {/* 10 DESIGN DECISIONS */}
+              <section id="decisions" className="mb-20 md:mb-28 scroll-mt-32">
+                <SectionHeading
+                  number="10"
                   title="Design Decisions"
                   subtitle="Intentional technical choices and why they were made."
                 />
@@ -240,15 +370,15 @@ export default function AITicketingContent() {
                 ]} />
                 <SectionBody>
                   <p>
-                    The project started as an Electron desktop app and was migrated to a web app with Express serving both the API and the static SPA build. This enabled Docker deployment and multi-user access without rewriting the service layer. The Electron origins are still visible in the codebase structure, but the architecture is now fully web-native.
+                    The project started as an Electron desktop app and was migrated to a web app with Express serving both the API and the static SPA build. This enabled Docker deployment and multi-user access without rewriting the service layer.
                   </p>
                 </SectionBody>
               </section>
 
-              {/* 07 CHALLENGES */}
+              {/* 11 CHALLENGES */}
               <section id="challenges" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="07"
+                  number="11"
                   title="Challenges"
                   subtitle="The hardest problems encountered during development and how they were solved."
                 />
@@ -268,31 +398,10 @@ export default function AITicketingContent() {
                 </SectionBody>
               </section>
 
-              {/* 08 OUTCOMES */}
-              <section id="outcomes" className="mb-20 md:mb-28 scroll-mt-32">
-                <SectionHeading
-                  number="08"
-                  title="Outcomes"
-                />
-                <StatBlock items={[
-                  { value: "13", label: "React pages" },
-                  { value: "7", label: "Backend service classes" },
-                  { value: "8", label: "Supported file types" },
-                ]} />
-                <SectionBody>
-                  <p>
-                    The system handles the complete lifecycle of support ticket management, from raw, unstructured email input to structured, prioritized tickets with granular task lists. Every AI interaction is enriched with organizational knowledge, making responses more accurate and contextually relevant than generic LLM output.
-                  </p>
-                  <p>
-                    The zero-infrastructure deployment model means the entire application (frontend, API, wiki database, and all stored data) runs in a single Docker container on any machine with a volume mount. No external databases, no cloud services beyond the Gemini API.
-                  </p>
-                </SectionBody>
-              </section>
-
-              {/* 09 RETROSPECTIVE */}
+              {/* 12 RETROSPECTIVE */}
               <section id="retrospective" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
-                  number="09"
+                  number="12"
                   title="Retrospective"
                   subtitle="What worked, what I'd change, and what I learned."
                 />
@@ -303,7 +412,7 @@ export default function AITicketingContent() {
                 ]} />
                 <SectionBody>
                   <p>
-                    If rebuilding from scratch: a real database for concurrent write safety, route modules instead of a single 1,200-line server file, vector embeddings for semantic document retrieval, and proper error boundaries with exponential backoff on the AI integration. The rapid development cycle (9 commits) validated the architecture quickly, but the next iteration would invest in automated tests and a more modular backend structure.
+                    If rebuilding from scratch: a real database for concurrent write safety, route modules instead of a single 1,200-line server file, vector embeddings for semantic document retrieval, and proper error boundaries with exponential backoff on the AI integration. The rapid development cycle validated the architecture quickly, but the next iteration would invest in automated tests and a more modular backend structure.
                   </p>
                 </SectionBody>
               </section>
