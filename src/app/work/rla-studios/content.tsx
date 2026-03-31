@@ -438,6 +438,7 @@ export default function RLAStudiosContent() {
                 previewBg="linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)"
                 previewLabel="AI"
                 previewLabelColor="rgba(242,242,242,0.4)"
+                previewImageSrc="/images/ai-ticketing/dashboard.png"
               />
             </div>
           </div>

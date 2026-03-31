@@ -424,6 +424,7 @@ export default function AITicketingContent() {
                 previewBg="linear-gradient(135deg, #0f1a2e 0%, #0a1628 40%, #061020 100%)"
                 previewLabel="RLA"
                 previewLabelColor="rgba(127,207,255,0.6)"
+                previewImageSrc="/images/rla-studios/dashboard.png"
               />
             </div>
           </div>

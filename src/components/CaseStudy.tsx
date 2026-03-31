@@ -417,6 +417,7 @@ export function NextProject({
   previewBg,
   previewLabel,
   previewLabelColor,
+  previewImageSrc,
 }: {
   title: string;
   meta: string;
@@ -424,6 +425,7 @@ export function NextProject({
   previewBg: string;
   previewLabel: string;
   previewLabelColor: string;
+  previewImageSrc?: string;
 }) {
   return (
     <FadeIn>
@@ -477,18 +479,22 @@ export function NextProject({
               className="rounded-[8px] overflow-hidden"
               style={{
                 background: previewBg,
-                aspectRatio: "21/9",
+                ...(!previewImageSrc && { aspectRatio: "21/9" }),
                 border: "1px solid rgba(242,242,242,0.03)",
               }}
             >
-              <div className="w-full h-full flex items-center justify-center">
-                <span
-                  className="text-[28px] font-semibold tracking-[-1px] select-none"
-                  style={{ color: previewLabelColor }}
-                >
-                  {previewLabel}
-                </span>
-              </div>
+              {previewImageSrc ? (
+                <img src={previewImageSrc} alt={title} className="w-full h-auto block" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <span
+                    className="text-[28px] font-semibold tracking-[-1px] select-none"
+                    style={{ color: previewLabelColor }}
+                  >
+                    {previewLabel}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </Link>
