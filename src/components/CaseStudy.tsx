@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import FadeIn from "./FadeIn";
@@ -193,6 +193,41 @@ export function SectionBody({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* ── Magnifier zoom image ── */
+function MagnifierImage({ src, alt }: { src: string; alt: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [zoomed, setZoomed] = useState(false);
+  const [origin, setOrigin] = useState("50% 50%");
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setOrigin(`${x}% ${y}%`);
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative overflow-hidden cursor-zoom-in"
+      onMouseEnter={() => setZoomed(true)}
+      onMouseLeave={() => setZoomed(false)}
+      onMouseMove={handleMouseMove}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-auto block transition-transform duration-300 ease-out"
+        style={{
+          transform: zoomed ? "scale(2.5)" : "scale(1)",
+          transformOrigin: origin,
+        }}
+        loading="lazy"
+      />
+    </div>
+  );
+}
+
 /* ── Visual frame (for mockups / diagrams) ── */
 export function VisualFrame({
   bg,
@@ -201,6 +236,7 @@ export function VisualFrame({
   caption,
   aspectRatio = "16/9",
   imageSrc,
+  zoomable = false,
 }: {
   bg: string;
   label: string;
@@ -208,6 +244,7 @@ export function VisualFrame({
   caption?: string;
   aspectRatio?: string;
   imageSrc?: string;
+  zoomable?: boolean;
 }) {
   return (
     <FadeIn>
@@ -223,12 +260,11 @@ export function VisualFrame({
           }}
         >
           {imageSrc ? (
-            <img
-              src={imageSrc}
-              alt={label}
-              className="w-full h-auto block"
-              loading="lazy"
-            />
+            zoomable ? (
+              <MagnifierImage src={imageSrc} alt={label} />
+            ) : (
+              <img src={imageSrc} alt={label} className="w-full h-auto block" loading="lazy" />
+            )
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <span

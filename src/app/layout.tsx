@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Rouben Ghambaryan — Systems Engineer & Founder",
+  title: "Rouben Ghambaryan | Systems Engineer & Founder",
   description:
     "I build scalable systems, automation pipelines, and production-grade infrastructure.",
 };

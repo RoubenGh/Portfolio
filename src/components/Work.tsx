@@ -9,9 +9,9 @@ const ease = [0.165, 0.84, 0.44, 1] as const;
 const projects = [
   {
     title: "RLA Studios",
-    meta: "Founder — 2024",
+    meta: "Founder - 2024",
     description:
-      "Full-stack business operations platform for a real estate videography company. Lead scraping, invoicing, CRM, commission tracking — one admin panel.",
+      "Full-stack business operations platform for a real estate videography company. Lead scraping, invoicing, CRM, commission tracking. One admin panel.",
     href: "/work/rla-studios",
     color:
       "radial-gradient(circle at 50% 0%, rgba(127,207,255,0.2), transparent 70%), radial-gradient(circle at 50% 0%, rgba(0,51,85,0.6), transparent)",
@@ -20,11 +20,12 @@ const projects = [
       bg: "linear-gradient(135deg, #0f1a2e 0%, #0a1628 40%, #061020 100%)",
       label: "RLA",
       labelColor: "rgba(127,207,255,0.7)",
+      imageSrc: "/images/rla-studios/dashboard.png",
     },
   },
   {
     title: "AI Ticketing System",
-    meta: "Internal Tool — 2024",
+    meta: "Internal Tool - 2024",
     description:
       "AI-powered system that transforms unstructured emails into structured, prioritized tickets with auto-generated task breakdowns and knowledge base integration.",
     href: "/work/ai-ticketing",
@@ -134,17 +135,25 @@ function ProjectCard({
                     boxShadow:
                       "0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(242,242,242,0.04)",
                     border: "1px solid rgba(242,242,242,0.04)",
-                    aspectRatio: "16/9",
+                    ...(!project.preview.imageSrc && { aspectRatio: "16/9" }),
                   }}
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span
-                      className="text-[32px] md:text-[40px] font-semibold tracking-[-1px] select-none"
-                      style={{ color: project.preview.labelColor }}
-                    >
-                      {project.preview.label}
-                    </span>
-                  </div>
+                  {project.preview.imageSrc ? (
+                    <img
+                      src={project.preview.imageSrc}
+                      alt={project.title}
+                      className="w-full h-auto block"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span
+                        className="text-[32px] md:text-[40px] font-semibold tracking-[-1px] select-none"
+                        style={{ color: project.preview.labelColor }}
+                      >
+                        {project.preview.label}
+                      </span>
+                    </div>
+                  )}
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{ boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)" }}

@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
 import {
   BackButton,
-  ProjectHero,
   ProjectMeta,
   TableOfContents,
   SectionHeading,
@@ -53,23 +52,29 @@ export default function RLAStudiosContent() {
               RLA Studios
             </h1>
             <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--color-fg-30)] max-w-[600px]">
-              Full-stack business operations platform for a real estate videography company &mdash; from lead scraping to invoice delivery.
+              Full-stack business operations platform for a real estate videography company. From lead scraping to invoice delivery.
             </p>
           </motion.div>
 
-          <div className="mt-10 md:mt-12">
-            <ProjectHero
-              bannerBg="linear-gradient(135deg, #0f1a2e 0%, #0a1628 40%, #061020 100%)"
-              bannerLabel="RLA"
-              bannerLabelColor="rgba(127,207,255,0.6)"
-            />
-          </div>
+          {/* Hero image */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease }}
+            className="mt-10 md:mt-12 rounded-[16px] overflow-hidden"
+            style={{
+              boxShadow: "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
+              border: "1px solid rgba(242,242,242,0.05)",
+            }}
+          >
+            <img src="/images/rla-studios/dashboard.png" alt="RLA Studios Admin Dashboard" className="w-full h-auto block" />
+          </motion.div>
 
           <div className="mt-8">
             <ProjectMeta
               items={[
                 { label: "Role", value: "Founder & Lead Engineer" },
-                { label: "Timeline", value: "2024 — Present" },
+                { label: "Timeline", value: "2024 - Present" },
                 { label: "Stack", value: "Node, FastAPI, React, PostgreSQL" },
                 { label: "Type", value: "Business Platform" },
               ]}
@@ -99,14 +104,14 @@ export default function RLAStudiosContent() {
                 <SectionHeading
                   number="01"
                   title="The Big Picture"
-                  subtitle="A dual-runtime platform that automates lead scraping, client management, invoice generation, file delivery, and commission tracking — replacing spreadsheets, manual Airtable entry, and disconnected tools."
+                  subtitle="A dual-runtime platform that automates lead scraping, client management, invoice generation, file delivery, and commission tracking. It replaces spreadsheets, manual Airtable entry, and disconnected tools."
                 />
                 <SectionBody>
                   <p>
-                    RLA Studios is a full-stack business operations platform built for a real estate videography company. It&apos;s a dual-runtime monolith &mdash; a Node/Express frontend server and a Python/FastAPI backend sidecar &mdash; deployed as three Docker containers (Express, FastAPI, PostgreSQL) behind Traefik on a VPS via Dokploy.
+                    RLA Studios is a full-stack business operations platform built for a real estate videography company. It&apos;s a dual-runtime monolith: a Node/Express frontend server and a Python/FastAPI backend sidecar, deployed as three Docker containers (Express, FastAPI, PostgreSQL) behind Traefik on a VPS via Dokploy.
                   </p>
                   <p>
-                    The platform connects lead intake, CRM management, invoice generation, file delivery, commission tracking, and admin operations through a single interface &mdash; replacing what was previously a tangle of 4&ndash;5 disconnected tools.
+                    The platform connects lead intake, CRM management, invoice generation, file delivery, commission tracking, and admin operations through a single interface, replacing what was previously a tangle of 4-5 disconnected tools.
                   </p>
                 </SectionBody>
 
@@ -122,7 +127,7 @@ export default function RLAStudiosContent() {
                   bg="#ffffff"
                   label="RLA Studios Website"
                   labelColor="rgba(0,0,0,0.3)"
-                  caption="1.0 — rlastudios.com — the public-facing marketing site with lead capture, built alongside the platform."
+                  caption="1.0 - rlastudios.com, the public-facing marketing site with lead capture, built alongside the platform."
                   imageSrc="/images/rla-studios/website.png"
                 />
               </section>
@@ -147,7 +152,7 @@ export default function RLAStudiosContent() {
                   items={[
                     { title: "Manual Lead Research", description: "Browsing listing sites one-by-one, copy-pasting agent contact info into spreadsheets and Airtable by hand." },
                     { title: "Disconnected Invoicing", description: "Creating invoices in Canva/Google Docs, manually uploading to Dropbox, then tracking payment status separately." },
-                    { title: "No Commission Tracking", description: "Remembering who sold which client and who's owed what — tracked in someone's head, not a system." },
+                    { title: "No Commission Tracking", description: "Remembering who sold which client and who's owed what. Tracked in someone's head, not a system." },
                     { title: "Tool Sprawl", description: "Every step required context-switching between Redfin, Airtable, Canva, Dropbox, and spreadsheets." },
                   ]}
                 />
@@ -158,11 +163,11 @@ export default function RLAStudiosContent() {
                 <SectionHeading
                   number="03"
                   title="System Architecture"
-                  subtitle="A dual-runtime monolith — Node gateway + Python sidecar — deployed as three Docker containers behind Traefik."
+                  subtitle="A dual-runtime monolith: Node gateway + Python sidecar, deployed as three Docker containers behind Traefik."
                 />
                 <SectionBody>
                   <p>
-                    Express acts as the gateway and proxy &mdash; it handles auth, sessions, audit logging, and commission interception, then forwards business-logic requests to FastAPI via internal HTTP. The Python sidecar is never publicly exposed; an internal API key guard enforces this. WebSocket connections for the scraper are upgraded and piped through raw TCP.
+                    Express acts as the gateway and proxy. It handles auth, sessions, audit logging, and commission interception, then forwards business-logic requests to FastAPI via internal HTTP. The Python sidecar is never publicly exposed; an internal API key guard enforces this. WebSocket connections for the scraper are upgraded and piped through raw TCP.
                   </p>
                   <p>
                     PostgreSQL handles platform state (users, leads, settings, services, audit logs, commissions) across 8 tables with Drizzle ORM for type-safe queries. Airtable serves as the external CRM for client records, and Dropbox handles file storage for generated invoices.
@@ -173,15 +178,15 @@ export default function RLAStudiosContent() {
                   bg="#f5f5f5"
                   label="Admin Dashboard"
                   labelColor="rgba(0,0,0,0.3)"
-                  caption="2.0 — Admin dashboard showing integration status, quick actions, and lead management."
+                  caption="2.0 - Admin dashboard showing integration status, quick actions, and lead management."
                   imageSrc="/images/rla-studios/dashboard.png"
                 />
 
                 <PrincipleCards
                   items={[
                     { number: "01", title: "Express Gateway", description: "Handles auth, sessions, audit logging, WebSocket proxy, and commission interception. Forwards business logic to FastAPI via internal HTTP." },
-                    { number: "02", title: "FastAPI Sidecar", description: "Scraping engine, invoice generator, Airtable CRUD, Dropbox uploads, and address geocoding. Never publicly exposed — guarded by internal API key." },
-                    { number: "03", title: "Dual Database", description: "PostgreSQL for platform state (8 tables via Drizzle ORM). Airtable as external CRM — preserved the existing workflow while adding automation on top." },
+                    { number: "02", title: "FastAPI Sidecar", description: "Scraping engine, invoice generator, Airtable CRUD, Dropbox uploads, and address geocoding. Never publicly exposed, guarded by internal API key." },
+                    { number: "03", title: "Dual Database", description: "PostgreSQL for platform state (8 tables via Drizzle ORM). Airtable as external CRM, preserving the existing workflow while adding automation on top." },
                   ]}
                 />
               </section>
@@ -191,7 +196,7 @@ export default function RLAStudiosContent() {
                 <SectionHeading
                   number="04"
                   title="Scraper Pipeline"
-                  subtitle="Paste listing URLs, get structured agent data in Airtable — with real-time WebSocket progress."
+                  subtitle="Paste listing URLs, get structured agent data in Airtable with real-time WebSocket progress."
                 />
                 <SectionBody>
                   <p>
@@ -209,7 +214,7 @@ export default function RLAStudiosContent() {
                   bg="#f5f5f5"
                   label="Lead Scraper"
                   labelColor="rgba(0,0,0,0.3)"
-                  caption="3.0 — Paste Redfin/Compass URLs, watch real-time WebSocket progress as each listing is scraped and written to Airtable."
+                  caption="3.0 - Paste Redfin/Compass URLs, watch real-time WebSocket progress as each listing is scraped and written to Airtable."
                   imageSrc="/images/rla-studios/scraper.png"
                 />
               </section>
@@ -219,7 +224,7 @@ export default function RLAStudiosContent() {
                 <SectionHeading
                   number="05"
                   title="Invoicing Engine"
-                  subtitle="Generate branded PDF invoices, auto-upload to Dropbox, sync to Airtable, and track commissions — all in one click."
+                  subtitle="Generate branded PDF invoices, auto-upload to Dropbox, sync to Airtable, and track commissions. All in one click."
                 />
                 <SectionBody>
                   <p>
@@ -234,7 +239,7 @@ export default function RLAStudiosContent() {
                   bg="#f5f5f5"
                   label="Invoice Generator"
                   labelColor="rgba(0,0,0,0.3)"
-                  caption="4.0 — Select services from the catalog, preview the branded PDF in real-time, then generate and auto-upload to Dropbox."
+                  caption="4.0 - Select services from the catalog, preview the branded PDF in real-time, then generate and auto-upload to Dropbox."
                   imageSrc="/images/rla-studios/invoice.png"
                 />
               </section>
@@ -248,16 +253,16 @@ export default function RLAStudiosContent() {
                 />
                 <SectionBody>
                   <p>
-                    The CRM manages nearly 2,000 real estate agent leads with full outreach pipeline tracking. Each record stores contact info, listing details (address, URL), and tracks the entire outreach lifecycle &mdash; when they were texted, days since last contact, follow-up dates, and response status.
+                    The CRM manages nearly 2,000 real estate agent leads with full outreach pipeline tracking. Each record stores contact info, listing details (address, URL), and tracks the entire outreach lifecycle: when they were texted, days since last contact, follow-up dates, and response status.
                   </p>
                   <p>
-                    Quick-action buttons let the team send templated messages with one tap: opener texts, follow-ups, pricing info, questions, and emails. Each button generates a pre-filled SMS deep link with the agent&apos;s first name, listing address, and a customizable message template pulled directly from the CRM &mdash; no copy-pasting, no app switching.
+                    Quick-action buttons let the team send templated messages with one tap: opener texts, follow-ups, pricing info, questions, and emails. Each button generates a pre-filled SMS deep link with the agent&apos;s first name, listing address, and a customizable message template pulled directly from the CRM. No copy-pasting, no app switching.
                   </p>
                   <p>
                     Lead status flows through a defined pipeline: New Lead, Interested, Need to Follow Up, Followed Up, Not Interested, Ghosted, or Hired. Video production status is tracked per lead (Not Started, In Progress, Completed), and invoices attach directly to completed work. Team attribution tracks who scraped each lead for commission purposes.
                   </p>
                   <p>
-                    The admin panel layers on top with role-based access control (superadmin, admin, viewer, demo), rate-limited login (5 attempts per 15 minutes), bcrypt hashing, session-based auth, and audit logging. A sandboxed demo mode lets prospects explore the full panel &mdash; all mutations are intercepted and short-circuited so demo users can click every button without touching real data.
+                    The admin panel layers on top with role-based access control (superadmin, admin, viewer, demo), rate-limited login (5 attempts per 15 minutes), bcrypt hashing, session-based auth, and audit logging. A sandboxed demo mode lets prospects explore the full panel. All mutations are intercepted and short-circuited so demo users can click every button without touching real data.
                   </p>
                 </SectionBody>
 
@@ -265,8 +270,9 @@ export default function RLAStudiosContent() {
                   bg="#1a1a1a"
                   label="Client CRM"
                   labelColor="rgba(255,255,255,0.3)"
-                  caption="5.0 — Nearly 2,000 agent leads with outreach status, follow-up tracking, and one-tap templated messaging."
+                  caption="5.0 - Nearly 2,000 agent leads with outreach status, follow-up tracking, and one-tap templated messaging."
                   imageSrc="/images/rla-studios/crm.png"
+                  zoomable
                 />
 
                 {/* Click-to-text demo video */}
@@ -291,7 +297,7 @@ export default function RLAStudiosContent() {
                       </video>
                     </div>
                     <p className="mt-3 text-[12px] tracking-[0.1px] text-[var(--color-fg-15)]">
-                      5.1 &mdash; One-tap outreach: click a button, get a pre-filled SMS with the agent&apos;s name and listing address pulled from the CRM.
+                      5.1 - One-tap outreach: click a button, get a pre-filled SMS with the agent&apos;s name and listing address pulled from the CRM.
                     </p>
                   </div>
                 </FadeIn>
@@ -300,7 +306,7 @@ export default function RLAStudiosContent() {
                   bg="#f5f5f5"
                   label="Commission Tracking"
                   labelColor="rgba(0,0,0,0.3)"
-                  caption="5.2 — Commission ledger with invoice links, sold-by attribution, and payment status toggling."
+                  caption="5.2 - Commission ledger with invoice links, sold-by attribution, and payment status toggling."
                   imageSrc="/images/rla-studios/commissions.png"
                 />
               </section>
@@ -314,14 +320,14 @@ export default function RLAStudiosContent() {
                 />
                 <PrincipleCards
                   items={[
-                    { number: "01", title: "Scraper → Airtable", description: "Paste URLs → auto-detect platform → scrape agent info → deduplicate → write to Airtable. Real-time WebSocket streaming shows each URL's progress." },
-                    { number: "02", title: "Invoice Lifecycle", description: "Generate PDF → upload to Dropbox → sync link to Airtable → mark paid → overlay PAID stamp → re-upload → create commission entry. One click." },
+                    { number: "01", title: "Scraper to Airtable", description: "Paste URLs, auto-detect platform, scrape agent info, deduplicate, write to Airtable. Real-time WebSocket streaming shows each URL's progress." },
+                    { number: "02", title: "Invoice Lifecycle", description: "Generate PDF, upload to Dropbox, sync link to Airtable, mark paid, overlay PAID stamp, re-upload, create commission entry. One click." },
                     { number: "03", title: "Address Completion", description: "Partial addresses from listing URLs are auto-geocoded via Nominatim to full street, city, state, ZIP format. In-memory cache prevents redundant lookups." },
                   ]}
                 />
                 <SectionBody>
                   <p>
-                    On first startup, the system auto-creates a default superadmin user and seeds a 7-item service catalog &mdash; zero manual setup needed post-deploy. The configurable service catalog lets admins add, edit, and reorder line items that populate invoice generation, so pricing changes don&apos;t require code changes.
+                    On first startup, the system auto-creates a default superadmin user and seeds a 7-item service catalog. Zero manual setup needed post-deploy. The configurable service catalog lets admins add, edit, and reorder line items that populate invoice generation, so pricing changes don&apos;t require code changes.
                   </p>
                 </SectionBody>
               </section>
@@ -342,10 +348,10 @@ export default function RLAStudiosContent() {
                 />
                 <SectionBody>
                   <p>
-                    WebSockets were chosen over polling for scraper progress because scraping multiple URLs takes 5&ndash;30 seconds each. Polling would add latency and complexity. WebSockets give instant per-URL feedback with structured message types, making the scraper feel interactive rather than batch-oriented.
+                    WebSockets were chosen over polling for scraper progress because scraping multiple URLs takes 5-30 seconds each. Polling would add latency and complexity. WebSockets give instant per-URL feedback with structured message types, making the scraper feel interactive rather than batch-oriented.
                   </p>
                   <p>
-                    Multi-stage Docker builds with Alpine cut the final image size significantly &mdash; the builder stage installs all dev dependencies and runs Vite + esbuild, then the runtime stage copies only build output and production deps.
+                    Multi-stage Docker builds with Alpine cut the final image size significantly. The builder stage installs all dev dependencies and runs Vite + esbuild, then the runtime stage copies only build output and production deps.
                   </p>
                 </SectionBody>
               </section>
@@ -388,10 +394,10 @@ export default function RLAStudiosContent() {
                 />
                 <SectionBody>
                   <p>
-                    The platform replaced a workflow that required constant context-switching between 4&ndash;5 disconnected tools with a single interface that handles the entire business lifecycle. Lead research that used to take hours of manual browsing now happens in seconds with the scraper. Invoicing that required Canva, manual uploads, and spreadsheet tracking is now a one-click pipeline.
+                    The platform replaced a workflow that required constant context-switching between 4-5 disconnected tools with a single interface that handles the entire business lifecycle. Lead research that used to take hours of manual browsing now happens in seconds with the scraper. Invoicing that required Canva, manual uploads, and spreadsheet tracking is now a one-click pipeline.
                   </p>
                   <p>
-                    The dual-database architecture means the business can continue using Airtable as a familiar CRM interface while the platform adds automation, commission tracking, and audit logging on top &mdash; a pragmatic bridge between existing workflow and full automation.
+                    The dual-database architecture means the business can continue using Airtable as a familiar CRM interface while the platform adds automation, commission tracking, and audit logging on top, serving as a pragmatic bridge between existing workflow and full automation.
                   </p>
                 </SectionBody>
               </section>
@@ -407,7 +413,7 @@ export default function RLAStudiosContent() {
                   items={[
                     { number: "01", title: "Use the Right Runtime", description: "The dual-runtime approach was the fastest path to production. Python for scraping/PDFs, Node for auth/sessions/ORM. Pragmatism over purity." },
                     { number: "02", title: "Wrap, Don't Replace", description: "Wrapping Airtable instead of migrating away from it preserved the existing workflow and reduced adoption friction. Meet the business where it is." },
-                    { number: "03", title: "Automate the Full Loop", description: "Half-automating a workflow just moves the bottleneck. The invoice lifecycle works because it's automated end-to-end — generation through commission tracking." },
+                    { number: "03", title: "Automate the Full Loop", description: "Half-automating a workflow just moves the bottleneck. The invoice lifecycle works because it's automated end-to-end, from generation through commission tracking." },
                   ]}
                 />
                 <SectionBody>
@@ -419,7 +425,7 @@ export default function RLAStudiosContent() {
 
               <NextProject
                 title="AI Ticketing System"
-                meta="Internal Tool — 2024"
+                meta="Internal Tool - 2024"
                 href="/work/ai-ticketing"
                 previewBg="linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)"
                 previewLabel="AI"

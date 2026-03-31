@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import {
   BackButton,
-  ProjectHero,
   ProjectMeta,
   TableOfContents,
   SectionHeading,
@@ -48,13 +47,26 @@ export default function AITicketingContent() {
             </p>
           </motion.div>
 
-          <div className="mt-10 md:mt-12">
-            <ProjectHero
-              bannerBg="linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)"
-              bannerLabel="AI"
-              bannerLabelColor="rgba(242,242,242,0.4)"
-            />
-          </div>
+          {/* Hero placeholder - will be replaced with collage when screenshots are uploaded */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease }}
+            className="mt-10 md:mt-12 relative rounded-[16px] overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, #1a1a1a 0%, #111 40%, #0a0a0a 100%)",
+              aspectRatio: "21/9",
+              boxShadow: "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
+              border: "1px solid rgba(242,242,242,0.05)",
+            }}
+          >
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-[48px] md:text-[72px] font-semibold tracking-[-2px] select-none" style={{ color: "rgba(242,242,242,0.4)" }}>
+                AI
+              </span>
+            </div>
+            <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }} />
+          </motion.div>
 
           <div className="mt-8">
             <ProjectMeta items={[
@@ -92,7 +104,7 @@ export default function AITicketingContent() {
                 />
                 <SectionBody>
                   <p>
-                    IT support teams receive a constant stream of unstructured requests &mdash; emails with vague subjects, screenshots with no context, forwarded threads with multiple asks buried in one message. This system ingests all of it, uses Google Gemini to extract structured tickets with prioritized task lists, and lets operators refine results through real-time AI chat before saving.
+                    IT support teams receive a constant stream of unstructured requests: emails with vague subjects, screenshots with no context, forwarded threads with multiple asks buried in one message. This system ingests all of it, uses Google Gemini to extract structured tickets with prioritized task lists, and lets operators refine results through real-time AI chat before saving.
                   </p>
                   <p>
                     The platform includes a full wiki system with version control, a knowledge base with document-aware Q&A, streaming AI guidance per task, and a multi-workspace architecture where each tenant&apos;s data is completely isolated.
@@ -115,16 +127,16 @@ export default function AITicketingContent() {
                 />
                 <SectionBody>
                   <p>
-                    MSPs and IT teams receive requests in every format imaginable &mdash; emails with screenshots, PDFs with no context, forwarded threads with five different asks in one message. Manually reading each one, deciding priority, creating tasks, and writing a response is slow and inconsistent. Critical requests get lost, priorities are guessed at, and institutional knowledge lives in people&apos;s heads instead of a searchable system.
+                    MSPs and IT teams receive requests in every format imaginable: emails with screenshots, PDFs with no context, forwarded threads with five different asks in one message. Manually reading each one, deciding priority, creating tasks, and writing a response is slow and inconsistent. Critical requests get lost, priorities are guessed at, and institutional knowledge lives in people&apos;s heads instead of a searchable system.
                   </p>
                   <p>
-                    There was no tool that could intelligently parse an email &mdash; including attached images, PDFs, and Word docs &mdash; break it into granular tasks, and connect it to an internal knowledge base, all in one workflow.
+                    There was no tool that could intelligently parse an email (including attached images, PDFs, and Word docs), break it into granular tasks, and connect it to an internal knowledge base, all in one workflow.
                   </p>
                 </SectionBody>
 
                 <ConstraintList items={[
-                  { title: "Unstructured Input", description: "Emails with vague subjects, screenshots, PDFs, forwarded threads — no consistent format to parse." },
-                  { title: "Manual Triage", description: "Every request required a human to read, classify, prioritize, and create tasks — a bottleneck that didn't scale." },
+                  { title: "Unstructured Input", description: "Emails with vague subjects, screenshots, PDFs, forwarded threads. No consistent format to parse." },
+                  { title: "Manual Triage", description: "Every request required a human to read, classify, prioritize, and create tasks. A bottleneck that didn't scale." },
                   { title: "Knowledge Silos", description: "Institutional knowledge lived in people's heads. New team members had no way to find past solutions." },
                   { title: "No Task Decomposition", description: "A single email might contain 5 distinct issues, but ticketing systems treat it as one item." },
                 ]} />
@@ -139,10 +151,10 @@ export default function AITicketingContent() {
                 />
                 <SectionBody>
                   <p>
-                    A user pastes an email or support request into the ingestion page, optionally attaching images, PDFs, or Word documents via drag-and-drop. The Express backend processes attachments through a type-aware pipeline &mdash; images are base64-encoded for Gemini&apos;s vision input, PDFs extracted via pdf2json, Word docs via mammoth.
+                    A user pastes an email or support request into the ingestion page, optionally attaching images, PDFs, or Word documents via drag-and-drop. The Express backend processes attachments through a type-aware pipeline. Images are base64-encoded for Gemini&apos;s vision input, PDFs extracted via pdf2json, Word docs via mammoth.
                   </p>
                   <p>
-                    Everything is bundled into a multimodal prompt enriched with relevant internal documents and wiki pages. Gemini analyzes the full input, identifies distinct issues, assigns priority, extracts the company name, and generates 5&ndash;20 granular actionable tasks. Before saving, the user can chat with the AI in real-time via SSE streaming to adjust tasks, add context, or ask clarifying questions.
+                    Everything is bundled into a multimodal prompt enriched with relevant internal documents and wiki pages. Gemini analyzes the full input, identifies distinct issues, assigns priority, extracts the company name, and generates 5-20 granular actionable tasks. Before saving, the user can chat with the AI in real-time via SSE streaming to adjust tasks, add context, or ask clarifying questions.
                   </p>
                   <p>
                     On confirmation, the ticket and tasks are persisted to the workspace&apos;s data store. From the dashboard, users check off tasks, request AI-generated technical guidance (also streamed), and query the knowledge base which searches across uploaded documents and wiki pages to answer questions with cited sources.
@@ -153,7 +165,7 @@ export default function AITicketingContent() {
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Processing Pipeline"
                   labelColor="rgba(242,242,242,0.25)"
-                  caption="1.0 — Email + attachments → Parse → Enrich with KB context → Gemini classification → Task generation → Chat refinement → Save."
+                  caption="1.0 - Email + attachments > Parse > Enrich with KB context > Gemini classification > Task generation > Chat refinement > Save."
                 />
               </section>
 
@@ -169,10 +181,10 @@ export default function AITicketingContent() {
                     The frontend is a React 18 SPA built with Vite, using React Router across 13 pages with Framer Motion transitions and Headless UI for accessible components. The backend is an Express 5 API server with JWT-based session auth, workspace-scoping middleware, and 50+ REST endpoints.
                   </p>
                   <p>
-                    Each workspace gets its own isolated data directory with completely separate tickets, documents, and wiki databases. The service layer follows a domain-driven pattern &mdash; AuthService, TicketService, WikiService, DocumentService, OpenAIService &mdash; each self-contained with its own persistence, cached per workspace.
+                    Each workspace gets its own isolated data directory with completely separate tickets, documents, and wiki databases. The service layer follows a domain-driven pattern (AuthService, TicketService, WikiService, DocumentService, OpenAIService), each self-contained with its own persistence, cached per workspace.
                   </p>
                   <p>
-                    Storage is hybrid: sql.js (SQLite compiled to WASM) powers the wiki system where relational queries matter &mdash; version history, chunked full-text search, category and tag relationships. Everything else uses JSON files where simplicity wins. Zero external dependencies: no Postgres, no Redis, no cloud storage. The entire app runs in a single Docker container with a volume mount.
+                    Storage is hybrid: sql.js (SQLite compiled to WASM) powers the wiki system where relational queries matter (version history, chunked full-text search, category and tag relationships). Everything else uses JSON files where simplicity wins. Zero external dependencies: no Postgres, no Redis, no cloud storage. The entire app runs in a single Docker container with a volume mount.
                   </p>
                 </SectionBody>
 
@@ -180,14 +192,14 @@ export default function AITicketingContent() {
                   bg="linear-gradient(135deg, #0a0e14 0%, #0d1218 50%, #080c12 100%)"
                   label="System Architecture"
                   labelColor="rgba(242,242,242,0.2)"
-                  caption="2.0 — React SPA → Express API (JWT + workspace middleware) → Service layer → Hybrid storage (sql.js + JSON files) + Gemini API."
+                  caption="2.0 - React SPA > Express API (JWT + workspace middleware) > Service layer > Hybrid storage (sql.js + JSON files) + Gemini API."
                   aspectRatio="16/10"
                 />
 
                 <PrincipleCards items={[
                   { number: "01", title: "Multi-Workspace Isolation", description: "Each workspace gets its own data directory with separate tickets, docs, and wiki databases. Middleware resolves the active workspace per-user on every request." },
                   { number: "02", title: "Hybrid Storage", description: "sql.js (WASM SQLite) for the wiki where relational queries matter. JSON files for tickets, docs, users, and config where simplicity wins." },
-                  { number: "03", title: "SSE Streaming", description: "AI responses stream token-by-token from Gemini through Express to React via Server-Sent Events — no WebSocket server needed." },
+                  { number: "03", title: "SSE Streaming", description: "AI responses stream token-by-token from Gemini through Express to React via Server-Sent Events. No WebSocket server needed." },
                 ]} />
               </section>
 
@@ -200,16 +212,16 @@ export default function AITicketingContent() {
                 />
                 <PrincipleCards items={[
                   { number: "01", title: "Multimodal Email Parsing", description: "Paste an email with screenshots, PDFs, and Word docs. Gemini processes text and images together with vision understanding to extract structured tickets." },
-                  { number: "02", title: "AI Task Decomposition", description: "A single email automatically becomes 5–20 granular, actionable tasks. When the email references lists, the AI cross-references internal docs to generate explicit per-item tasks." },
+                  { number: "02", title: "AI Task Decomposition", description: "A single email automatically becomes 5-20 granular, actionable tasks. When the email references lists, the AI cross-references internal docs to generate explicit per-item tasks." },
                   { number: "03", title: "Context-Aware AI", description: "Every AI call is enriched with relevant internal documents and wiki pages. A custom relevance engine scores and ranks docs, injecting up to 16KB of context into each prompt." },
                 ]} />
 
                 <SectionBody>
                   <p>
-                    The platform includes four distinct streaming AI interfaces: ingestion refinement, per-ticket technical guidance, knowledge base Q&A, and document context chat. The wiki system supports full version control with rollback, categories, tags, and chunked storage for long documents &mdash; all backed by in-process SQLite and queryable via SQL.
+                    The platform includes four distinct streaming AI interfaces: ingestion refinement, per-ticket technical guidance, knowledge base Q&A, and document context chat. The wiki system supports full version control with rollback, categories, tags, and chunked storage for long documents, all backed by in-process SQLite and queryable via SQL.
                   </p>
                   <p>
-                    Other features include multi-workspace multi-tenant isolation, an admin onboarding flow with temporary passwords, and a monthly billing export that generates CSV reports of completed tasks by company for a date range &mdash; ready for invoicing.
+                    Other features include multi-workspace multi-tenant isolation, an admin onboarding flow with temporary passwords, and a monthly billing export that generates CSV reports of completed tasks by company for a date range, ready for invoicing.
                   </p>
                 </SectionBody>
               </section>
@@ -222,9 +234,9 @@ export default function AITicketingContent() {
                   subtitle="Intentional technical choices and why they were made."
                 />
                 <PrincipleCards items={[
-                  { number: "01", title: "OpenAI SDK → Gemini", description: "The OpenAI SDK is the most battle-tested LLM client. Pointing it at Google's OpenAI-compatible endpoint gets Gemini's cost advantages while retaining the ability to swap providers by changing one URL." },
-                  { number: "02", title: "SSE Over WebSockets", description: "Server-Sent Events are unidirectional — exactly what streaming AI responses need. SSE works over standard HTTP, auto-reconnects, and plays nicely with Express middleware. No heartbeats or upgrade handshakes." },
-                  { number: "03", title: "File-Based Persistence", description: "The entire app state lives in a data/ directory — back it up by copying a folder. No database migrations, no connection strings, no managed services. For team-scale usage, this is the right trade-off." },
+                  { number: "01", title: "OpenAI SDK to Gemini", description: "The OpenAI SDK is the most battle-tested LLM client. Pointing it at Google's OpenAI-compatible endpoint gets Gemini's cost advantages while retaining the ability to swap providers by changing one URL." },
+                  { number: "02", title: "SSE Over WebSockets", description: "Server-Sent Events are unidirectional, exactly what streaming AI responses need. SSE works over standard HTTP, auto-reconnects, and plays nicely with Express middleware. No heartbeats or upgrade handshakes." },
+                  { number: "03", title: "File-Based Persistence", description: "The entire app state lives in a data/ directory. Back it up by copying a folder. No database migrations, no connection strings, no managed services. For team-scale usage, this is the right trade-off." },
                 ]} />
                 <SectionBody>
                   <p>
@@ -245,10 +257,10 @@ export default function AITicketingContent() {
                     <strong className="text-[var(--color-fg-80)]">Multimodal input processing.</strong> Gemini&apos;s vision API needs base64-encoded images with MIME types, but users paste content in unpredictable formats. The solution was a processing pipeline that detects file types by extension, routes each to the appropriate extractor (pdf2json, mammoth, or raw base64), and assembles mixed-content prompts with both text and image content blocks.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Streaming through Express.</strong> Getting token-by-token streaming from Gemini through an Express endpoint into a React component required careful plumbing &mdash; chunked transfer encoding on the backend, ReadableStream with incremental decoding on the frontend, and graceful error recovery mid-stream for partial JSON responses.
+                    <strong className="text-[var(--color-fg-80)]">Streaming through Express.</strong> Getting token-by-token streaming from Gemini through an Express endpoint into a React component required careful plumbing: chunked transfer encoding on the backend, ReadableStream with incremental decoding on the frontend, and graceful error recovery mid-stream for partial JSON responses.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Wiki search without vectors.</strong> Instead of introducing embeddings and a vector store, the wiki uses sql.js with a chunking strategy &mdash; long pages are split into chunks with token estimates. Search queries are tokenized, stop-words filtered, and chunks scored by keyword density. Pinned pages bypass scoring and are always included.
+                    <strong className="text-[var(--color-fg-80)]">Wiki search without vectors.</strong> Instead of introducing embeddings and a vector store, the wiki uses sql.js with a chunking strategy. Long pages are split into chunks with token estimates. Search queries are tokenized, stop-words filtered, and chunks scored by keyword density. Pinned pages bypass scoring and are always included.
                   </p>
                   <p>
                     <strong className="text-[var(--color-fg-80)]">Retroactive multi-workspace support.</strong> Adding workspace isolation meant every service needed to become workspace-aware without breaking existing data. Each service instance is cached per workspace ID, and the migration preserved single-workspace data by treating the first workspace as the default.
@@ -269,10 +281,10 @@ export default function AITicketingContent() {
                 ]} />
                 <SectionBody>
                   <p>
-                    The system handles the complete lifecycle of support ticket management &mdash; from raw, unstructured email input to structured, prioritized tickets with granular task lists. Every AI interaction is enriched with organizational knowledge, making responses more accurate and contextually relevant than generic LLM output.
+                    The system handles the complete lifecycle of support ticket management, from raw, unstructured email input to structured, prioritized tickets with granular task lists. Every AI interaction is enriched with organizational knowledge, making responses more accurate and contextually relevant than generic LLM output.
                   </p>
                   <p>
-                    The zero-infrastructure deployment model means the entire application &mdash; frontend, API, wiki database, and all stored data &mdash; runs in a single Docker container on any machine with a volume mount. No external databases, no cloud services beyond the Gemini API.
+                    The zero-infrastructure deployment model means the entire application (frontend, API, wiki database, and all stored data) runs in a single Docker container on any machine with a volume mount. No external databases, no cloud services beyond the Gemini API.
                   </p>
                 </SectionBody>
               </section>
@@ -285,7 +297,7 @@ export default function AITicketingContent() {
                   subtitle="What worked, what I'd change, and what I learned."
                 />
                 <PrincipleCards items={[
-                  { number: "01", title: "Right-Size the Stack", description: "JSON files and in-process SQLite were the right call for this scale. Not every project needs Postgres — but the next version would benefit from it for concurrent write safety." },
+                  { number: "01", title: "Right-Size the Stack", description: "JSON files and in-process SQLite were the right call for this scale. Not every project needs Postgres, but the next version would benefit from it for concurrent write safety." },
                   { number: "02", title: "Streaming Is Worth It", description: "SSE streaming across all AI interfaces made the system feel responsive and interactive. The implementation complexity paid for itself in user experience." },
                   { number: "03", title: "Build the Knowledge Layer", description: "The custom relevance engine and wiki system turned generic AI responses into context-aware answers. The quality difference between prompted and un-prompted AI is massive." },
                 ]} />
@@ -298,7 +310,7 @@ export default function AITicketingContent() {
 
               <NextProject
                 title="RLA Studios"
-                meta="Founder — 2024"
+                meta="Founder - 2024"
                 href="/work/rla-studios"
                 previewBg="linear-gradient(135deg, #0f1a2e 0%, #0a1628 40%, #061020 100%)"
                 previewLabel="RLA"

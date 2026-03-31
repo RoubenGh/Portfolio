@@ -47,7 +47,7 @@ export default function About() {
           <div className="md:col-span-6 md:col-start-7">
             <FadeIn delay={0.16}>
               <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
-                I build production infrastructure at scale — cloud platforms,
+                I build production infrastructure at scale: cloud platforms,
                 backend services, data automation pipelines, and AI-assisted
                 tools. My work sits at the intersection of systems engineering
                 and product thinking.
@@ -57,7 +57,7 @@ export default function About() {
               <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
                 I founded{" "}
                 <span className="text-[var(--color-fg-80)]">RLA Studios</span>{" "}
-                to apply systems thinking to creative work — turning manual
+                to apply systems thinking to creative work, turning manual
                 processes into pipelines that scale without adding complexity.
               </p>
             </FadeIn>
