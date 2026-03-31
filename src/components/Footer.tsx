@@ -43,7 +43,7 @@ export default function Footer() {
                 </span>
                 <div className="flex flex-col gap-3">
                   <a
-                    href="https://www.linkedin.com/"
+                    href="https://www.linkedin.com/in/rouben-ghambaryan/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[13px] font-medium text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
@@ -51,7 +51,9 @@ export default function Footer() {
                     LinkedIn
                   </a>
                   <a
-                    href="#"
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-[13px] font-medium text-[var(--color-fg-30)] hover:text-[var(--color-fg-80)] transition-colors duration-300"
                   >
                     Resume

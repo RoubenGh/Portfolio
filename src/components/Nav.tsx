@@ -69,7 +69,7 @@ export default function Nav() {
         {/* Right */}
         <div className="hidden md:flex items-center gap-1">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/rouben-ghambaryan/"
             target="_blank"
             rel="noopener noreferrer"
             className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
@@ -77,7 +77,9 @@ export default function Nav() {
             LinkedIn
           </a>
           <a
-            href="#"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
           >
             Resume
@@ -127,8 +129,8 @@ export default function Nav() {
               {[
                 { label: "Work", href: "/#work" },
                 { label: "About", href: "/#about" },
-                { label: "LinkedIn", href: "https://www.linkedin.com/" },
-                { label: "Resume", href: "#" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/rouben-ghambaryan/" },
+                { label: "Resume", href: "/resume.pdf" },
               ].map((link, i) => (
                 <motion.a
                   key={link.label}
