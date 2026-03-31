@@ -49,25 +49,33 @@ export default function RLAStudiosContent() {
             transition={{ duration: 0.9, ease }}
           >
             <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--color-fg)]">
-              RLA Studios
+              Automated Lead Generation System
             </h1>
             <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--color-fg-30)] max-w-[600px]">
-              Full-stack business operations platform for a real estate videography company. From lead scraping to invoice delivery.
+              Scrapes real estate listings, extracts agent data, and syncs directly into a CRM.
             </p>
           </motion.div>
 
-          {/* Hero image */}
+          {/* Hero: Dashboard screenshot */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease }}
-            className="mt-10 md:mt-12 rounded-[16px] overflow-hidden"
+            transition={{ duration: 1, delay: 0.2, ease }}
+            className="mt-10 md:mt-12 relative rounded-[16px] overflow-hidden"
             style={{
               boxShadow: "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
               border: "1px solid rgba(242,242,242,0.05)",
             }}
           >
-            <img src="/images/rla-studios/dashboard.png" alt="RLA Studios Admin Dashboard" className="w-full h-auto block" />
+            <img
+              src="/images/rla-studios/dashboard.png"
+              alt="RLA Studios Dashboard"
+              className="w-full h-auto block"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none rounded-[16px]"
+              style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }}
+            />
           </motion.div>
 
           <div className="mt-8">
