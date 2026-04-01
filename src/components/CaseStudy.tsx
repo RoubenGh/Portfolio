@@ -263,7 +263,7 @@ export function VisualFrame({
             zoomable ? (
               <MagnifierImage src={imageSrc} alt={label} />
             ) : (
-              <img src={imageSrc} alt={label} className="w-full h-auto block" loading="lazy" />
+              <img src={imageSrc} alt={label} className="w-full h-auto block md:brightness-100" loading="lazy" />
             )
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -276,8 +276,12 @@ export function VisualFrame({
             </div>
           )}
           <div
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none hidden md:block"
             style={{ boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)" }}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none md:hidden"
+            style={{ boxShadow: "inset 0 0 15px rgba(0,0,0,0.2)" }}
           />
         </div>
         {caption && (

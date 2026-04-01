@@ -143,7 +143,7 @@ function ProjectCard({
                     <img
                       src={project.preview.imageSrc}
                       alt={project.title}
-                      className="w-full h-auto block"
+                      className="w-full h-auto block brightness-100 md:brightness-100"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -156,8 +156,12 @@ function ProjectCard({
                     </div>
                   )}
                   <div
-                    className="absolute inset-0 pointer-events-none"
+                    className="absolute inset-0 pointer-events-none hidden md:block"
                     style={{ boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)" }}
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none md:hidden"
+                    style={{ boxShadow: "inset 0 0 20px rgba(0,0,0,0.2)" }}
                   />
                 </div>
               </div>

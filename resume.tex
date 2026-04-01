@@ -1,0 +1,109 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[margin=0.5in, top=0.45in, bottom=0.45in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{ragged2e}
+
+\pagenumbering{gobble}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=1.5pt,topsep=3pt,parsep=0pt}
+
+\definecolor{rulegray}{HTML}{D9D9D9}
+\definecolor{textgray}{HTML}{4A4A4A}
+
+\titleformat{\section}{\large\bfseries\uppercase}{}{0em}{}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+
+\newcommand{\resheading}[1]{%
+  \section*{#1}
+  \vspace{-0.4em}\hrule height 0.6pt \vspace{0.45em}
+}
+
+\newcommand{\roleline}[4]{%
+  {\bfseries #1}\hfill #2\\
+  {\itshape #3}\if\relax\detokenize{#4}\relax\else, {\itshape #4}\fi\\
+}
+
+\begin{document}
+
+\begin{center}
+    {\fontsize{22}{24}\selectfont\bfseries Rouben Ghambaryan}\\[5pt]
+    Los Angeles, CA \textbullet{} RoubenRG@gmail.com \textbullet{} (440) 440 1440\\[3pt]
+    \href{https://www.linkedin.com/in/rouben-ghambaryan/}{linkedin.com/in/rouben-ghambaryan} \textbullet{} \href{https://rouben.dev}{rouben.dev}
+\end{center}
+
+\resheading{Skills}
+
+\textbf{Languages:} Python, JavaScript, TypeScript, PHP, SQL \\[3pt]
+\textbf{Frontend:} React, Next.js, Vue.js, Tailwind CSS, Framer Motion, Vite, Electron \\[3pt]
+\textbf{Backend:} Node.js, Express, FastAPI, Zend Framework, Apache, Nginx \\[3pt]
+\textbf{Cloud \& Infrastructure:} Linux, AWS (EC2, Route 53, Elastic IPs, load balancers), Docker, Kubernetes, SSH \\[3pt]
+\textbf{Databases:} PostgreSQL, MariaDB, MongoDB, Redis, sql.js (WASM SQLite) \\[3pt]
+\textbf{AI \& APIs:} Google Gemini API, OpenAI API, SSE streaming, REST APIs, Airtable API, Dropbox API \\[3pt]
+\textbf{DevOps:} Git, CI/CD pipelines, Docker multi-stage builds, Traefik, Dokploy, DNS management, SSL lifecycle \\[3pt]
+\textbf{Automation:} Selenium, data scraping pipelines, PDF parsing, document processing, browser automation
+
+\resheading{Experience}
+
+\roleline{Senior Software Engineer}{2023 to Present}{Inverselogic}{Los Angeles, CA}
+\begin{itemize}
+    \item Maintain and operate production infrastructure supporting 200+ client websites and web applications.
+    \item Deploy and manage containerized workloads using Docker and Kubernetes across multi-server Linux environments.
+    \item Develop and maintain internal CMS platforms and backend services using PHP, MariaDB, Redis, Apache, and Nginx.
+    \item Deploy and support enterprise infrastructure used by Kaiser Permanente genetics laboratory systems.
+    \item Manage DNS infrastructure and SSL certificate lifecycle across large client domain portfolios.
+    \item Implement build and deployment automation pipelines for application releases.
+    \item Diagnose and resolve production incidents across APIs, containers, databases, and distributed systems.
+\end{itemize}
+
+\vspace{0.2em}
+\roleline{Founder \& Lead Engineer}{2024 to Present}{RLA Studios}{Los Angeles, CA}
+\begin{itemize}
+    \item Built a full-stack business operations platform consolidating lead generation, invoicing, CRM, and commission tracking into a single admin panel for a real estate videography company.
+    \item Developed an automated scraping pipeline that extracts agent data from Redfin and Compass listings, enriches contact info, and syncs 1,963+ leads into a CRM with templated outreach workflows.
+    \item Engineered an invoicing engine with automated PDF generation, payment tracking, and Dropbox integration.
+    \item Built a commission tracking system that calculates per-job payouts across team members with automated reporting.
+    \item Deployed on a VPS using Docker multi-stage builds with Traefik reverse proxy via Dokploy.
+\end{itemize}
+
+\vspace{0.2em}
+\roleline{Software Engineer}{2022 to 2023}{Independent Software Development}{Los Angeles, CA}
+\begin{itemize}
+    \item Designed Python-based automation platforms for collecting and processing structured datasets using browser automation and external APIs.
+    \item Built data pipelines that extract, normalize, and enrich datasets with contact information via third-party APIs.
+    \item Developed automation workflows synchronizing processed datasets with Airtable-based CRM systems.
+    \item Implemented automated document generation pipelines for invoices and operational workflows.
+\end{itemize}
+
+\resheading{Projects}
+
+\textbf{AI Ticketing System} \textbullet{} \href{https://tickets.rouben.dev}{tickets.rouben.dev}\hfill 2024\\
+Full-stack AI platform that transforms unstructured emails into structured, prioritized tickets with auto-generated task breakdowns. Five distinct AI interfaces powered by Google Gemini with SSE streaming, a wiki system with version control and chunked keyword search via in-process SQLite (sql.js), auto-organized company tracking, and AI-generated billing summaries. Multi-workspace tenant isolation, deployed as a single Docker container.\\
+\textit{Tech:} React, Express, TypeScript, Google Gemini API, sql.js, SSE streaming, Docker
+
+\vspace{0.4em}
+
+\textbf{Infrastructure Audit Toolkit}\hfill 2026\\
+Discovery and auditing toolkit that scans Linux environments to map servers, services, containers, DNS records, and SSL certificates across distributed infrastructure. Generates structured documentation for operational visibility.\\
+\textit{Tech:} Python, Linux, Docker, SSH automation, DNS tooling
+
+\resheading{Education}
+
+\roleline{App Academy}{San Francisco, CA}{Full Stack Software Engineering}{}
+
+\vspace{0.2em}
+\roleline{University of Nevada, Las Vegas}{Las Vegas, NV}{Bachelor of Arts, Psychology}{}
+
+\vspace{0.2em}
+\roleline{College of Southern Nevada}{Las Vegas, NV}{Associate of Arts, Psychology}{}
+
+\end{document}

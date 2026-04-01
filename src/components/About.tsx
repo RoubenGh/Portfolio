@@ -21,15 +21,15 @@ const terminalLines = [
   { prompt: false, text: "\u25cf traefik.service - Traefik Proxy" },
   { prompt: false, text: "   Active: active (running) since Mar 01" },
   { prompt: true, text: "tail -f /var/log/nginx/access.log" },
-  { prompt: false, text: '200 GET /api/tickets 12ms' },
-  { prompt: false, text: '200 POST /api/scrape/run 847ms' },
-  { prompt: false, text: '200 GET /api/leads?page=3 8ms' },
-  { prompt: false, text: '200 GET /api/tickets/42 6ms' },
-  { prompt: false, text: '201 POST /api/tickets 134ms' },
-  { prompt: false, text: '200 GET /api/companies 9ms' },
+  { prompt: false, text: "200 GET /api/tickets 12ms" },
+  { prompt: false, text: "200 POST /api/scrape/run 847ms" },
+  { prompt: false, text: "200 GET /api/leads?page=3 8ms" },
+  { prompt: false, text: "200 GET /api/tickets/42 6ms" },
+  { prompt: false, text: "201 POST /api/tickets 134ms" },
+  { prompt: false, text: "200 GET /api/companies 9ms" },
 ];
 
-/* ── Code lines (longer for scrolling) ── */
+/* ── Code lines ── */
 const codeLines = [
   { text: "import { OpenAI } from 'openai';", color: "var(--color-fg-15)" },
   { text: "import { WikiService } from './WikiService';", color: "var(--color-fg-15)" },
@@ -82,7 +82,7 @@ const cardBase = {
 };
 
 /* ── Animated terminal ── */
-function AnimatedTerminal() {
+function AnimatedTerminal({ height = "200px" }: { height?: string }) {
   const [visibleLines, setVisibleLines] = useState(0);
   const [typingIndex, setTypingIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -97,14 +97,12 @@ function AnimatedTerminal() {
 
     const showNextLine = () => {
       if (lineIdx >= terminalLines.length) {
-        // Loop: reset after a pause
         setTimeout(() => {
           setVisibleLines(0);
           setTypingIndex(0);
           setIsTyping(false);
           hasStarted.current = false;
           lineIdx = 0;
-          // Re-trigger
           setTimeout(() => {
             hasStarted.current = true;
             showNextLine();
@@ -116,7 +114,6 @@ function AnimatedTerminal() {
       const line = terminalLines[lineIdx];
 
       if (line.prompt) {
-        // Type out prompt lines character by character
         setIsTyping(true);
         setTypingIndex(0);
         const chars = line.text.length;
@@ -128,7 +125,6 @@ function AnimatedTerminal() {
           if (charIdx < chars) {
             setTimeout(typeChar, 25 + Math.random() * 35);
           } else {
-            // Done typing, show this line fully and pause
             setTimeout(() => {
               setIsTyping(false);
               lineIdx++;
@@ -139,7 +135,6 @@ function AnimatedTerminal() {
         };
         setTimeout(typeChar, 400);
       } else {
-        // Output lines appear instantly
         lineIdx++;
         setVisibleLines(lineIdx);
         setTimeout(showNextLine, 60 + Math.random() * 40);
@@ -149,7 +144,6 @@ function AnimatedTerminal() {
     setTimeout(showNextLine, 1500);
   }, []);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
@@ -160,7 +154,7 @@ function AnimatedTerminal() {
     <div
       ref={containerRef}
       className="px-3.5 py-3 font-mono text-[9.5px] leading-[1.7] overflow-hidden"
-      style={{ height: "200px" }}
+      style={{ height }}
     >
       {terminalLines.slice(0, visibleLines).map((line, i) => (
         <div key={i}>
@@ -174,7 +168,6 @@ function AnimatedTerminal() {
           )}
         </div>
       ))}
-      {/* Currently typing line */}
       {isTyping && visibleLines < terminalLines.length && terminalLines[visibleLines]?.prompt && (
         <div>
           <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
@@ -190,7 +183,6 @@ function AnimatedTerminal() {
           />
         </div>
       )}
-      {/* Blinking cursor at end when idle */}
       {!isTyping && visibleLines > 0 && visibleLines < terminalLines.length && (
         <div>
           <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
@@ -208,14 +200,13 @@ function AnimatedTerminal() {
 }
 
 /* ── Scrolling code ── */
-function ScrollingCode() {
-  // Duplicate lines for seamless loop
+function ScrollingCode({ height = "170px" }: { height?: string }) {
   const doubled = [...codeLines, ...codeLines];
-  const lineHeight = 15.2; // ~9.5px font * 1.6 leading
+  const lineHeight = 15.2;
   const totalHeight = codeLines.length * lineHeight;
 
   return (
-    <div className="overflow-hidden" style={{ height: "170px" }}>
+    <div className="overflow-hidden" style={{ height }}>
       <motion.div
         animate={{ y: [0, -totalHeight] }}
         transition={{
@@ -231,6 +222,91 @@ function ScrollingCode() {
           </div>
         ))}
       </motion.div>
+    </div>
+  );
+}
+
+/* ── Terminal card (reusable) ── */
+function TerminalCard({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <div
+      className={`rounded-[14px] overflow-hidden ${className}`}
+      style={{ ...cardBase, ...style }}
+    >
+      <div
+        className="flex items-center gap-1.5 px-3.5 py-2.5"
+        style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+      >
+        <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
+        <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
+        <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
+        <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+          prod-web-03
+        </span>
+      </div>
+      <AnimatedTerminal height="160px" />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 30% 20%, rgba(127,207,255,0.03), transparent 60%)",
+        }}
+      />
+    </div>
+  );
+}
+
+/* ── Dashboard card (reusable) ── */
+function DashboardCard({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <div
+      className={`rounded-[14px] overflow-hidden ${className}`}
+      style={{ ...cardBase, ...style }}
+    >
+      <div
+        className="px-3.5 py-2.5"
+        style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+      >
+        <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+          Dashboard
+        </span>
+      </div>
+      <div className="rounded-b-[14px] overflow-hidden">
+        <img
+          src="/images/ai-ticketing/dashboard.png"
+          alt=""
+          className="w-full h-auto block"
+          style={{ opacity: 0.8 }}
+          loading="lazy"
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ── Code card (reusable) ── */
+function CodeCard({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <div
+      className={`rounded-[14px] overflow-hidden relative ${className}`}
+      style={{ ...cardBase, ...style }}
+    >
+      <div
+        className="flex items-center gap-1.5 px-3.5 py-2.5"
+        style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+      >
+        <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+          streamGuidance.ts
+        </span>
+      </div>
+      <ScrollingCode height="140px" />
+      <div
+        className="absolute top-[30px] left-0 right-0 h-[20px] pointer-events-none"
+        style={{ background: "linear-gradient(180deg, #181818, transparent)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[30px] pointer-events-none"
+        style={{ background: "linear-gradient(0deg, #0e0e0e, transparent)" }}
+      />
     </div>
   );
 }
@@ -257,6 +333,99 @@ export default function About() {
           </span>
         </FadeIn>
 
+        {/* ── Mobile fanned card stack ── */}
+        <div className="md:hidden mb-14">
+          <FadeIn delay={0.1}>
+            <div className="relative" style={{ height: "270px" }}>
+              {/* Back card: Code (deepest) */}
+              <div
+                className="absolute rounded-[14px] overflow-hidden"
+                style={{
+                  ...cardBase,
+                  top: "0px",
+                  left: "8%",
+                  right: "8%",
+                  height: "230px",
+                  opacity: 0.4,
+                  zIndex: 1,
+                }}
+              >
+                <div
+                  className="flex items-center gap-1.5 px-3.5 py-2.5"
+                  style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                >
+                  <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                    streamGuidance.ts
+                  </span>
+                </div>
+                <ScrollingCode height="190px" />
+              </div>
+              {/* Middle card: Dashboard */}
+              <div
+                className="absolute rounded-[14px] overflow-hidden"
+                style={{
+                  ...cardBase,
+                  top: "14px",
+                  left: "4%",
+                  right: "4%",
+                  height: "230px",
+                  opacity: 0.6,
+                  zIndex: 2,
+                }}
+              >
+                <div
+                  className="px-3.5 py-2.5"
+                  style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                >
+                  <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                    Dashboard
+                  </span>
+                </div>
+                <div className="overflow-hidden" style={{ height: "200px" }}>
+                  <img
+                    src="/images/ai-ticketing/dashboard.png"
+                    alt=""
+                    className="w-full h-auto block"
+                    style={{ opacity: 0.8 }}
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              {/* Front card: Terminal (topmost) */}
+              <div
+                className="absolute rounded-[14px] overflow-hidden"
+                style={{
+                  ...cardBase,
+                  top: "28px",
+                  left: "0%",
+                  right: "0%",
+                  height: "230px",
+                  zIndex: 3,
+                }}
+              >
+                <div
+                  className="flex items-center gap-1.5 px-3.5 py-2.5"
+                  style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                >
+                  <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
+                  <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
+                  <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
+                  <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                    prod-web-03
+                  </span>
+                </div>
+                <AnimatedTerminal height="195px" />
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse at 30% 20%, rgba(127,207,255,0.03), transparent 60%)",
+                  }}
+                />
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-6">
           <div className="md:col-span-5">
             <FadeIn delay={0.08}>
@@ -279,60 +448,24 @@ export default function About() {
               </p>
             </FadeIn>
 
-            {/* ── Overlapping cards ── */}
-            <div className="hidden md:block relative mt-12 group/cards" style={{ height: "440px" }}>
-              {/* Card 1: Terminal — animated typing */}
-              <FadeIn delay={0.2} y={40}>
+            {/* ── Desktop overlapping cards ── */}
+            <div className="hidden md:block relative mt-12 group/cards" style={{ height: "330px" }}>
+              {/* Card 2: Dashboard — back right */}
+              <FadeIn delay={0.35} y={40}>
                 <motion.div
-                  className="absolute rounded-[14px] overflow-hidden z-[3]"
+                  className="absolute rounded-[14px] overflow-hidden z-[1]"
                   style={{
                     ...cardBase,
                     top: "0px",
-                    left: "0px",
-                    width: "300px",
-                  }}
-                  whileHover={{ scale: 1.03, zIndex: 10 }}
-                  transition={{ duration: 0.4, ease }}
-                >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-1 group-hover/cards:-translate-y-2">
-                    {/* Title bar */}
-                    <div
-                      className="flex items-center gap-1.5 px-3.5 py-2.5"
-                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
-                    >
-                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
-                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
-                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
-                      <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
-                        prod-web-03
-                      </span>
-                    </div>
-                    <AnimatedTerminal />
-                    {/* Glow */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: "radial-gradient(ellipse at 30% 20%, rgba(127,207,255,0.03), transparent 60%)",
-                      }}
-                    />
-                  </div>
-                </motion.div>
-              </FadeIn>
-
-              {/* Card 2: Dashboard — overlapping right */}
-              <FadeIn delay={0.35} y={40}>
-                <motion.div
-                  className="absolute rounded-[14px] overflow-hidden z-[2]"
-                  style={{
-                    ...cardBase,
-                    top: "80px",
-                    left: "180px",
+                    left: "155px",
                     width: "220px",
+                    rotate: "4deg",
+                    opacity: 0.65,
                   }}
-                  whileHover={{ scale: 1.03, zIndex: 10 }}
+                  whileHover={{ scale: 1.03, rotate: 0, opacity: 1, zIndex: 10 }}
                   transition={{ duration: 0.4, ease }}
                 >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-2 group-hover/cards:-translate-y-1">
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-3 group-hover/cards:-translate-y-2">
                     <div
                       className="px-3.5 py-2.5"
                       style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
@@ -354,20 +487,58 @@ export default function About() {
                 </motion.div>
               </FadeIn>
 
-              {/* Card 3: Code — scrolling */}
+              {/* Card 1: Terminal — center front */}
+              <FadeIn delay={0.2} y={40}>
+                <motion.div
+                  className="absolute rounded-[14px] overflow-hidden z-[3]"
+                  style={{
+                    ...cardBase,
+                    top: "20px",
+                    left: "5px",
+                    width: "290px",
+                    rotate: "-1.5deg",
+                  }}
+                  whileHover={{ scale: 1.03, rotate: 0, zIndex: 10 }}
+                  transition={{ duration: 0.4, ease }}
+                >
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-2 group-hover/cards:-translate-y-1">
+                    <div
+                      className="flex items-center gap-1.5 px-3.5 py-2.5"
+                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+                    >
+                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
+                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
+                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
+                      <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                        prod-web-03
+                      </span>
+                    </div>
+                    <AnimatedTerminal />
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(ellipse at 30% 20%, rgba(127,207,255,0.03), transparent 60%)",
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              </FadeIn>
+
+              {/* Card 3: Code — front bottom */}
               <FadeIn delay={0.5} y={40}>
                 <motion.div
                   className="absolute rounded-[14px] overflow-hidden z-[4]"
                   style={{
                     ...cardBase,
-                    top: "250px",
-                    left: "20px",
-                    width: "270px",
+                    top: "158px",
+                    left: "22px",
+                    width: "265px",
+                    rotate: "1.5deg",
                   }}
-                  whileHover={{ scale: 1.03, zIndex: 10 }}
+                  whileHover={{ scale: 1.03, rotate: 0, zIndex: 10 }}
                   transition={{ duration: 0.4, ease }}
                 >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-0.5 group-hover/cards:translate-y-2">
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-0.5 group-hover/cards:translate-y-2">
                     <div
                       className="flex items-center gap-1.5 px-3.5 py-2.5"
                       style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
@@ -377,7 +548,6 @@ export default function About() {
                       </span>
                     </div>
                     <ScrollingCode />
-                    {/* Fade edges */}
                     <div
                       className="absolute top-[30px] left-0 right-0 h-[20px] pointer-events-none"
                       style={{ background: "linear-gradient(180deg, #181818, transparent)" }}
