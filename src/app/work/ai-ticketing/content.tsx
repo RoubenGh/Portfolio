@@ -14,6 +14,7 @@ import {
   PrincipleCards,
   ConstraintList,
   NextProject,
+  PipelineFlow,
 } from "@/components/CaseStudy";
 
 const ease = [0.165, 0.84, 0.44, 1] as const;
@@ -153,6 +154,15 @@ export default function AITicketingContent() {
                   title="How It Works"
                   subtitle="A multi-stage pipeline from raw email to completed ticket."
                 />
+
+                <PipelineFlow stages={[
+                  { label: "Email Input", sub: "paste / drag & drop" },
+                  { label: "Parse", sub: "PDF, images, docs" },
+                  { label: "AI Analysis", sub: "Gemini multimodal" },
+                  { label: "Task Generation", sub: "structured + prioritized" },
+                  { label: "Review & Save", sub: "SSE chat refinement" },
+                ]} />
+
                 <SectionBody>
                   <p>
                     A user pastes an email or support request into the ingestion page, optionally attaching images, PDFs, or Word documents via drag-and-drop. The Express backend processes attachments through a type-aware pipeline: images are base64-encoded for Gemini&apos;s vision input, PDFs extracted via pdf2json, Word docs via mammoth.

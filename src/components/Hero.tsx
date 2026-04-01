@@ -4,6 +4,35 @@ import { motion } from "framer-motion";
 
 const ease = [0.165, 0.84, 0.44, 1] as const;
 
+const NET_NODES: { id: number; x: number; y: number; glow?: boolean }[] = [
+  { id: 0,  x: 45,  y: 48,  glow: true  },
+  { id: 1,  x: 188, y: 22               },
+  { id: 2,  x: 338, y: 60,  glow: true  },
+  { id: 3,  x: 498, y: 18               },
+  { id: 4,  x: 638, y: 55,  glow: true  },
+  { id: 5,  x: 762, y: 28               },
+  { id: 6,  x: 812, y: 82               },
+  { id: 7,  x: 65,  y: 172              },
+  { id: 8,  x: 218, y: 192              },
+  { id: 9,  x: 392, y: 158, glow: true  },
+  { id: 10, x: 555, y: 185              },
+  { id: 11, x: 702, y: 162              },
+  { id: 12, x: 800, y: 195              },
+  { id: 13, x: 132, y: 318              },
+  { id: 14, x: 308, y: 348              },
+  { id: 15, x: 498, y: 328, glow: true  },
+  { id: 16, x: 668, y: 352              },
+  { id: 17, x: 798, y: 315              },
+];
+
+const NET_EDGES = [
+  [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],
+  [0,7],[7,8],[8,9],[9,10],[10,11],[11,12],
+  [1,8],[2,9],[4,10],[5,11],[6,12],
+  [7,13],[8,13],[9,14],[10,15],[11,16],[12,17],
+  [13,14],[14,15],[15,16],[16,17],
+];
+
 export default function Hero() {
   return (
     <section
@@ -92,25 +121,54 @@ export default function Hero() {
               className="relative px-7 pt-14 pb-28 md:px-12 md:pt-16 md:pb-40"
               style={{ background: "rgba(10,10,10,0.65)" }}
             >
-              {/* Diagonal shine — the Perry signature */}
-              <div
-                className="absolute inset-0 pointer-events-none overflow-hidden"
-                style={{ opacity: 0.04 }}
+              {/* Network graph */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                viewBox="0 0 820 380"
+                preserveAspectRatio="xMidYMid slice"
+                style={{ opacity: 0.4 }}
               >
-                <div
-                  className="absolute"
-                  style={{
-                    top: "-20%",
-                    left: "-10%",
-                    width: "140%",
-                    height: "140%",
-                    transform: "rotate(15deg)",
-                    background:
-                      "repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.4) 60px, rgba(255,255,255,0.4) 62px, transparent 62px, transparent 200px)",
-                    filter: "blur(8px)",
-                  }}
-                />
-              </div>
+                {NET_EDGES.map(([a, b]) => (
+                  <line
+                    key={`${a}-${b}`}
+                    x1={NET_NODES[a].x} y1={NET_NODES[a].y}
+                    x2={NET_NODES[b].x} y2={NET_NODES[b].y}
+                    stroke="rgba(127,207,255,0.1)"
+                    strokeWidth="0.8"
+                  />
+                ))}
+                {NET_NODES.map((node) => (
+                  <g key={node.id}>
+                    {node.glow && (
+                      <motion.circle
+                        cx={node.x} cy={node.y} r={4}
+                        fill="none"
+                        stroke="rgba(127,207,255,0.25)"
+                        strokeWidth="1"
+                        animate={{ r: [4, 13, 4], opacity: [0.4, 0, 0.4] }}
+                        transition={{
+                          duration: 3 + (node.id % 4) * 0.65,
+                          delay: node.id * 0.22,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    )}
+                    <motion.circle
+                      cx={node.x} cy={node.y}
+                      r={node.glow ? 2.5 : 1.8}
+                      fill="rgba(127,207,255,0.75)"
+                      animate={{ opacity: [0.15, 0.85, 0.15] }}
+                      transition={{
+                        duration: 3 + (node.id % 4) * 0.65,
+                        delay: node.id * 0.22,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </g>
+                ))}
+              </svg>
 
               {/* Headline */}
               <motion.h1

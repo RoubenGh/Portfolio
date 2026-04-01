@@ -74,6 +74,14 @@ const codeLines = [
   { text: "}", color: "var(--color-fg-80)" },
 ];
 
+const services = [
+  { name: "nginx-proxy",   uptime: "99.98%", upDays: "14d" },
+  { name: "api-gateway",   uptime: "99.99%", upDays: "14d" },
+  { name: "postgres-main", uptime: "100%",   upDays: "31d" },
+  { name: "redis-cache",   uptime: "100%",   upDays: "31d" },
+  { name: "traefik",       uptime: "99.97%", upDays: "61d" },
+];
+
 const cardBase = {
   background: "linear-gradient(190deg, #1c1c1c, #0e0e0e)",
   border: "1px solid rgba(242,242,242,0.06)",
@@ -222,6 +230,53 @@ function ScrollingCode({ height = "170px" }: { height?: string }) {
           </div>
         ))}
       </motion.div>
+    </div>
+  );
+}
+
+/* ── Status card ── */
+function StatusCard({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <div
+      className={`rounded-[14px] overflow-hidden ${className}`}
+      style={{ ...cardBase, ...style }}
+    >
+      <div
+        className="flex items-center justify-between px-3.5 py-2.5"
+        style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
+      >
+        <span className="text-[9.5px] uppercase tracking-[0.08em] text-[var(--color-fg-15)]">
+          system status
+        </span>
+        <div className="flex items-center gap-1.5">
+          <motion.div
+            animate={{ opacity: [1, 0.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-[5px] h-[5px] rounded-full"
+            style={{ background: "rgba(39,201,63,0.85)" }}
+          />
+          <span className="text-[8.5px] text-[var(--color-fg-15)]">all operational</span>
+        </div>
+      </div>
+      <div className="px-3.5 py-3 flex flex-col gap-[9px]">
+        {services.map((svc, i) => (
+          <div key={svc.name} className="flex items-center justify-between">
+            <div className="flex items-center gap-[6px]">
+              <motion.div
+                animate={{ opacity: [0.8, 0.25, 0.8] }}
+                transition={{ duration: 2.2 + i * 0.3, delay: i * 0.38, repeat: Infinity, ease: "easeInOut" }}
+                className="w-[4px] h-[4px] rounded-full shrink-0"
+                style={{ background: "rgba(39,201,63,0.75)" }}
+              />
+              <span className="text-[9px] font-mono text-[var(--color-fg-30)]">{svc.name}</span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[8.5px] text-[var(--color-fg-15)]">{svc.uptime}</span>
+              <span className="text-[8px] text-[var(--color-fg-10)]">↑{svc.upDays}</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -449,18 +504,39 @@ export default function About() {
             </FadeIn>
 
             {/* ── Desktop overlapping cards ── */}
-            <div className="hidden md:block relative mt-12 group/cards" style={{ height: "330px" }}>
+            <div className="hidden md:block relative mt-12 group/cards" style={{ height: "360px" }}>
+              {/* Card 0: Status — deepest */}
+              <FadeIn delay={0.15} y={40}>
+                <motion.div
+                  className="absolute rounded-[14px] overflow-hidden z-[0]"
+                  style={{
+                    ...cardBase,
+                    top: "0px",
+                    left: "188px",
+                    width: "168px",
+                    rotate: "8deg",
+                    opacity: 0.48,
+                  }}
+                  whileHover={{ scale: 1.03, rotate: 0, opacity: 1, zIndex: 10 }}
+                  transition={{ duration: 0.4, ease }}
+                >
+                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-5 group-hover/cards:-translate-y-3">
+                    <StatusCard />
+                  </div>
+                </motion.div>
+              </FadeIn>
+
               {/* Card 2: Dashboard — back right */}
               <FadeIn delay={0.35} y={40}>
                 <motion.div
                   className="absolute rounded-[14px] overflow-hidden z-[1]"
                   style={{
                     ...cardBase,
-                    top: "0px",
-                    left: "155px",
-                    width: "220px",
-                    rotate: "4deg",
-                    opacity: 0.65,
+                    top: "8px",
+                    left: "150px",
+                    width: "215px",
+                    rotate: "3.5deg",
+                    opacity: 0.62,
                   }}
                   whileHover={{ scale: 1.03, rotate: 0, opacity: 1, zIndex: 10 }}
                   transition={{ duration: 0.4, ease }}
@@ -493,9 +569,9 @@ export default function About() {
                   className="absolute rounded-[14px] overflow-hidden z-[3]"
                   style={{
                     ...cardBase,
-                    top: "20px",
+                    top: "26px",
                     left: "5px",
-                    width: "290px",
+                    width: "288px",
                     rotate: "-1.5deg",
                   }}
                   whileHover={{ scale: 1.03, rotate: 0, zIndex: 10 }}
@@ -530,9 +606,9 @@ export default function About() {
                   className="absolute rounded-[14px] overflow-hidden z-[4]"
                   style={{
                     ...cardBase,
-                    top: "158px",
-                    left: "22px",
-                    width: "265px",
+                    top: "168px",
+                    left: "20px",
+                    width: "263px",
                     rotate: "1.5deg",
                   }}
                   whileHover={{ scale: 1.03, rotate: 0, zIndex: 10 }}

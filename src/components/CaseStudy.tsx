@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, Fragment } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView, animate } from "framer-motion";
 import FadeIn from "./FadeIn";
 
 const ease = [0.165, 0.84, 0.44, 1] as const;
@@ -305,6 +305,37 @@ export function VisualFrame({
   );
 }
 
+/* ── Animated stat number ── */
+function AnimatedValue({ raw }: { raw: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-20px" });
+  const [display, setDisplay] = useState("0");
+
+  useEffect(() => {
+    if (!inView) return;
+    const hasPlus = raw.endsWith("+");
+    const hasK = raw.endsWith("K");
+    const isDecimal = /\d\.\d/.test(raw);
+    const target = parseFloat(raw.replace(/[+K,]/g, ""));
+    const suffix = hasPlus ? "+" : hasK ? "K" : "";
+    const controls = animate(0, target, {
+      duration: 1.8,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate(v) {
+        const formatted = isDecimal
+          ? v.toFixed(1)
+          : target >= 1000
+          ? Math.floor(v).toLocaleString()
+          : Math.floor(v).toString();
+        setDisplay(formatted + suffix);
+      },
+    });
+    return () => controls.stop();
+  }, [inView, raw]);
+
+  return <span ref={ref}>{display}</span>;
+}
+
 /* ── Stat callout ── */
 export function StatBlock({
   items,
@@ -324,7 +355,7 @@ export function StatBlock({
             }}
           >
             <span className="block text-[24px] md:text-[28px] font-medium tracking-[-0.5px] text-[var(--color-fg)]">
-              {item.value}
+              <AnimatedValue raw={item.value} />
             </span>
             <span className="block text-[12px] tracking-[0.1px] text-[var(--color-fg-30)] mt-1">
               {item.label}
@@ -419,6 +450,86 @@ export function ConstraintList({
             </div>
           </div>
         ))}
+      </div>
+    </FadeIn>
+  );
+}
+
+/* ── Pipeline flow diagram ── */
+export function PipelineFlow({
+  stages,
+}: {
+  stages: { label: string; sub?: string }[];
+}) {
+  const connCount = stages.length - 1;
+  const travelDuration = 1.5;
+  const stagger = 0.65;
+  const repeatDelay = connCount * stagger;
+
+  return (
+    <FadeIn>
+      <div className="my-12 md:my-16 -mx-1 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+        <div className="flex items-start px-1" style={{ minWidth: "max-content" }}>
+          {stages.map((stage, i) => (
+            <Fragment key={stage.label}>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.12, ease }}
+                className="flex flex-col items-center"
+                style={{ width: "100px" }}
+              >
+                <div
+                  className="w-full rounded-[10px] px-2.5 py-2.5 text-center"
+                  style={{
+                    background: "rgba(242,242,242,0.025)",
+                    border: "1px solid rgba(242,242,242,0.08)",
+                  }}
+                >
+                  <span className="text-[11px] font-medium text-[var(--color-fg-80)] leading-[1.3] block">
+                    {stage.label}
+                  </span>
+                </div>
+                {stage.sub && (
+                  <span className="text-[9.5px] text-[var(--color-fg-15)] mt-1.5 text-center leading-[1.3] px-1">
+                    {stage.sub}
+                  </span>
+                )}
+              </motion.div>
+
+              {i < stages.length - 1 && (
+                <div
+                  className="relative shrink-0 mt-[15px]"
+                  style={{ width: "48px" }}
+                >
+                  <div
+                    className="w-full h-px"
+                    style={{ background: "rgba(242,242,242,0.08)" }}
+                  />
+                  <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 rounded-full"
+                    style={{
+                      width: "5px",
+                      height: "5px",
+                      background: "rgba(127,207,255,0.85)",
+                      left: 0,
+                      boxShadow: "0 0 6px rgba(127,207,255,0.6)",
+                    }}
+                    animate={{ x: [0, 43] }}
+                    transition={{
+                      duration: travelDuration,
+                      delay: i * stagger,
+                      repeat: Infinity,
+                      repeatDelay,
+                      ease: "easeInOut",
+                    }}
+                  />
+                </div>
+              )}
+            </Fragment>
+          ))}
+        </div>
       </div>
     </FadeIn>
   );
