@@ -313,7 +313,7 @@ function CodeCard({ className = "", style = {} }: { className?: string; style?: 
 
 export default function About() {
   return (
-    <section id="about" className="relative py-36 md:py-52">
+    <section id="about" className="relative pt-20 pb-36 md:pt-24 md:pb-52">
       {/* Blink keyframe */}
       <style>{`@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }`}</style>
 

@@ -237,6 +237,7 @@ export function VisualFrame({
   aspectRatio = "16/9",
   imageSrc,
   zoomable = false,
+  wide = false,
 }: {
   bg: string;
   label: string;
@@ -245,25 +246,39 @@ export function VisualFrame({
   aspectRatio?: string;
   imageSrc?: string;
   zoomable?: boolean;
+  wide?: boolean;
 }) {
   return (
     <FadeIn>
-      <div className="my-10 md:my-14">
+      <div className={`my-12 md:my-16 ${wide ? "-mx-4 sm:-mx-8 md:-mx-12 lg:-mx-20" : ""}`}>
         <div
-          className="relative rounded-[12px] overflow-hidden"
+          className="relative rounded-[14px] overflow-hidden"
           style={{
             background: bg,
             aspectRatio: imageSrc ? undefined : aspectRatio,
             boxShadow:
-              "0 24px 48px rgba(0,0,0,0.35), inset 0 1px 0 rgba(242,242,242,0.03)",
-            border: "1px solid rgba(242,242,242,0.04)",
+              "0 40px 80px rgba(0,0,0,0.55), 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(242,242,242,0.05)",
+            border: "1px solid rgba(242,242,242,0.07)",
           }}
         >
+          {imageSrc && (
+            <div
+              className="flex items-center gap-[5px] px-3 py-2.5"
+              style={{
+                background: "rgba(18,18,18,0.9)",
+                borderBottom: "1px solid rgba(242,242,242,0.05)",
+              }}
+            >
+              <span className="w-[8px] h-[8px] rounded-full" style={{ background: "rgba(255,95,87,0.6)" }} />
+              <span className="w-[8px] h-[8px] rounded-full" style={{ background: "rgba(255,189,46,0.6)" }} />
+              <span className="w-[8px] h-[8px] rounded-full" style={{ background: "rgba(39,201,63,0.6)" }} />
+            </div>
+          )}
           {imageSrc ? (
             zoomable ? (
               <MagnifierImage src={imageSrc} alt={label} />
             ) : (
-              <img src={imageSrc} alt={label} className="w-full h-auto block md:brightness-100" loading="lazy" />
+              <img src={imageSrc} alt={label} className="w-full h-auto block" loading="lazy" />
             )
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -276,16 +291,12 @@ export function VisualFrame({
             </div>
           )}
           <div
-            className="absolute inset-0 pointer-events-none hidden md:block"
-            style={{ boxShadow: "inset 0 0 40px rgba(0,0,0,0.4)" }}
-          />
-          <div
-            className="absolute inset-0 pointer-events-none md:hidden"
-            style={{ boxShadow: "inset 0 0 15px rgba(0,0,0,0.2)" }}
+            className="absolute inset-0 pointer-events-none"
+            style={{ boxShadow: "inset 0 0 40px rgba(0,0,0,0.35)" }}
           />
         </div>
         {caption && (
-          <p className="mt-3 text-[12px] tracking-[0.1px] text-[var(--color-fg-15)]">
+          <p className={`mt-3 text-[12px] tracking-[0.1px] text-[var(--color-fg-15)] ${wide ? "px-4 sm:px-8 md:px-12 lg:px-20" : ""}`}>
             {caption}
           </p>
         )}

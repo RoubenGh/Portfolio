@@ -65,6 +65,17 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* Reduced motion — respect system preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 1; }
+  }
+}
+
 /* Scrollbar — thinner, quieter */
 ::-webkit-scrollbar {
   width: 4px;

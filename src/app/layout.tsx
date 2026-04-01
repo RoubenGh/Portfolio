@@ -4,7 +4,21 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Rouben Ghambaryan | Systems Engineer & Founder",
   description:
-    "I build scalable systems, automation pipelines, and production-grade infrastructure.",
+    "Building production infrastructure, automation pipelines, and systems that run at scale.",
+  openGraph: {
+    title: "Rouben Ghambaryan | Systems Engineer & Founder",
+    description:
+      "Building production infrastructure, automation pipelines, and systems that run at scale.",
+    url: "https://rouben.dev",
+    siteName: "Rouben Ghambaryan",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rouben Ghambaryan | Systems Engineer & Founder",
+    description:
+      "Building production infrastructure, automation pipelines, and systems that run at scale.",
+  },
 };
 
 export default function RootLayout({

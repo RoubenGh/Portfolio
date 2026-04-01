@@ -175,7 +175,7 @@ function ProjectCard({
 
 export default function Work() {
   return (
-    <section id="work" className="relative pt-6 pb-48 md:pb-64">
+    <section id="work" className="relative pt-6 pb-24 md:pb-32">
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
         style={{

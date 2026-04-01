@@ -124,9 +124,9 @@ export default function Hero() {
                     "0 4px 8px rgba(0,87,255,0.08), 0 -3px 8px rgba(255,90,0,0.05), 0 -4px 20px rgba(255,255,255,0.12)",
                 }}
               >
-                I build systems,
+                I build &amp; operate
                 <br />
-                infrastructure &
+                production systems
                 <br />
                 <span
                   className="gradient-text-fade inline-block mt-1"
@@ -137,26 +137,26 @@ export default function Hero() {
                     letterSpacing: "-1px",
                   }}
                 >
-                  automation.
+                  at scale.
                 </span>
               </motion.h1>
 
-              {/* Bio — pushed right, separated by generous space */}
+              {/* Bio — pushed right on desktop, full-width on mobile */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.6, ease }}
                 className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 md:mt-16"
               >
-                <div />
+                <div className="hidden md:block" />
                 <div>
                   <p className="text-[15px] md:text-[17px] font-medium leading-[1.45] text-[var(--color-fg)]">
-                    Engineer &amp; Founder.
+                    Systems Engineer &amp; Founder.
                     <br className="hidden md:block" />{" "}
                     Based in Los Angeles.
                   </p>
                   <p className="text-[13px] md:text-[14px] leading-[1.5] text-[var(--color-fg-30)] mt-2 tracking-[0.1px]">
-                    Founder of RLA Studios
+                    Keeping hundreds of environments running.
                   </p>
                 </div>
               </motion.div>
