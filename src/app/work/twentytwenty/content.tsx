@@ -80,30 +80,66 @@ export default function TwentyTwentyContent() {
             ]} />
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-6">
-            <a
-              href="https://github.com/RoubenGh/twentytwenty"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-30)] hover:text-[var(--color-fg)] transition-colors duration-300"
-            >
-              <span>View source</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M7 17L17 7M17 7H10M17 7v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/RoubenGh/twentytwenty/releases/latest"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-30)] hover:text-[var(--color-fg)] transition-colors duration-300"
-            >
-              <span>Download</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </div>
+          {/* Download call to action */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.35, ease }}
+            className="mt-8 rounded-[14px] p-5 md:p-6"
+            style={{
+              background: "linear-gradient(190deg, rgba(110,231,183,0.055), rgba(242,242,242,0.012))",
+              border: "1px solid rgba(110,231,183,0.14)",
+            }}
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+              <div>
+                <span className="block text-[15px] md:text-[16px] font-medium text-[var(--color-fg)] leading-[1.4]">
+                  Free and open source. Install it in about a minute.
+                </span>
+                <span className="block mt-1.5 text-[13px] leading-[1.6] text-[var(--color-fg-30)]">
+                  Linux (.deb, .AppImage, .rpm) &nbsp;·&nbsp; Windows (.msi, .exe) &nbsp;·&nbsp; macOS (universal .dmg)
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 flex-none">
+                <a
+                  href="https://github.com/RoubenGh/twentytwenty/releases/latest"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-[10px] px-5 py-2.5 text-[13.5px] font-medium tracking-[0.2px] transition-all duration-300 hover:brightness-110"
+                  style={{
+                    background: "rgba(110,231,183,0.92)",
+                    color: "#0a0c10",
+                  }}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span>Download</span>
+                </a>
+
+                <a
+                  href="https://github.com/RoubenGh/twentytwenty"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-[10px] px-4 py-2.5 text-[13.5px] font-medium tracking-[0.2px] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors duration-300"
+                  style={{
+                    background: "rgba(242,242,242,0.05)",
+                    border: "1px solid rgba(242,242,242,0.08)",
+                  }}
+                >
+                  <span>Source</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 17L17 7M17 7H10M17 7v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <p className="mt-4 pt-4 text-[12px] leading-[1.6] text-[var(--color-fg-15)]" style={{ borderTop: "1px solid rgba(242,242,242,0.05)" }}>
+              Builds are unsigned, because code signing certificates cost money this project does not spend. Windows will show a SmartScreen prompt (More info, then Run anyway) and macOS needs one command to clear the quarantine flag. The README covers both.
+            </p>
+          </motion.div>
 
           <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-[160px_1fr] gap-12 lg:gap-16">
             <TableOfContents sections={tocSections} />
