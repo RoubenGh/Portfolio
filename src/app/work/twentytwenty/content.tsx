@@ -102,7 +102,7 @@ export default function TwentyTwentyContent() {
                   href="https://github.com/RoubenGh/twentytwenty/releases/latest"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-[10px] px-5 py-2.5 text-[13.5px] font-medium tracking-[0.2px] transition-all duration-200 hover:brightness-110"
+                  className="inline-flex items-center gap-2 rounded-[10px] px-5 py-2.5 text-[13.5px] font-medium tracking-[0.2px] transition-all duration-300 hover:brightness-110"
                   style={{
                     background: "rgba(110,231,183,0.92)",
                     color: "#0a0c10",
@@ -118,7 +118,7 @@ export default function TwentyTwentyContent() {
                   href="https://github.com/RoubenGh/twentytwenty"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-[10px] px-4 py-2.5 text-[13.5px] font-medium tracking-[0.2px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+                  className="inline-flex items-center gap-2 rounded-[10px] px-4 py-2.5 text-[13.5px] font-medium tracking-[0.2px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-300"
                   style={{
                     background: "rgba(242,242,242,0.05)",
                     border: "1px solid rgba(242,242,242,0.08)",
@@ -279,7 +279,6 @@ export default function TwentyTwentyContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #11131a 0%, #0c0e14 100%)"
                   label="Overlay"
-                  labelColor="rgba(110,231,183,0.55)"
                   imageSrc="/images/twentytwenty/overlay.png"
                   caption="The break overlay over an editor. The dim is transparent by design, so the work underneath stays visible."
                   zoomable

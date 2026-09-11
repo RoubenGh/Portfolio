@@ -3,13 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
-// Shared easing curve used site-wide by framer-motion. Kept here for the
-// continuous node-glow loops below; the entrance/reveal animations were
-// moved to plain CSS (see the "Hero" block at the end of globals.css) so
-// the hero is guaranteed to reach a fully visible state even if React
-// never hydrates. The CSS keyframes use the same cubic-bezier values.
-const ease = [0.165, 0.84, 0.44, 1] as const;
-
 const NET_NODES: { id: number; x: number; y: number; glow?: boolean }[] = [
   { id: 0,  x: 45,  y: 48,  glow: true  },
   { id: 1,  x: 188, y: 22               },
@@ -356,7 +349,7 @@ export default function Hero() {
                 <div className="flex">
                   <a
                     href="#work"
-                    className="hero-anim group inline-flex items-center gap-2 rounded-full pl-5 pr-4 py-2.5 text-[13px] font-medium tracking-[0.1px] text-[var(--text-primary)] hover:text-white transition-colors duration-200"
+                    className="hero-anim group inline-flex items-center gap-2 rounded-full pl-5 pr-4 py-2.5 text-[13px] font-medium tracking-[0.1px] text-[var(--text-primary)] hover:text-white transition-colors duration-300"
                     style={{
                       background: "rgba(242,242,242,0.04)",
                       border: "1px solid rgba(242,242,242,0.1)",
@@ -372,7 +365,7 @@ export default function Hero() {
                       height="14"
                       viewBox="0 0 24 24"
                       fill="none"
-                      className="group-hover:translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-200"
+                      className="group-hover:translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-300"
                     >
                       <path
                         d="M7 17L17 7M17 7H8M17 7V16"

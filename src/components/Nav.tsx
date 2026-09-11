@@ -200,7 +200,7 @@ export default function Nav() {
         >
           {/* Left — Identity */}
           <Link href="/" className="flex flex-col gap-0.5 group">
-            <span className="text-[14px] font-medium tracking-[-0.01em] text-[var(--text-primary)] group-hover:text-white transition-colors duration-200">
+            <span className="text-[14px] font-medium tracking-[-0.01em] text-[var(--text-primary)] group-hover:text-white transition-colors duration-300">
               Rouben Ghambaryan
             </span>
             <span className="text-[11px] tracking-[0.15px] text-[var(--text-body)]">
@@ -233,7 +233,7 @@ export default function Nav() {
               <MagneticLink
                 href="/#work"
                 onElementRef={(el) => (workLinkRef.current = el)}
-                className={`relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] transition-colors duration-200 ${
+                className={`relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] transition-colors duration-300 ${
                   activeSection === "work"
                     ? "text-white"
                     : "text-[var(--text-primary)] hover:text-white"
@@ -244,7 +244,7 @@ export default function Nav() {
               <MagneticLink
                 href="/#about"
                 onElementRef={(el) => (aboutLinkRef.current = el)}
-                className={`relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] transition-colors duration-200 ${
+                className={`relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] transition-colors duration-300 ${
                   activeSection === "about"
                     ? "text-[var(--text-primary)]"
                     : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
@@ -261,7 +261,7 @@ export default function Nav() {
               href="https://www.linkedin.com/in/rouben-ghambaryan/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-200"
+              className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
             >
               LinkedIn
             </MagneticLink>
@@ -269,7 +269,7 @@ export default function Nav() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-200"
+              className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
             >
               Resume
             </MagneticLink>
@@ -287,12 +287,12 @@ export default function Nav() {
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-4 h-[1.5px] bg-[var(--color-fg-80)] transition-all duration-200 ${
+              className={`block w-4 h-[1.5px] bg-[var(--color-fg-80)] transition-all duration-300 ${
                 mobileOpen ? "rotate-45 translate-y-[3.5px]" : ""
               }`}
             />
             <span
-              className={`block w-4 h-[1.5px] bg-[var(--color-fg-80)] transition-all duration-200 mt-[5px] ${
+              className={`block w-4 h-[1.5px] bg-[var(--color-fg-80)] transition-all duration-300 mt-[5px] ${
                 mobileOpen ? "-rotate-45 -translate-y-[3px]" : ""
               }`}
             />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { CSSProperties, PointerEvent as ReactPointerEvent, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 /** Inline style helper for CSS custom properties (mirrors About.tsx's
  *  aboutVars) — typed loosely because React's CSSProperties doesn't know
@@ -26,12 +26,10 @@ function cssVars(vars: Record<string, string>): CSSProperties {
  *    scanner sweep, pipeline glow) is a plain CSS @keyframes animation on
  *    `transform`/`opacity` only. There is no per-frame JavaScript driving
  *    any of it.
- *  - The only JS in the animation path is (a) an IntersectionObserver
- *    that toggles a single `.opswall--paused` class when the section
- *    scrolls out of view, which flips `animation-play-state` on every
- *    animated node at once via one CSS rule, and (b) a rAF-throttled
- *    pointer-parallax transform on the whole wall (fine pointers only),
- *    mirroring Hero.tsx's constellation parallax.
+ *  - The only JS in the animation path is an IntersectionObserver that
+ *    toggles a single `.opswall--paused` class when the section scrolls
+ *    out of view, which flips `animation-play-state` on every animated
+ *    node at once via one CSS rule.
  *  - Panel count is capped at 9 live instances (3 columns x 3 panels),
  *    with the 3rd column hidden below `md` so a narrow viewport only
  *    ever renders 6.
@@ -44,7 +42,6 @@ function cssVars(vars: Record<string, string>): CSSProperties {
  *    for the drift loop, without changing what any panel visually reads
  *    as at a glance.
  *
-
  * Visibility contract: every panel's real content (host names, log
  * lines, bar heights, dot fills) is drawn with static, non-animated
  * class-level styles and NO inline `opacity: 0` — the animated layers on
@@ -423,21 +420,7 @@ function WallColumn({
 
 export default function OpsWall() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const parallaxRef = useRef<HTMLDivElement>(null);
-  const pointerRef = useRef<{ x: number; y: number } | null>(null);
-  const rafRef = useRef<number | null>(null);
   const [paused, setPaused] = useState(true);
-  const [parallaxEnabled, setParallaxEnabled] = useState(false);
-
-  // Fine-pointer + reduced-motion gate for the wall's cursor parallax —
-  // same matchMedia + mounted-gated approach as Hero's constellation and
-  // the previous card stack's tilt, so it can't cause a hydration
-  // mismatch (SSR/first-paint markup never depends on this).
-  useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setParallaxEnabled(fine && !reduced);
-  }, []);
 
   // Pause every CSS animation in the wall the moment it scrolls off
   // screen — a visitor who never scrolls to About pays nothing for it.
@@ -457,52 +440,14 @@ export default function OpsWall() {
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  const applyParallax = () => {
-    rafRef.current = null;
-    const el = parallaxRef.current;
-    if (!el) return;
-    const p = pointerRef.current;
-    if (!p) {
-      el.style.transform = "";
-      return;
-    }
-    el.style.transform = `translate3d(${(p.x * 6).toFixed(2)}px, ${(p.y * 5).toFixed(2)}px, 0)`;
-  };
-
-  const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    const rect = rootRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    pointerRef.current = {
-      x: ((e.clientX - rect.left) / rect.width) * 2 - 1,
-      y: ((e.clientY - rect.top) / rect.height) * 2 - 1,
-    };
-    if (rafRef.current == null) rafRef.current = requestAnimationFrame(applyParallax);
-  };
-
-  const handlePointerLeave = () => {
-    pointerRef.current = null;
-    if (rafRef.current == null) rafRef.current = requestAnimationFrame(applyParallax);
-  };
-
   return (
     <div
       ref={rootRef}
       aria-hidden="true"
       className={`about-reveal opswall relative mt-12 overflow-hidden${paused ? " opswall--paused" : ""}`}
       style={{ height: SET_H, ...cssVars({ "--about-delay": "0.3s", "--about-rise-y": "34px" }) }}
-      onPointerMove={parallaxEnabled ? handlePointerMove : undefined}
-      onPointerLeave={parallaxEnabled ? handlePointerLeave : undefined}
     >
-      <div
-        ref={parallaxRef}
-        className="opswall-parallax grid grid-cols-2 md:grid-cols-3 gap-3 h-full"
-      >
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 h-full">
         <WallColumn panels={col1} duration={26} />
         <WallColumn panels={col2} duration={21} delay={5} />
         <div className="hidden md:block h-full">

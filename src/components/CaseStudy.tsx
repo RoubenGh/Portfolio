@@ -212,14 +212,14 @@ export function BackButton() {
     <MountReveal y={16}>
       <Link
         href="/#work"
-        className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-200 group"
+        className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300 group"
       >
         <svg
           width="16"
           height="16"
           viewBox="0 0 24 24"
           fill="none"
-          className="group-hover:-translate-x-0.5 transition-transform duration-200"
+          className="group-hover:-translate-x-0.5 transition-transform duration-300"
         >
           <path
             d="M19 12H5M5 12l6 6M5 12l6-6"
@@ -231,45 +231,6 @@ export function BackButton() {
         </svg>
         Back to work
       </Link>
-    </MountReveal>
-  );
-}
-
-/* ── Project hero banner ── */
-export function ProjectHero({
-  bannerBg,
-  bannerLabel,
-  bannerLabelColor,
-}: {
-  bannerBg: string;
-  bannerLabel: string;
-  bannerLabelColor: string;
-}) {
-  return (
-    <MountReveal y={40}>
-      <div
-        className="relative rounded-[16px] overflow-hidden"
-        style={{
-          background: bannerBg,
-          aspectRatio: "21/9",
-          boxShadow:
-            "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
-          border: "1px solid rgba(242,242,242,0.05)",
-        }}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span
-            className="text-[48px] md:text-[72px] font-semibold tracking-[-2px] select-none"
-            style={{ color: bannerLabelColor }}
-          >
-            {bannerLabel}
-          </span>
-        </div>
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }}
-        />
-      </div>
     </MountReveal>
   );
 }
@@ -382,7 +343,7 @@ export function TableOfContents({
                 linkRefs.current[s.id] = el;
               }}
               href={`#${s.id}`}
-              className={`text-[12px] font-medium tracking-[0.1px] transition-colors duration-200 ${
+              className={`text-[12px] font-medium tracking-[0.1px] transition-colors duration-300 ${
                 active === s.id
                   ? "text-[var(--text-primary)]"
                   : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
@@ -465,7 +426,7 @@ function MagnifierImage({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        className="w-full h-auto block transition-transform duration-200 ease-out"
+        className="w-full h-auto block transition-transform duration-300 ease-out"
         style={{
           transform: zoomed ? "scale(2.5)" : "scale(1)",
           transformOrigin: origin,
@@ -480,19 +441,15 @@ function MagnifierImage({ src, alt }: { src: string; alt: string }) {
 export function VisualFrame({
   bg,
   label,
-  labelColor,
   caption,
-  aspectRatio = "16/9",
   imageSrc,
   zoomable = false,
   wide = false,
 }: {
   bg: string;
   label: string;
-  labelColor: string;
   caption?: string;
-  aspectRatio?: string;
-  imageSrc?: string;
+  imageSrc: string;
   zoomable?: boolean;
   wide?: boolean;
 }) {
@@ -501,14 +458,12 @@ export function VisualFrame({
       className="relative rounded-[14px] overflow-hidden"
       style={{
         background: bg,
-        aspectRatio: imageSrc ? undefined : aspectRatio,
         boxShadow:
           "0 40px 80px rgba(0,0,0,0.55), 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(242,242,242,0.05)",
         border: "1px solid rgba(242,242,242,0.07)",
       }}
     >
-      {imageSrc && (
-        <div
+      <div
           className="flex items-center gap-[5px] px-3 py-2.5"
           style={{
             background: "rgba(18,18,18,0.9)",
@@ -518,23 +473,11 @@ export function VisualFrame({
           <span className="w-[8px] h-[8px] rounded-full" style={{ background: "rgba(255,95,87,0.6)" }} />
           <span className="w-[8px] h-[8px] rounded-full" style={{ background: "rgba(255,189,46,0.6)" }} />
           <span className="w-[8px] h-[8px] rounded-full" style={{ background: "rgba(39,201,63,0.6)" }} />
-        </div>
-      )}
-      {imageSrc ? (
-        zoomable ? (
-          <MagnifierImage src={imageSrc} alt={label} />
-        ) : (
-          <img src={imageSrc} alt={label} className="w-full h-auto block" loading="lazy" />
-        )
+      </div>
+      {zoomable ? (
+        <MagnifierImage src={imageSrc} alt={label} />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span
-            className="text-[24px] md:text-[32px] font-medium tracking-[-0.5px] select-none"
-            style={{ color: labelColor }}
-          >
-            {label}
-          </span>
-        </div>
+        <img src={imageSrc} alt={label} className="w-full h-auto block" loading="lazy" />
       )}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -546,11 +489,9 @@ export function VisualFrame({
   return (
     <Reveal variant="scale" duration={0.9}>
       <div className={`my-12 md:my-16 ${wide ? "-mx-4 sm:-mx-8 md:-mx-12 lg:-mx-20" : ""}`}>
-        {/* Screenshots are the best visual asset on the page — give them
-            a mild scroll-linked drift instead of sitting dead still.
-            Only real screenshots parallax; the flat-color placeholder
-            variant (no imageSrc) stays static. */}
-        {imageSrc ? <ParallaxWrap range={16}>{frame}</ParallaxWrap> : frame}
+        {/* Screenshots are the best visual asset on the page, so give them
+            a mild scroll-linked drift instead of sitting dead still. */}
+        <ParallaxWrap range={16}>{frame}</ParallaxWrap>
         {caption && (
           <p className={`mt-3 text-[12px] tracking-[0.1px] text-[var(--text-muted)] ${wide ? "px-4 sm:px-8 md:px-12 lg:px-20" : ""}`}>
             {caption}
@@ -589,7 +530,7 @@ function AnimatedValue({ raw }: { raw: string }) {
     }
     const isDecimal = /\.\d/.test(numStr);
     const controls = animate(0, target, {
-      duration: 1.05,
+      duration: 1.8,
       ease: [0.16, 1, 0.3, 1],
       onUpdate(v) {
         const formatted = isDecimal
@@ -652,7 +593,7 @@ export function PrincipleCards({
       {items.map((item, i) => (
         <Reveal key={item.number} variant="up" delay={i * 0.08}>
           <div
-            className="rounded-[12px] p-5 md:p-6 h-full transition-[border-color] duration-200"
+            className="rounded-[12px] p-5 md:p-6 h-full transition-[border-color] duration-500"
             style={{
               background: "linear-gradient(190deg, rgba(242,242,242,0.03), rgba(242,242,242,0.01))",
               border: "1px solid rgba(242,242,242,0.04)",
@@ -832,7 +773,7 @@ export function NextProject({
         </span>
         <Link href={href} className="block group">
           <div
-            className="rounded-[16px] p-6 md:p-7 transition-[border-color] duration-200"
+            className="rounded-[16px] p-6 md:p-7 transition-[border-color] duration-500"
             style={{
               background: "linear-gradient(190deg, #1a1a1a, #0e0e0e)",
               border: "1px solid rgba(242,242,242,0.04)",
@@ -858,7 +799,7 @@ export function NextProject({
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                className="text-[var(--color-fg-15)] group-hover:text-[var(--color-fg-50)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
+                className="text-[var(--color-fg-15)] group-hover:text-[var(--color-fg-50)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-500"
               >
                 <path
                   d="M7 17L17 7M17 7H10M17 7v7"

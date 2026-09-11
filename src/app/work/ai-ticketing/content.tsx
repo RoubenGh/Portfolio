@@ -84,7 +84,7 @@ export default function AITicketingContent() {
               href="https://tickets.rouben.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300"
             >
               <span>Visit live site</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -169,7 +169,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Email Ingestion"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/ingestion.png"
                   caption="3.0 - The ingestion page where raw emails and attachments are pasted for AI processing."
                 />
@@ -183,7 +182,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Task Generation & Refinement"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/ticket-creation.png"
                   caption="3.1 - AI-generated tasks and the streaming chat refinement interface. Users can modify tasks, adjust priorities, and ask follow-up questions before saving."
                 />
@@ -243,7 +241,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Ticket Detail"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/ticketdetail.png"
                   caption="5.0 - Ticket detail view with task checklist, priority badge, company name, and inline editing."
                 />
@@ -268,7 +265,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Technical Guidance"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/technicalguidance.png"
                   caption="6.0 - AI-generated technical guidance with streaming follow-up chat. Context includes the ticket, tasks, and relevant wiki pages."
                 />
@@ -296,7 +292,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Wiki"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/wiki.png"
                   caption="7.0 - Wiki page list with categories, tags, and search."
                 />
@@ -304,7 +299,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Wiki Document"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/wiki2.png"
                   caption="7.1 - A wiki document with version history and content editing."
                 />
@@ -332,7 +326,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Companies"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/companies.png"
                   caption="8.0 - Auto-organized company list with ticket counts, active/completed stats, and last activity."
                 />
@@ -357,7 +350,6 @@ export default function AITicketingContent() {
                 <VisualFrame
                   bg="linear-gradient(135deg, #141414 0%, #0e0e0e 50%, #0a0a0a 100%)"
                   label="Job Description"
-                  labelColor="rgba(242,242,242,0.25)"
                   imageSrc="/images/ai-ticketing/description.png"
                   caption="9.0 - AI-generated billing description summarizing completed work in past tense for invoicing."
                 />

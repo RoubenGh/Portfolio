@@ -87,7 +87,7 @@ export default function RLAStudiosContent() {
               href="https://rlastudios.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300"
             >
               <span>Visit live site</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -127,7 +127,6 @@ export default function RLAStudiosContent() {
                 <VisualFrame
                   bg="#ffffff"
                   label="RLA Studios Website"
-                  labelColor="rgba(0,0,0,0.3)"
                   caption="1.0 - rlastudios.com, the public-facing marketing site with lead capture, built alongside the platform."
                   imageSrc="/images/rla-studios/website.png"
                 />
@@ -178,7 +177,6 @@ export default function RLAStudiosContent() {
                 <VisualFrame
                   bg="#f5f5f5"
                   label="Admin Dashboard"
-                  labelColor="rgba(0,0,0,0.3)"
                   caption="2.0 - Admin dashboard showing integration status, quick actions, and lead management."
                   imageSrc="/images/rla-studios/dashboard.png"
                 />
@@ -214,7 +212,6 @@ export default function RLAStudiosContent() {
                 <VisualFrame
                   bg="#f5f5f5"
                   label="Lead Scraper"
-                  labelColor="rgba(0,0,0,0.3)"
                   caption="3.0 - Paste Redfin/Compass URLs, watch real-time WebSocket progress as each listing is scraped and written to Airtable."
                   imageSrc="/images/rla-studios/scraper.png"
                 />
@@ -239,7 +236,6 @@ export default function RLAStudiosContent() {
                 <VisualFrame
                   bg="#f5f5f5"
                   label="Invoice Generator"
-                  labelColor="rgba(0,0,0,0.3)"
                   caption="4.0 - Select services from the catalog, preview the branded PDF in real-time, then generate and auto-upload to Dropbox."
                   imageSrc="/images/rla-studios/invoice.png"
                 />
@@ -270,7 +266,6 @@ export default function RLAStudiosContent() {
                 <VisualFrame
                   bg="#1a1a1a"
                   label="Client CRM"
-                  labelColor="rgba(255,255,255,0.3)"
                   caption="5.0 - Nearly 2,000 agent leads with outreach status, follow-up tracking, and one-tap templated messaging."
                   imageSrc="/images/rla-studios/crm.png"
                   zoomable
@@ -306,7 +301,6 @@ export default function RLAStudiosContent() {
                 <VisualFrame
                   bg="#f5f5f5"
                   label="Commission Tracking"
-                  labelColor="rgba(0,0,0,0.3)"
                   caption="5.2 - Commission ledger with invoice links, sold-by attribution, and payment status toggling."
                   imageSrc="/images/rla-studios/commissions.png"
                 />

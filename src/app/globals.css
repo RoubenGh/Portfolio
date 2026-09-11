@@ -7,10 +7,7 @@
   --color-fg: #f2f2f2;
   --color-fg-80: rgba(242, 242, 242, 0.8);
   --color-fg-50: rgba(242, 242, 242, 0.5);
-  --color-fg-30: rgba(242, 242, 242, 0.3);
   --color-fg-15: rgba(242, 242, 242, 0.15);
-  --color-fg-10: rgba(242, 242, 242, 0.1);
-  --color-fg-05: rgba(242, 242, 242, 0.05);
 }
 
 /*
@@ -23,7 +20,9 @@
  *   --text-faint     alpha 0.4  ->  3.49:1  genuinely decorative text only
  *     (e.g. the footer copyright line, the About section's code/terminal
  *     mockup chrome) — never used for content a user needs to read.
- * The --color-fg-* variables above are kept for backward compatibility.
+ * The --color-fg-* variables above are the few remaining pre-token
+ * colours still referenced directly by var(); everything else should
+ * use the semantic --text-* tokens.
  */
 :root {
   --text-primary: rgba(242, 242, 242, 1);
@@ -155,7 +154,7 @@ body {
 
 .hero-anim {
   opacity: 0;
-  animation: hero-rise 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: hero-rise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--hero-delay, 0s);
 }
 
@@ -169,7 +168,7 @@ body {
 .hero-line-inner {
   display: block;
   transform: translateY(112%);
-  animation: hero-line-rise 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: hero-line-rise 0.85s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--hero-delay, 0s);
 }
 
@@ -177,7 +176,7 @@ body {
    loop lives on a separate child element (.hero-scroll-line) so the two
    animations never target the same properties on the same element. */
 .hero-scroll-line {
-  animation: hero-scroll-bounce 1.8s ease-in-out infinite;
+  animation: hero-scroll-bounce 2.4s ease-in-out infinite;
   animation-delay: var(--hero-delay, 0s);
 }
 
@@ -285,7 +284,7 @@ body {
 
 .about-reveal {
   opacity: 0;
-  animation: about-rise 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: about-rise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--about-delay, 0s);
 }
 
@@ -299,7 +298,7 @@ body {
 .about-line-inner {
   display: block;
   transform: translateY(112%);
-  animation: about-line-rise 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: about-line-rise 0.85s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--about-delay, 0s);
 }
 
@@ -325,9 +324,7 @@ body {
    @keyframes animation on transform/opacity only, so none of it costs
    per-frame JavaScript. OpsWall.tsx only ever toggles the single
    `.opswall--paused` class (via IntersectionObserver, so an off-screen
-   wall costs nothing) and a rAF-throttled pointer-parallax transform on
-   `.opswall-parallax` (fine pointers only, same pattern as Hero's
-   constellation).
+   wall costs nothing).
 
    Visibility: every panel's real content is drawn with static,
    non-animated styles and no inline `opacity: 0` — these decorative
@@ -401,10 +398,6 @@ body {
   animation: wall-stage-glow 1.9s ease-in-out infinite;
 }
 
-.opswall-parallax {
-  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
 /* Single switch that pauses every animated node in the wall at once —
    driven by OpsWall.tsx's IntersectionObserver. */
 .opswall--paused .wall-col-track,
@@ -434,9 +427,5 @@ body {
   .wall-stage-glow {
     animation: none !important;
     opacity: 0 !important;
-  }
-  .opswall-parallax {
-    transition: none !important;
-    transform: none !important;
   }
 }

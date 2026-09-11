@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // Absolute base for OG/Twitter image URLs. Without it Next falls back
+  // to http://localhost:3000 and social previews resolve to nothing.
+  metadataBase: new URL("https://rouben.dev"),
   title: "Rouben Ghambaryan | Systems Engineer & Founder",
   description:
     "Building production infrastructure, automation pipelines, and systems that run at scale.",

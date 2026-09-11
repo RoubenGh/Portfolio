@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
 export const alt = "Rouben Ghambaryan — Systems Engineer & Founder";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -30,9 +29,11 @@ export default function OgImage() {
           rouben.dev
         </span>
 
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontSize: "82px",
               fontWeight: 500,
               color: "#f2f2f2",
@@ -42,8 +43,8 @@ export default function OgImage() {
               fontFamily: "system-ui, sans-serif",
             }}
           >
-            Systems Engineer
-            <br />& Founder.
+            <span>Systems Engineer</span>
+            <span>&amp; Founder.</span>
           </div>
           <div
             style={{
