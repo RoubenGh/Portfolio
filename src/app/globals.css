@@ -13,6 +13,26 @@
   --color-fg-05: rgba(242, 242, 242, 0.05);
 }
 
+/*
+ * Semantic text tokens — chosen for WCAG AA contrast against --color-bg
+ * (rgb(10,10,10)), measured empirically in-browser rather than calculated:
+ *   --text-primary   alpha 1.0  -> 17.68:1  headings
+ *   --text-secondary alpha 0.8  -> 11.30:1  secondary headings / emphasis
+ *   --text-body      alpha 0.6  ->  6.63:1  body copy, descriptions, meta
+ *   --text-muted     alpha 0.5  ->  4.88:1  labels/captions that carry meaning
+ *   --text-faint     alpha 0.4  ->  3.49:1  genuinely decorative text only
+ *     (e.g. the footer copyright line, the About section's code/terminal
+ *     mockup chrome) — never used for content a user needs to read.
+ * The --color-fg-* variables above are kept for backward compatibility.
+ */
+:root {
+  --text-primary: rgba(242, 242, 242, 1);
+  --text-secondary: rgba(242, 242, 242, 0.8);
+  --text-body: rgba(242, 242, 242, 0.6);
+  --text-muted: rgba(242, 242, 242, 0.5);
+  --text-faint: rgba(242, 242, 242, 0.4);
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;

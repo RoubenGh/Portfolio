@@ -48,10 +48,10 @@ export default function RLAStudiosContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease }}
           >
-            <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--color-fg)]">
+            <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--text-primary)]">
               Automated Lead Generation System
             </h1>
-            <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--color-fg-30)] max-w-[600px]">
+            <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--text-body)] max-w-[600px]">
               Scrapes real estate listings, extracts agent data, and syncs directly into a CRM.
             </p>
           </motion.div>
@@ -94,7 +94,7 @@ export default function RLAStudiosContent() {
               href="https://rlastudios.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-30)] hover:text-[var(--color-fg)] transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300"
             >
               <span>Visit live site</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -304,7 +304,7 @@ export default function RLAStudiosContent() {
                         <source src="/images/rla-studios/clicktotext.MP4" type="video/mp4" />
                       </video>
                     </div>
-                    <p className="mt-3 text-[12px] tracking-[0.1px] text-[var(--color-fg-15)]">
+                    <p className="mt-3 text-[12px] tracking-[0.1px] text-[var(--text-muted)]">
                       5.1 - One-tap outreach: click a button, get a pre-filled SMS with the agent&apos;s name and listing address pulled from the CRM.
                     </p>
                   </div>
@@ -373,16 +373,16 @@ export default function RLAStudiosContent() {
                 />
                 <SectionBody>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Scraping reliability across platforms.</strong> Redfin and Compass have completely different HTML structures and no consistent API. The scraper uses a multi-strategy pipeline: regex on the &ldquo;Listed by&rdquo; section first, then JSON-LD structured data, then DuckDuckGo HTML search as a fallback. Property type detection filters out land/lots to avoid irrelevant leads.
+                    <strong className="text-[var(--text-secondary)]">Scraping reliability across platforms.</strong> Redfin and Compass have completely different HTML structures and no consistent API. The scraper uses a multi-strategy pipeline: regex on the &ldquo;Listed by&rdquo; section first, then JSON-LD structured data, then DuckDuckGo HTML search as a fallback. Property type detection filters out land/lots to avoid irrelevant leads.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Invoice PDF pixel alignment.</strong> Overlaying dynamic text on branded background templates (Canva-exported PNGs) required a manual coordinate system with per-field (x, y) tuning. A debug grid mode draws 10/50/100-point gridlines to help align text visually. Text wrapping for long service descriptions uses ReportLab&apos;s simpleSplit with column-width constraints to prevent overlap.
+                    <strong className="text-[var(--text-secondary)]">Invoice PDF pixel alignment.</strong> Overlaying dynamic text on branded background templates (Canva-exported PNGs) required a manual coordinate system with per-field (x, y) tuning. A debug grid mode draws 10/50/100-point gridlines to help align text visually. Text wrapping for long service descriptions uses ReportLab&apos;s simpleSplit with column-width constraints to prevent overlap.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Airtable rate limits.</strong> Airtable enforces 5 requests/second. The service layer implements exponential backoff with 3 retries on 429 responses and connection errors. Pagination handles bases with 100+ records via offset tokens.
+                    <strong className="text-[var(--text-secondary)]">Airtable rate limits.</strong> Airtable enforces 5 requests/second. The service layer implements exponential backoff with 3 retries on 429 responses and connection errors. Pagination handles bases with 100+ records via offset tokens.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">WebSocket proxy through Express.</strong> The scraper&apos;s WebSocket connection originates from the browser, hits Express, and needs to reach FastAPI. The httpServer upgrade handler manually pipes the TCP connection through, forwarding the internal API key.
+                    <strong className="text-[var(--text-secondary)]">WebSocket proxy through Express.</strong> The scraper&apos;s WebSocket connection originates from the browser, hits Express, and needs to reach FastAPI. The httpServer upgrade handler manually pipes the TCP connection through, forwarding the internal API key.
                   </p>
                 </SectionBody>
               </section>

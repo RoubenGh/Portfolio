@@ -23,10 +23,10 @@ export default function Nav() {
       >
         {/* Left — Identity */}
         <Link href="/" className="flex flex-col gap-0.5 group">
-          <span className="text-[14px] font-medium tracking-[-0.01em] text-[var(--color-fg)] group-hover:text-white transition-colors duration-300">
+          <span className="text-[14px] font-medium tracking-[-0.01em] text-[var(--text-primary)] group-hover:text-white transition-colors duration-300">
             Rouben Ghambaryan
           </span>
-          <span className="text-[11px] tracking-[0.15px] text-[var(--color-fg-30)]">
+          <span className="text-[11px] tracking-[0.15px] text-[var(--text-body)]">
             Systems Engineer
           </span>
         </Link>
@@ -53,13 +53,13 @@ export default function Nav() {
             />
             <Link
               href="/#work"
-              className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg)] hover:text-white transition-colors duration-300"
+              className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--text-primary)] hover:text-white transition-colors duration-300"
             >
               Work
             </Link>
             <Link
               href="/#about"
-              className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] transition-colors duration-300"
+              className="relative z-10 px-5 py-1.5 text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors duration-300"
             >
               About
             </Link>
@@ -72,7 +72,7 @@ export default function Nav() {
             href="https://www.linkedin.com/in/rouben-ghambaryan/"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
+            className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
           >
             LinkedIn
           </a>
@@ -80,7 +80,7 @@ export default function Nav() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--color-fg-50)] hover:text-[var(--color-fg)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
+            className="px-3 py-1.5 rounded-full text-[12px] font-medium tracking-[0.2px] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[rgba(242,242,242,0.04)] transition-all duration-300"
           >
             Resume
           </a>
@@ -143,7 +143,7 @@ export default function Nav() {
                     duration: 0.5,
                     ease: [0.165, 0.84, 0.44, 1] as const,
                   }}
-                  className="text-[28px] font-light tracking-[-0.5px] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors"
+                  className="text-[28px] font-light tracking-[-0.5px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                 >
                   {link.label}
                 </motion.a>

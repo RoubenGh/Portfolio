@@ -41,10 +41,10 @@ export default function TwentyTwentyContent() {
           <div className="mb-10"><BackButton /></div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease }}>
-            <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--color-fg)]">
+            <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--text-primary)]">
               TwentyTwenty
             </h1>
-            <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--color-fg-30)] max-w-[600px]">
+            <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--text-body)] max-w-[600px]">
               A cross-platform desktop app that enforces the 20-20-20 eye strain rule by measuring genuine screen time, not by running a timer.
             </p>
           </motion.div>
@@ -93,10 +93,10 @@ export default function TwentyTwentyContent() {
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
               <div>
-                <span className="block text-[15px] md:text-[16px] font-medium text-[var(--color-fg)] leading-[1.4]">
+                <span className="block text-[15px] md:text-[16px] font-medium text-[var(--text-primary)] leading-[1.4]">
                   Free and open source. Install it in about a minute.
                 </span>
-                <span className="block mt-1.5 text-[13px] leading-[1.6] text-[var(--color-fg-30)]">
+                <span className="block mt-1.5 text-[13px] leading-[1.6] text-[var(--text-body)]">
                   Linux (.deb, .AppImage, .rpm) &nbsp;·&nbsp; Windows (.msi, .exe) &nbsp;·&nbsp; macOS (universal .dmg)
                 </span>
               </div>
@@ -122,7 +122,7 @@ export default function TwentyTwentyContent() {
                   href="https://github.com/RoubenGh/twentytwenty"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-[10px] px-4 py-2.5 text-[13.5px] font-medium tracking-[0.2px] text-[var(--color-fg-80)] hover:text-[var(--color-fg)] transition-colors duration-300"
+                  className="inline-flex items-center gap-2 rounded-[10px] px-4 py-2.5 text-[13.5px] font-medium tracking-[0.2px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-300"
                   style={{
                     background: "rgba(242,242,242,0.05)",
                     border: "1px solid rgba(242,242,242,0.08)",
@@ -136,7 +136,7 @@ export default function TwentyTwentyContent() {
               </div>
             </div>
 
-            <p className="mt-4 pt-4 text-[12px] leading-[1.6] text-[var(--color-fg-15)]" style={{ borderTop: "1px solid rgba(242,242,242,0.05)" }}>
+            <p className="mt-4 pt-4 text-[12px] leading-[1.6] text-[var(--text-body)]" style={{ borderTop: "1px solid rgba(242,242,242,0.05)" }}>
               Builds are unsigned, because code signing certificates cost money this project does not spend. Windows will show a SmartScreen prompt (More info, then Run anyway) and macOS needs one command to clear the quarantine flag. The README covers both.
             </p>
           </motion.div>
@@ -353,10 +353,10 @@ export default function TwentyTwentyContent() {
                     The interesting failures were not the ones the tests caught. They were the ones that passed everything and were still broken.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">The app quit forever after the first break.</strong> This is a tray app that opens no window at startup, and the framework treats zero open windows as an instruction to exit. So the moment the first break overlay closed, the process ended. A user would have installed it, received exactly one reminder, and watched it vanish from the tray permanently. No test detects this. It was found by running the app and instrumenting the event loop.
+                    <strong className="text-[var(--text-secondary)]">The app quit forever after the first break.</strong> This is a tray app that opens no window at startup, and the framework treats zero open windows as an instruction to exit. So the moment the first break overlay closed, the process ended. A user would have installed it, received exactly one reminder, and watched it vanish from the tray permanently. No test detects this. It was found by running the app and instrumenting the event loop.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">The overlay was completely invisible.</strong> The fade-in set transparency on both the document and the body element but only ever restored it on one of them. Opacity multiplies down the tree, so the result was a fullscreen window that rendered nothing while still swallowing every click. Every automated signal was green: the window was created, events flowed, the keyboard shortcut worked, 35 tests passed. The bug surfaced when a human looked at the screen and reported that something kept covering it with nothing on it.
+                    <strong className="text-[var(--text-secondary)]">The overlay was completely invisible.</strong> The fade-in set transparency on both the document and the body element but only ever restored it on one of them. Opacity multiplies down the tree, so the result was a fullscreen window that rendered nothing while still swallowing every click. Every automated signal was green: the window was created, events flowed, the keyboard shortcut worked, 35 tests passed. The bug surfaced when a human looked at the screen and reported that something kept covering it with nothing on it.
                   </p>
                   <p>
                     The rest were ordinary but would have shipped: an idle check that would have downgraded itself to a dumb timer the first time the user touched the mouse, a session lookup that fails specifically when the app is launched at login, a macOS parser that would have reported the display permanently awake, and a wrong Win32 call for closing a handle.

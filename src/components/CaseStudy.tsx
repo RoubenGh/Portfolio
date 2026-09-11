@@ -13,7 +13,7 @@ export function BackButton() {
     <FadeIn y={20}>
       <Link
         href="/#work"
-        className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-30)] hover:text-[var(--color-fg)] transition-colors duration-300 group"
+        className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300 group"
       >
         <svg
           width="16"
@@ -87,10 +87,10 @@ export function ProjectMeta({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 py-8 border-t border-b" style={{ borderColor: "rgba(242,242,242,0.06)" }}>
         {items.map((item) => (
           <div key={item.label}>
-            <span className="block text-[10px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] mb-2">
+            <span className="block text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)] mb-2">
               {item.label}
             </span>
-            <span className="block text-[13px] md:text-[14px] font-medium leading-[1.5] text-[var(--color-fg-80)]">
+            <span className="block text-[13px] md:text-[14px] font-medium leading-[1.5] text-[var(--text-secondary)]">
               {item.value}
             </span>
           </div>
@@ -130,7 +130,7 @@ export function TableOfContents({
   return (
     <div className="hidden lg:block">
       <div className="sticky top-32">
-        <span className="block text-[10px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] mb-4">
+        <span className="block text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)] mb-4">
           Contents
         </span>
         <nav className="flex flex-col gap-2">
@@ -140,8 +140,8 @@ export function TableOfContents({
               href={`#${s.id}`}
               className={`text-[12px] font-medium tracking-[0.1px] transition-colors duration-300 ${
                 active === s.id
-                  ? "text-[var(--color-fg)]"
-                  : "text-[var(--color-fg-15)] hover:text-[var(--color-fg-50)]"
+                  ? "text-[var(--text-primary)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               }`}
             >
               {s.label}
@@ -166,14 +166,14 @@ export function SectionHeading({
   return (
     <FadeIn>
       <div className="mb-8">
-        <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] block mb-3">
+        <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] block mb-3">
           {number}
         </span>
-        <h2 className="text-[24px] md:text-[28px] font-medium tracking-[-0.5px] text-[var(--color-fg)] leading-[1.15]">
+        <h2 className="text-[24px] md:text-[28px] font-medium tracking-[-0.5px] text-[var(--text-primary)] leading-[1.15]">
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-3 text-[15px] md:text-[16px] leading-[1.6] text-[var(--color-fg-30)]">
+          <p className="mt-3 text-[15px] md:text-[16px] leading-[1.6] text-[var(--text-body)]">
             {subtitle}
           </p>
         )}
@@ -186,7 +186,7 @@ export function SectionHeading({
 export function SectionBody({ children }: { children: React.ReactNode }) {
   return (
     <FadeIn>
-      <div className="text-[14px] md:text-[15px] leading-[1.75] text-[var(--color-fg-30)] space-y-4 max-w-[640px]">
+      <div className="text-[14px] md:text-[15px] leading-[1.75] text-[var(--text-body)] space-y-4 max-w-[640px]">
         {children}
       </div>
     </FadeIn>
@@ -296,7 +296,7 @@ export function VisualFrame({
           />
         </div>
         {caption && (
-          <p className={`mt-3 text-[12px] tracking-[0.1px] text-[var(--color-fg-15)] ${wide ? "px-4 sm:px-8 md:px-12 lg:px-20" : ""}`}>
+          <p className={`mt-3 text-[12px] tracking-[0.1px] text-[var(--text-muted)] ${wide ? "px-4 sm:px-8 md:px-12 lg:px-20" : ""}`}>
             {caption}
           </p>
         )}
@@ -354,10 +354,10 @@ export function StatBlock({
               border: "1px solid rgba(242,242,242,0.04)",
             }}
           >
-            <span className="block text-[24px] md:text-[28px] font-medium tracking-[-0.5px] text-[var(--color-fg)]">
+            <span className="block text-[24px] md:text-[28px] font-medium tracking-[-0.5px] text-[var(--text-primary)]">
               <AnimatedValue raw={item.value} />
             </span>
-            <span className="block text-[12px] tracking-[0.1px] text-[var(--color-fg-30)] mt-1">
+            <span className="block text-[12px] tracking-[0.1px] text-[var(--text-body)] mt-1">
               {item.label}
             </span>
           </div>
@@ -385,13 +385,13 @@ export function PrincipleCards({
               border: "1px solid rgba(242,242,242,0.04)",
             }}
           >
-            <span className="text-[11px] text-[var(--color-fg-15)] tracking-[0.15em] block mb-3">
+            <span className="text-[11px] text-[var(--text-muted)] tracking-[0.15em] block mb-3">
               {item.number}
             </span>
-            <h4 className="text-[15px] font-medium text-[var(--color-fg)] mb-2">
+            <h4 className="text-[15px] font-medium text-[var(--text-primary)] mb-2">
               {item.title}
             </h4>
-            <p className="text-[13px] leading-[1.6] text-[var(--color-fg-30)]">
+            <p className="text-[13px] leading-[1.6] text-[var(--text-body)]">
               {item.description}
             </p>
           </div>
@@ -441,10 +441,10 @@ export function ConstraintList({
               />
             </svg>
             <div>
-              <h4 className="text-[14px] font-medium text-[var(--color-fg-80)] mb-1">
+              <h4 className="text-[14px] font-medium text-[var(--text-secondary)] mb-1">
                 {item.title}
               </h4>
-              <p className="text-[13px] leading-[1.5] text-[var(--color-fg-30)]">
+              <p className="text-[13px] leading-[1.5] text-[var(--text-body)]">
                 {item.description}
               </p>
             </div>
@@ -487,12 +487,12 @@ export function PipelineFlow({
                     border: "1px solid rgba(242,242,242,0.08)",
                   }}
                 >
-                  <span className="text-[11px] font-medium text-[var(--color-fg-80)] leading-[1.3] block">
+                  <span className="text-[11px] font-medium text-[var(--text-secondary)] leading-[1.3] block">
                     {stage.label}
                   </span>
                 </div>
                 {stage.sub && (
-                  <span className="text-[9.5px] text-[var(--color-fg-15)] mt-1.5 text-center leading-[1.3] px-1">
+                  <span className="text-[9.5px] text-[var(--text-muted)] mt-1.5 text-center leading-[1.3] px-1">
                     {stage.sub}
                   </span>
                 )}
@@ -559,7 +559,7 @@ export function NextProject({
         className="my-20 pt-12"
         style={{ borderTop: "1px solid rgba(242,242,242,0.04)" }}
       >
-        <span className="text-[10px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] block mb-6">
+        <span className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)] block mb-6">
           Next Project
         </span>
         <Link href={href} className="block group">
@@ -578,10 +578,10 @@ export function NextProject({
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-[18px] md:text-[20px] font-medium text-[var(--color-fg)]">
+                <h3 className="text-[18px] md:text-[20px] font-medium text-[var(--text-primary)]">
                   {title}
                 </h3>
-                <p className="text-[13px] text-[var(--color-fg-30)] mt-1">
+                <p className="text-[13px] text-[var(--text-body)] mt-1">
                   {meta}
                 </p>
               </div>

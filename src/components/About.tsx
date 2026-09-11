@@ -31,47 +31,47 @@ const terminalLines = [
 
 /* ── Code lines ── */
 const codeLines = [
-  { text: "import { OpenAI } from 'openai';", color: "var(--color-fg-15)" },
-  { text: "import { WikiService } from './WikiService';", color: "var(--color-fg-15)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "const ai = new OpenAI({", color: "var(--color-fg-30)" },
-  { text: '  baseURL: "https://generativelanguage.googleapis.com",', color: "var(--color-fg-15)" },
-  { text: "  apiKey: process.env.GEMINI_KEY,", color: "var(--color-fg-15)" },
-  { text: "});", color: "var(--color-fg-30)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "async function *streamGuidance(ticket) {", color: "var(--color-fg-80)" },
-  { text: "  const wiki = WikiService.getInstance(ticket.workspaceId);", color: "var(--color-fg-30)" },
-  { text: "  const pages = await wiki.findRelevantPages(ticket.subject);", color: "var(--color-fg-30)" },
-  { text: "  const docs = await docService.findRelevant(ticket.subject);", color: "var(--color-fg-30)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "  const context = buildPrompt({", color: "var(--color-fg-30)" },
-  { text: "    ticket,", color: "var(--color-fg-15)" },
-  { text: "    wikiPages: pages.slice(0, 5),", color: "var(--color-fg-15)" },
-  { text: "    documents: docs.slice(0, 5),", color: "var(--color-fg-15)" },
-  { text: "  });", color: "var(--color-fg-30)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "  const stream = await ai.chat.completions.create({", color: "var(--color-fg-30)" },
-  { text: '    model: "gemini-2.0-flash",', color: "var(--color-fg-15)" },
-  { text: "    stream: true,", color: "var(--color-fg-15)" },
-  { text: "    messages: context.messages,", color: "var(--color-fg-15)" },
-  { text: "  });", color: "var(--color-fg-30)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "  for await (const chunk of stream) {", color: "var(--color-fg-30)" },
-  { text: "    const token = chunk.choices[0]?.delta?.content;", color: "var(--color-fg-50)" },
-  { text: "    if (token) yield token;", color: "var(--color-fg-50)" },
-  { text: "  }", color: "var(--color-fg-30)" },
-  { text: "}", color: "var(--color-fg-80)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "export async function handleGuidanceRequest(req, res) {", color: "var(--color-fg-80)" },
-  { text: '  res.setHeader("Content-Type", "text/plain");', color: "var(--color-fg-30)" },
-  { text: '  res.setHeader("Transfer-Encoding", "chunked");', color: "var(--color-fg-30)" },
-  { text: "", color: "var(--color-fg-15)" },
-  { text: "  const ticket = await TicketService.getById(req.params.id);", color: "var(--color-fg-30)" },
-  { text: "  for await (const token of streamGuidance(ticket)) {", color: "var(--color-fg-30)" },
-  { text: "    res.write(token);", color: "var(--color-fg-50)" },
-  { text: "  }", color: "var(--color-fg-30)" },
-  { text: "  res.end();", color: "var(--color-fg-30)" },
-  { text: "}", color: "var(--color-fg-80)" },
+  { text: "import { OpenAI } from 'openai';", color: "var(--text-faint)" },
+  { text: "import { WikiService } from './WikiService';", color: "var(--text-faint)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "const ai = new OpenAI({", color: "var(--text-faint)" },
+  { text: '  baseURL: "https://generativelanguage.googleapis.com",', color: "var(--text-faint)" },
+  { text: "  apiKey: process.env.GEMINI_KEY,", color: "var(--text-faint)" },
+  { text: "});", color: "var(--text-faint)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "async function *streamGuidance(ticket) {", color: "var(--text-secondary)" },
+  { text: "  const wiki = WikiService.getInstance(ticket.workspaceId);", color: "var(--text-faint)" },
+  { text: "  const pages = await wiki.findRelevantPages(ticket.subject);", color: "var(--text-faint)" },
+  { text: "  const docs = await docService.findRelevant(ticket.subject);", color: "var(--text-faint)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "  const context = buildPrompt({", color: "var(--text-faint)" },
+  { text: "    ticket,", color: "var(--text-faint)" },
+  { text: "    wikiPages: pages.slice(0, 5),", color: "var(--text-faint)" },
+  { text: "    documents: docs.slice(0, 5),", color: "var(--text-faint)" },
+  { text: "  });", color: "var(--text-faint)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "  const stream = await ai.chat.completions.create({", color: "var(--text-faint)" },
+  { text: '    model: "gemini-2.0-flash",', color: "var(--text-faint)" },
+  { text: "    stream: true,", color: "var(--text-faint)" },
+  { text: "    messages: context.messages,", color: "var(--text-faint)" },
+  { text: "  });", color: "var(--text-faint)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "  for await (const chunk of stream) {", color: "var(--text-faint)" },
+  { text: "    const token = chunk.choices[0]?.delta?.content;", color: "var(--text-muted)" },
+  { text: "    if (token) yield token;", color: "var(--text-muted)" },
+  { text: "  }", color: "var(--text-faint)" },
+  { text: "}", color: "var(--text-secondary)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "export async function handleGuidanceRequest(req, res) {", color: "var(--text-secondary)" },
+  { text: '  res.setHeader("Content-Type", "text/plain");', color: "var(--text-faint)" },
+  { text: '  res.setHeader("Transfer-Encoding", "chunked");', color: "var(--text-faint)" },
+  { text: "", color: "var(--text-faint)" },
+  { text: "  const ticket = await TicketService.getById(req.params.id);", color: "var(--text-faint)" },
+  { text: "  for await (const token of streamGuidance(ticket)) {", color: "var(--text-faint)" },
+  { text: "    res.write(token);", color: "var(--text-muted)" },
+  { text: "  }", color: "var(--text-faint)" },
+  { text: "  res.end();", color: "var(--text-faint)" },
+  { text: "}", color: "var(--text-secondary)" },
 ];
 
 const services = [
@@ -169,17 +169,17 @@ function AnimatedTerminal({ height = "200px" }: { height?: string }) {
           {line.prompt ? (
             <span>
               <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
-              <span className="text-[var(--color-fg-50)]">{line.text}</span>
+              <span className="text-[var(--text-muted)]">{line.text}</span>
             </span>
           ) : (
-            <span className="text-[var(--color-fg-15)]">{line.text}</span>
+            <span className="text-[var(--text-faint)]">{line.text}</span>
           )}
         </div>
       ))}
       {isTyping && visibleLines < terminalLines.length && terminalLines[visibleLines]?.prompt && (
         <div>
           <span style={{ color: "rgba(127,207,255,0.6)" }}>$</span>{" "}
-          <span className="text-[var(--color-fg-50)]">
+          <span className="text-[var(--text-muted)]">
             {terminalLines[visibleLines].text.slice(0, typingIndex)}
           </span>
           <span
@@ -245,7 +245,7 @@ function StatusCard({ className = "", style = {} }: { className?: string; style?
         className="flex items-center justify-between px-3.5 py-2.5"
         style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
       >
-        <span className="text-[9.5px] uppercase tracking-[0.08em] text-[var(--color-fg-15)]">
+        <span className="text-[9.5px] uppercase tracking-[0.08em] text-[var(--text-faint)]">
           system status
         </span>
         <div className="flex items-center gap-1.5">
@@ -255,7 +255,7 @@ function StatusCard({ className = "", style = {} }: { className?: string; style?
             className="w-[5px] h-[5px] rounded-full"
             style={{ background: "rgba(39,201,63,0.85)" }}
           />
-          <span className="text-[8.5px] text-[var(--color-fg-15)]">all operational</span>
+          <span className="text-[8.5px] text-[var(--text-faint)]">all operational</span>
         </div>
       </div>
       <div className="px-3.5 py-3 flex flex-col gap-[9px]">
@@ -268,11 +268,11 @@ function StatusCard({ className = "", style = {} }: { className?: string; style?
                 className="w-[4px] h-[4px] rounded-full shrink-0"
                 style={{ background: "rgba(39,201,63,0.75)" }}
               />
-              <span className="text-[9px] font-mono text-[var(--color-fg-30)]">{svc.name}</span>
+              <span className="text-[9px] font-mono text-[var(--text-faint)]">{svc.name}</span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[8.5px] text-[var(--color-fg-15)]">{svc.uptime}</span>
-              <span className="text-[8px] text-[var(--color-fg-10)]">↑{svc.upDays}</span>
+              <span className="text-[8.5px] text-[var(--text-faint)]">{svc.uptime}</span>
+              <span className="text-[8px] text-[var(--text-faint)]">↑{svc.upDays}</span>
             </div>
           </div>
         ))}
@@ -295,7 +295,7 @@ function TerminalCard({ className = "", style = {} }: { className?: string; styl
         <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
         <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
         <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
-        <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+        <span className="ml-2 text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
           prod-web-03
         </span>
       </div>
@@ -321,7 +321,7 @@ function DashboardCard({ className = "", style = {} }: { className?: string; sty
         className="px-3.5 py-2.5"
         style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
       >
-        <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+        <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
           Dashboard
         </span>
       </div>
@@ -349,7 +349,7 @@ function CodeCard({ className = "", style = {} }: { className?: string; style?: 
         className="flex items-center gap-1.5 px-3.5 py-2.5"
         style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
       >
-        <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+        <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
           streamGuidance.ts
         </span>
       </div>
@@ -383,7 +383,7 @@ export default function About() {
 
       <div className="relative mx-auto max-w-[880px] px-4 md:px-0">
         <FadeIn>
-          <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] block mb-14">
+          <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] block mb-14">
             About
           </span>
         </FadeIn>
@@ -409,7 +409,7 @@ export default function About() {
                   className="flex items-center gap-1.5 px-3.5 py-2.5"
                   style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
                 >
-                  <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                  <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
                     streamGuidance.ts
                   </span>
                 </div>
@@ -432,7 +432,7 @@ export default function About() {
                   className="px-3.5 py-2.5"
                   style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
                 >
-                  <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                  <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
                     Dashboard
                   </span>
                 </div>
@@ -465,7 +465,7 @@ export default function About() {
                   <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
                   <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
                   <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
-                  <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                  <span className="ml-2 text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
                     prod-web-03
                   </span>
                 </div>
@@ -484,7 +484,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-6">
           <div className="md:col-span-5">
             <FadeIn delay={0.08}>
-              <p className="text-[26px] md:text-[32px] font-medium leading-[1.12] tracking-[-0.8px] text-[var(--color-fg)]">
+              <p className="text-[26px] md:text-[32px] font-medium leading-[1.12] tracking-[-0.8px] text-[var(--text-primary)]">
                 Engineer building
                 <br />
                 systems that
@@ -546,7 +546,7 @@ export default function About() {
                       className="px-3.5 py-2.5"
                       style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
                     >
-                      <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                      <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
                         Dashboard
                       </span>
                     </div>
@@ -585,7 +585,7 @@ export default function About() {
                       <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
                       <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
                       <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
-                      <span className="ml-2 text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                      <span className="ml-2 text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
                         prod-web-03
                       </span>
                     </div>
@@ -619,7 +619,7 @@ export default function About() {
                       className="flex items-center gap-1.5 px-3.5 py-2.5"
                       style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
                     >
-                      <span className="text-[10px] text-[var(--color-fg-15)] tracking-[0.05em]">
+                      <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
                         streamGuidance.ts
                       </span>
                     </div>
@@ -640,7 +640,7 @@ export default function About() {
 
           <div className="md:col-span-6 md:col-start-7">
             <FadeIn delay={0.16}>
-              <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
+              <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 I work on production infrastructure and applications that
                 support real users at scale. That includes everything from
                 cloud environments and DNS to backend services, automation
@@ -649,7 +649,7 @@ export default function About() {
               </p>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
+              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 Most of my experience comes from operating live systems, not
                 just building them. Debugging broken payment flows, tracing
                 down infrastructure issues, and keeping hundreds of
@@ -659,7 +659,7 @@ export default function About() {
               </p>
             </FadeIn>
             <FadeIn delay={0.24}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
+              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 I tend to focus on turning messy, manual processes into clean,
                 repeatable systems. Whether it&apos;s internal tools, data
                 pipelines, or full application workflows, the goal is always
@@ -667,8 +667,8 @@ export default function About() {
               </p>
             </FadeIn>
             <FadeIn delay={0.28}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
-                <span className="text-[var(--color-fg-80)]">RLA Studios</span>{" "}
+              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
+                <span className="text-[var(--text-secondary)]">RLA Studios</span>{" "}
                 came out of that same mindset. What started as creative work
                 evolved into building systems behind it, automating everything
                 from client intake to delivery so it can scale without becoming
@@ -676,14 +676,14 @@ export default function About() {
               </p>
             </FadeIn>
             <FadeIn delay={0.32}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
+              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 I&apos;m less interested in perfect architecture diagrams and
                 more in systems that actually hold up in production, under
                 load, with real users.
               </p>
             </FadeIn>
             <FadeIn delay={0.36}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--color-fg-30)]">
+              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 Outside of work, I&apos;m usually watching tennis or F1, which
                 probably explains why I care a bit too much about performance,
                 consistency, and things working exactly the way they should.

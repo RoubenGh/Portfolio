@@ -208,12 +208,12 @@ export default function Hero() {
               >
                 <div className="hidden md:block" />
                 <div>
-                  <p className="text-[15px] md:text-[17px] font-medium leading-[1.45] text-[var(--color-fg)]">
+                  <p className="text-[15px] md:text-[17px] font-medium leading-[1.45] text-[var(--text-primary)]">
                     Systems Engineer &amp; Founder.
                     <br className="hidden md:block" />{" "}
                     Based in Los Angeles.
                   </p>
-                  <p className="text-[13px] md:text-[14px] leading-[1.5] text-[var(--color-fg-30)] mt-2 tracking-[0.1px]">
+                  <p className="text-[13px] md:text-[14px] leading-[1.5] text-[var(--text-body)] mt-2 tracking-[0.1px]">
                     Keeping hundreds of environments running.
                   </p>
                 </div>

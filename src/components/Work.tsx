@@ -114,10 +114,10 @@ function ProjectCard({
               {/* Header */}
               <div className="flex items-start justify-between gap-4 mb-5">
                 <div>
-                  <h3 className="text-[20px] md:text-[22px] font-medium tracking-[-0.02em] text-[var(--color-fg)]">
+                  <h3 className="text-[20px] md:text-[22px] font-medium tracking-[-0.02em] text-[var(--text-primary)]">
                     {project.title}
                   </h3>
-                  <p className="mt-1 text-[13px] tracking-[0.1px] text-[var(--color-fg-30)]">
+                  <p className="mt-1 text-[13px] tracking-[0.1px] text-[var(--text-body)]">
                     {project.meta}
                   </p>
                 </div>
@@ -139,7 +139,7 @@ function ProjectCard({
               </div>
 
               {/* Description */}
-              <p className="text-[13px] md:text-[14px] leading-[1.6] tracking-[0.1px] text-[var(--color-fg-30)] group-hover:text-[var(--color-fg-50)] transition-colors duration-500 max-w-[480px]">
+              <p className="text-[13px] md:text-[14px] leading-[1.6] tracking-[0.1px] text-[var(--text-body)] group-hover:text-[var(--text-secondary)] transition-colors duration-500 max-w-[480px]">
                 {project.description}
               </p>
 
@@ -202,7 +202,7 @@ export default function Work() {
 
       <div className="relative mx-auto max-w-[880px] px-4 md:px-0">
         <FadeIn>
-          <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--color-fg-15)] block mb-14 md:mb-16">
+          <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] block mb-14 md:mb-16">
             Selected Work
           </span>
         </FadeIn>

@@ -43,10 +43,10 @@ export default function AITicketingContent() {
           <div className="mb-10"><BackButton /></div>
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease }}>
-            <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--color-fg)]">
+            <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--text-primary)]">
               AI Ticketing System
             </h1>
-            <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--color-fg-30)] max-w-[600px]">
+            <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--text-body)] max-w-[600px]">
               An AI-powered assistant that transforms unstructured emails and support requests into structured, prioritized tickets with auto-generated task breakdowns.
             </p>
           </motion.div>
@@ -87,7 +87,7 @@ export default function AITicketingContent() {
               href="https://tickets.rouben.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--color-fg-30)] hover:text-[var(--color-fg)] transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300"
             >
               <span>Visit live site</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -394,16 +394,16 @@ export default function AITicketingContent() {
                 />
                 <SectionBody>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Multimodal input processing.</strong> Gemini&apos;s vision API needs base64-encoded images with MIME types, but users paste content in unpredictable formats. The solution was a processing pipeline that detects file types by extension, routes each to the appropriate extractor (pdf2json, mammoth, or raw base64), and assembles mixed-content prompts with both text and image content blocks.
+                    <strong className="text-[var(--text-secondary)]">Multimodal input processing.</strong> Gemini&apos;s vision API needs base64-encoded images with MIME types, but users paste content in unpredictable formats. The solution was a processing pipeline that detects file types by extension, routes each to the appropriate extractor (pdf2json, mammoth, or raw base64), and assembles mixed-content prompts with both text and image content blocks.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Streaming through Express.</strong> Getting token-by-token streaming from Gemini through an Express endpoint into a React component required careful plumbing: chunked transfer encoding on the backend, ReadableStream with incremental decoding on the frontend, and graceful error recovery mid-stream for partial JSON responses.
+                    <strong className="text-[var(--text-secondary)]">Streaming through Express.</strong> Getting token-by-token streaming from Gemini through an Express endpoint into a React component required careful plumbing: chunked transfer encoding on the backend, ReadableStream with incremental decoding on the frontend, and graceful error recovery mid-stream for partial JSON responses.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Wiki search without vectors.</strong> Instead of introducing embeddings and a vector store, the wiki uses sql.js with a chunking strategy. Long pages are split into chunks with token estimates. Search queries are tokenized, stop-words filtered, and chunks scored by keyword density. Pinned pages bypass scoring and are always included.
+                    <strong className="text-[var(--text-secondary)]">Wiki search without vectors.</strong> Instead of introducing embeddings and a vector store, the wiki uses sql.js with a chunking strategy. Long pages are split into chunks with token estimates. Search queries are tokenized, stop-words filtered, and chunks scored by keyword density. Pinned pages bypass scoring and are always included.
                   </p>
                   <p>
-                    <strong className="text-[var(--color-fg-80)]">Retroactive multi-workspace support.</strong> Adding workspace isolation meant every service needed to become workspace-aware without breaking existing data. Each service instance is cached per workspace ID, and the migration preserved single-workspace data by treating the first workspace as the default.
+                    <strong className="text-[var(--text-secondary)]">Retroactive multi-workspace support.</strong> Adding workspace isolation meant every service needed to become workspace-aware without breaking existing data. Each service instance is cached per workspace ID, and the migration preserved single-workspace data by treating the first workspace as the default.
                   </p>
                 </SectionBody>
               </section>
