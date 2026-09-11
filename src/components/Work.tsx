@@ -39,6 +39,22 @@ const projects = [
       imageSrc: "/images/ai-ticketing/dashboard.png",
     },
   },
+  {
+    title: "TwentyTwenty",
+    meta: "Open Source Desktop App - 2026",
+    description:
+      "Cross-platform eye strain app that measures genuine screen time instead of running a timer, reading system idle and display-wake signals so a video counts and a lunch break does not.",
+    href: "/work/twentytwenty",
+    color:
+      "radial-gradient(circle at 50% 0%, rgba(110,231,183,0.1), transparent 60%)",
+    accent: "rgba(110,231,183,0.2)",
+    preview: {
+      bg: "linear-gradient(135deg, #11131a 0%, #0c0e14 40%, #08090d 100%)",
+      label: "20",
+      labelColor: "rgba(110,231,183,0.5)",
+      imageSrc: "/images/twentytwenty/overlay.png",
+    },
+  },
 ];
 
 function ProjectCard({
