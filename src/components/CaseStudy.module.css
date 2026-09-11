@@ -1,0 +1,38 @@
+/* ============================================================
+   Case study entrance animation — plain CSS @keyframes, same
+   approach as Hero.tsx (see globals.css comment there). The browser
+   runs this the moment the stylesheet is parsed and painted, fully
+   independent of React hydration, so anything wrapped in
+   `.mountReveal` reaches opacity: 1 even if JS never loads or never
+   hydrates. Do not convert this back to a JS-driven initial-opacity-0
+   pattern (motion.div initial={{opacity:0}} + animate) — that is the
+   exact failure mode documented in Hero.tsx and in the TwentyTwenty
+   case study copy itself ("The overlay was completely invisible").
+
+   Easing matches the framer-motion curve used everywhere on the site:
+   cubic-bezier(0.165, 0.84, 0.44, 1).
+   ============================================================ */
+@keyframes csRise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--cs-rise-y, 24px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mountReveal {
+  opacity: 0;
+  animation: csRise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation-delay: var(--cs-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mountReveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

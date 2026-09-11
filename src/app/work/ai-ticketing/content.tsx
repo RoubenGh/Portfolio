@@ -2,9 +2,9 @@
 
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
 import {
   BackButton,
+  MountReveal,
   ProjectMeta,
   TableOfContents,
   SectionHeading,
@@ -16,8 +16,6 @@ import {
   NextProject,
   PipelineFlow,
 } from "@/components/CaseStudy";
-
-const ease = [0.165, 0.84, 0.44, 1] as const;
 
 const tocSections = [
   { id: "overview", label: "Overview" },
@@ -42,36 +40,35 @@ export default function AITicketingContent() {
         <div className="mx-auto max-w-[960px] px-5 md:px-10">
           <div className="mb-10"><BackButton /></div>
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease }}>
+          <MountReveal y={30}>
             <h1 className="text-[36px] md:text-[52px] font-medium tracking-[-1.5px] leading-[1.05] text-[var(--text-primary)]">
               AI Ticketing System
             </h1>
             <p className="mt-3 text-[16px] md:text-[18px] leading-[1.5] text-[var(--text-body)] max-w-[600px]">
               An AI-powered assistant that transforms unstructured emails and support requests into structured, prioritized tickets with auto-generated task breakdowns.
             </p>
-          </motion.div>
+          </MountReveal>
 
           {/* Hero: Dashboard screenshot */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease }}
-            className="mt-10 md:mt-12 relative rounded-[16px] overflow-hidden"
-            style={{
-              boxShadow: "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
-              border: "1px solid rgba(242,242,242,0.05)",
-            }}
-          >
-            <img
-              src="/images/ai-ticketing/dashboard.png"
-              alt="AI Ticketing System Dashboard"
-              className="w-full h-auto block"
-            />
+          <MountReveal y={40} delay={0.2} className="mt-10 md:mt-12 block">
             <div
-              className="absolute inset-0 pointer-events-none rounded-[16px]"
-              style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }}
-            />
-          </motion.div>
+              className="relative rounded-[16px] overflow-hidden"
+              style={{
+                boxShadow: "0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04)",
+                border: "1px solid rgba(242,242,242,0.05)",
+              }}
+            >
+              <img
+                src="/images/ai-ticketing/dashboard.png"
+                alt="AI Ticketing System Dashboard"
+                className="w-full h-auto block"
+              />
+              <div
+                className="absolute inset-0 pointer-events-none rounded-[16px]"
+                style={{ boxShadow: "inset 0 0 60px rgba(0,0,0,0.5)" }}
+              />
+            </div>
+          </MountReveal>
 
           <div className="mt-8">
             <ProjectMeta items={[
