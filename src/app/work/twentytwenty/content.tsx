@@ -285,6 +285,29 @@ export default function TwentyTwentyContent() {
                   zoomable
                   wide
                 />
+
+                <SectionBody>
+                  <p>
+                    Between breaks the app is a tray icon and nothing else. Right-clicking it shows a live countdown to the next break alongside the controls, which turned out to be the only way to surface it: the tray backend on KDE Wayland exposes no tooltip property at all, so the hover text the app sets is silently discarded there.
+                  </p>
+                </SectionBody>
+
+                <figure className="my-10 md:my-12 flex flex-col items-center">
+                  <img
+                    src="/images/twentytwenty/tray-menu.png"
+                    alt="The TwentyTwenty tray menu, showing a live countdown reading Next break in 17:40 above the break, snooze, pause and quit controls"
+                    width={187}
+                    className="block rounded-[8px]"
+                    style={{
+                      width: "187px",
+                      boxShadow: "0 20px 45px rgba(0,0,0,0.55)",
+                      border: "1px solid rgba(242,242,242,0.06)",
+                    }}
+                  />
+                  <figcaption className="mt-4 text-[12.5px] leading-[1.6] text-[var(--text-muted)] text-center max-w-[420px]">
+                    The tray menu, counting down in real time. Captured at 17:40 remaining.
+                  </figcaption>
+                </figure>
               </section>
 
               {/* 06 THREE PLATFORMS */}
