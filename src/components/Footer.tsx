@@ -30,14 +30,14 @@ export default function Footer() {
                 <div className="flex flex-col gap-3">
                   <a
                     href="#work"
-                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-300"
+                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-200"
                     style={{ "--transition-easing": "cubic-bezier(0.165, 0.84, 0.44, 1)" } as React.CSSProperties}
                   >
                     Work
                   </a>
                   <a
                     href="#about"
-                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-300"
+                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-200"
                     style={{ "--transition-easing": "cubic-bezier(0.165, 0.84, 0.44, 1)" } as React.CSSProperties}
                   >
                     About
@@ -53,7 +53,7 @@ export default function Footer() {
                     href="https://www.linkedin.com/in/rouben-ghambaryan/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-300"
+                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-200"
                     style={{ "--transition-easing": "cubic-bezier(0.165, 0.84, 0.44, 1)" } as React.CSSProperties}
                   >
                     LinkedIn
@@ -62,7 +62,7 @@ export default function Footer() {
                     href="/resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-300"
+                    className="text-[13px] font-medium text-[var(--text-body)] hover:text-[var(--text-primary)] transition-all duration-200"
                     style={{ "--transition-easing": "cubic-bezier(0.165, 0.84, 0.44, 1)" } as React.CSSProperties}
                   >
                     Resume

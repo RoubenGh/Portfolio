@@ -87,7 +87,7 @@ export default function RLAStudiosContent() {
               href="https://rlastudios.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-200"
             >
               <span>Visit live site</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none">

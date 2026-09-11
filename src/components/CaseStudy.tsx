@@ -212,14 +212,14 @@ export function BackButton() {
     <MountReveal y={16}>
       <Link
         href="/#work"
-        className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-300 group"
+        className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.2px] text-[var(--text-body)] hover:text-[var(--text-primary)] transition-colors duration-200 group"
       >
         <svg
           width="16"
           height="16"
           viewBox="0 0 24 24"
           fill="none"
-          className="group-hover:-translate-x-0.5 transition-transform duration-300"
+          className="group-hover:-translate-x-0.5 transition-transform duration-200"
         >
           <path
             d="M19 12H5M5 12l6 6M5 12l6-6"
@@ -382,7 +382,7 @@ export function TableOfContents({
                 linkRefs.current[s.id] = el;
               }}
               href={`#${s.id}`}
-              className={`text-[12px] font-medium tracking-[0.1px] transition-colors duration-300 ${
+              className={`text-[12px] font-medium tracking-[0.1px] transition-colors duration-200 ${
                 active === s.id
                   ? "text-[var(--text-primary)]"
                   : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
@@ -465,7 +465,7 @@ function MagnifierImage({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        className="w-full h-auto block transition-transform duration-300 ease-out"
+        className="w-full h-auto block transition-transform duration-200 ease-out"
         style={{
           transform: zoomed ? "scale(2.5)" : "scale(1)",
           transformOrigin: origin,
@@ -589,7 +589,7 @@ function AnimatedValue({ raw }: { raw: string }) {
     }
     const isDecimal = /\.\d/.test(numStr);
     const controls = animate(0, target, {
-      duration: 1.8,
+      duration: 1.05,
       ease: [0.16, 1, 0.3, 1],
       onUpdate(v) {
         const formatted = isDecimal
@@ -652,7 +652,7 @@ export function PrincipleCards({
       {items.map((item, i) => (
         <Reveal key={item.number} variant="up" delay={i * 0.08}>
           <div
-            className="rounded-[12px] p-5 md:p-6 h-full transition-[border-color] duration-500"
+            className="rounded-[12px] p-5 md:p-6 h-full transition-[border-color] duration-200"
             style={{
               background: "linear-gradient(190deg, rgba(242,242,242,0.03), rgba(242,242,242,0.01))",
               border: "1px solid rgba(242,242,242,0.04)",
@@ -832,7 +832,7 @@ export function NextProject({
         </span>
         <Link href={href} className="block group">
           <div
-            className="rounded-[16px] p-6 md:p-7 transition-[border-color] duration-500"
+            className="rounded-[16px] p-6 md:p-7 transition-[border-color] duration-200"
             style={{
               background: "linear-gradient(190deg, #1a1a1a, #0e0e0e)",
               border: "1px solid rgba(242,242,242,0.04)",
@@ -858,7 +858,7 @@ export function NextProject({
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                className="text-[var(--color-fg-15)] group-hover:text-[var(--color-fg-50)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-500"
+                className="text-[var(--color-fg-15)] group-hover:text-[var(--color-fg-50)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
               >
                 <path
                   d="M7 17L17 7M17 7H10M17 7v7"

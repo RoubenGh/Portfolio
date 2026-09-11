@@ -155,7 +155,7 @@ body {
 
 .hero-anim {
   opacity: 0;
-  animation: hero-rise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: hero-rise 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--hero-delay, 0s);
 }
 
@@ -169,7 +169,7 @@ body {
 .hero-line-inner {
   display: block;
   transform: translateY(112%);
-  animation: hero-line-rise 0.85s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: hero-line-rise 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--hero-delay, 0s);
 }
 
@@ -177,7 +177,7 @@ body {
    loop lives on a separate child element (.hero-scroll-line) so the two
    animations never target the same properties on the same element. */
 .hero-scroll-line {
-  animation: hero-scroll-bounce 2.4s ease-in-out infinite;
+  animation: hero-scroll-bounce 1.8s ease-in-out infinite;
   animation-delay: var(--hero-delay, 0s);
 }
 
@@ -285,7 +285,7 @@ body {
 
 .about-reveal {
   opacity: 0;
-  animation: about-rise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: about-rise 0.55s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--about-delay, 0s);
 }
 
@@ -299,7 +299,7 @@ body {
 .about-line-inner {
   display: block;
   transform: translateY(112%);
-  animation: about-line-rise 0.85s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: about-line-rise 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   animation-delay: var(--about-delay, 0s);
 }
 
@@ -386,19 +386,19 @@ body {
 
 .wall-dot-overlay {
   opacity: 0;
-  animation: wall-dot-flip 7s ease-in-out infinite;
+  animation: wall-dot-flip 3.4s ease-in-out infinite;
 }
 
 .wall-spark-sweep {
-  animation: wall-spark-sweep 4.2s ease-in-out infinite;
+  animation: wall-spark-sweep 2.4s ease-in-out infinite;
 }
 
 .wall-sweep {
-  animation: wall-sweep 5.5s ease-in-out infinite;
+  animation: wall-sweep 2.8s ease-in-out infinite;
 }
 
 .wall-stage-glow {
-  animation: wall-stage-glow 3.2s ease-in-out infinite;
+  animation: wall-stage-glow 1.9s ease-in-out infinite;
 }
 
 .opswall-parallax {

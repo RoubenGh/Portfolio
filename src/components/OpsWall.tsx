@@ -503,10 +503,10 @@ export default function OpsWall() {
         ref={parallaxRef}
         className="opswall-parallax grid grid-cols-2 md:grid-cols-3 gap-3 h-full"
       >
-        <WallColumn panels={col1} duration={78} />
-        <WallColumn panels={col2} duration={64} delay={14} />
+        <WallColumn panels={col1} duration={26} />
+        <WallColumn panels={col2} duration={21} delay={5} />
         <div className="hidden md:block h-full">
-          <WallColumn panels={col3} duration={92} delay={30} />
+          <WallColumn panels={col3} duration={31} delay={10} />
         </div>
       </div>
       <div

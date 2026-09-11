@@ -42,7 +42,7 @@ export default function FadeIn({
       initial={{ opacity: 0, y: reduced ? 0 : y, ...(scale && !reduced ? { scale: 0.97 } : {}) }}
       whileInView={{ opacity: 1, y: 0, ...(scale ? { scale: 1 } : {}) }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: reduced ? 0.01 : 1, delay: reduced ? 0 : delay, ease }}
+      transition={{ duration: reduced ? 0.01 : 0.6, delay: reduced ? 0 : delay, ease }}
       className={className}
     >
       {children}

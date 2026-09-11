@@ -153,7 +153,7 @@ function entryVariants(kind: "rise" | "left" | "right", reduced: boolean): Varia
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: { duration: 1.05, ease },
+        transition: { duration: 0.6, ease },
       },
     };
   }
@@ -165,7 +165,7 @@ function entryVariants(kind: "rise" | "left" | "right", reduced: boolean): Varia
         x: 0,
         y: 0,
         rotate: 0,
-        transition: { duration: 0.85, ease },
+        transition: { duration: 0.55, ease },
       },
     };
   }
@@ -176,7 +176,7 @@ function entryVariants(kind: "rise" | "left" | "right", reduced: boolean): Varia
       x: 0,
       y: 0,
       rotate: 0,
-      transition: { duration: 0.85, ease, delay: 0.12 },
+      transition: { duration: 0.55, ease, delay: 0.08 },
     },
   };
 }
@@ -217,11 +217,11 @@ function ProjectCard({
           transition={{ duration: 0.45, ease }}
         >
           {/* Outer glare */}
-          <div className="glare-line absolute top-0 left-[8%] right-[8%] z-10 opacity-40 group-hover:opacity-90 transition-opacity duration-500" />
+          <div className="glare-line absolute top-0 left-[8%] right-[8%] z-10 opacity-40 group-hover:opacity-90 transition-opacity duration-200" />
 
           {/* Inner card */}
           <div
-            className="relative h-full rounded-[16px] overflow-hidden transition-[border-color] duration-500 flex flex-col"
+            className="relative h-full rounded-[16px] overflow-hidden transition-[border-color] duration-200 flex flex-col"
             style={{
               background: "linear-gradient(190deg, #1c1c1c, #0e0e0e)",
               border: "1px solid rgba(242,242,242,0.06)",
@@ -237,13 +237,13 @@ function ProjectCard({
           >
             {/* Inner glare */}
             <div
-              className="glare-line absolute top-0 left-[12%] right-[12%] z-10 opacity-20 group-hover:opacity-60 transition-opacity duration-500"
+              className="glare-line absolute top-0 left-[12%] right-[12%] z-10 opacity-20 group-hover:opacity-60 transition-opacity duration-200"
               style={{ height: "1.5px" }}
             />
 
             {/* Color glow on hover */}
             <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
               style={{ backgroundImage: project.color }}
             />
 
@@ -290,7 +290,7 @@ function ProjectCard({
                   height={featured ? 32 : 28}
                   viewBox="0 0 24 24"
                   fill="none"
-                  className="shrink-0 mt-0.5 text-[var(--color-fg-15)] group-hover:text-[var(--color-fg-80)] transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
+                  className="shrink-0 mt-0.5 text-[var(--color-fg-15)] group-hover:text-[var(--color-fg-80)] transition-all duration-200 ease-out group-hover:translate-x-1 group-hover:-translate-y-1"
                 >
                   <path
                     d="M7 17L17 7M17 7H10M17 7v7"
@@ -304,7 +304,7 @@ function ProjectCard({
 
               {/* Description */}
               <p
-                className={`text-[13px] md:text-[14px] leading-[1.6] tracking-[0.1px] text-[var(--text-body)] group-hover:text-[var(--text-secondary)] transition-colors duration-500 ${
+                className={`text-[13px] md:text-[14px] leading-[1.6] tracking-[0.1px] text-[var(--text-body)] group-hover:text-[var(--text-secondary)] transition-colors duration-200 ${
                   featured ? "max-w-[620px]" : "max-w-[480px]"
                 }`}
               >

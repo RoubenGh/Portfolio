@@ -356,7 +356,7 @@ export default function Hero() {
                 <div className="flex">
                   <a
                     href="#work"
-                    className="hero-anim group inline-flex items-center gap-2 rounded-full pl-5 pr-4 py-2.5 text-[13px] font-medium tracking-[0.1px] text-[var(--text-primary)] hover:text-white transition-colors duration-300"
+                    className="hero-anim group inline-flex items-center gap-2 rounded-full pl-5 pr-4 py-2.5 text-[13px] font-medium tracking-[0.1px] text-[var(--text-primary)] hover:text-white transition-colors duration-200"
                     style={{
                       background: "rgba(242,242,242,0.04)",
                       border: "1px solid rgba(242,242,242,0.1)",
@@ -372,7 +372,7 @@ export default function Hero() {
                       height="14"
                       viewBox="0 0 24 24"
                       fill="none"
-                      className="group-hover:translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-300"
+                      className="group-hover:translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-200"
                     >
                       <path
                         d="M7 17L17 7M17 7H8M17 7V16"
