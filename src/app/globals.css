@@ -252,25 +252,6 @@ body {
   animation-delay: var(--about-delay, 0s);
 }
 
-/* Cursor-reactive tilt on the desktop card stack (About.tsx's
-   DesktopCardStack). The rotateX/rotateY transform itself is set
-   imperatively via a ref in JS — this class only supplies the smoothing
-   transition and 3D context, and is inert (no-op) until JS writes a
-   transform, so it never hides content on its own. */
-.about-tilt-group {
-  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transform-style: preserve-3d;
-}
-
-/* Lets a hovered card in the stack rise above its siblings using plain
-   CSS, decoupled from the framer-motion whileHover transform on the card
-   inside it (see the "z-index vs. nested stacking context" note in
-   About.tsx) — keeps the stacking concern out of the animated element. */
-.about-card-wrap:hover,
-.about-card-wrap:focus-within {
-  z-index: 10 !important;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .about-reveal,
   .about-line-inner {
@@ -278,7 +259,139 @@ body {
     opacity: 1 !important;
     transform: none !important;
   }
-  .about-tilt-group {
+}
+
+/* ============================================================
+   OpsWall — live operational panel wall (src/components/OpsWall.tsx)
+
+   Replaces the old overlapping mockup-card stack (which on some real
+   screens overlapped badly enough that card text rendered on top of
+   other card text) with several columns of small "infrastructure
+   surface" panels drifting vertically at different speeds.
+
+   Every motion in this block — column drift, cursor blink, status-dot
+   flip, bar pulse, scanner sweep, pipeline glow — is a plain CSS
+   @keyframes animation on transform/opacity only, so none of it costs
+   per-frame JavaScript. OpsWall.tsx only ever toggles the single
+   `.opswall--paused` class (via IntersectionObserver, so an off-screen
+   wall costs nothing) and a rAF-throttled pointer-parallax transform on
+   `.opswall-parallax` (fine pointers only, same pattern as Hero's
+   constellation).
+
+   Visibility: every panel's real content is drawn with static,
+   non-animated styles and no inline `opacity: 0` — these decorative
+   layers default to a visible resting state and are explicitly turned
+   off (never left mid-transition) under reduced motion below, so the
+   wall can never render blank.
+   ============================================================ */
+@keyframes wall-drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes wall-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
+}
+
+@keyframes wall-dot-flip {
+  0%, 78% { opacity: 0; }
+  86%, 94% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes wall-bar-pulse {
+  0%, 100% { transform: scaleY(0.88); }
+  50% { transform: scaleY(1.08); }
+}
+
+@keyframes wall-bar-pulse-x {
+  0%, 100% { transform: scaleX(0.86); }
+  50% { transform: scaleX(1); }
+}
+
+@keyframes wall-sweep {
+  0% { transform: translateX(-110%); opacity: 0; }
+  8% { opacity: 0.9; }
+  50% { opacity: 0.9; }
+  92% { opacity: 0; }
+  100% { transform: translateX(110%); opacity: 0; }
+}
+
+@keyframes wall-stage-glow {
+  0%, 100% { transform: translateX(0); opacity: 0.25; }
+  50% { transform: translateX(18px); opacity: 0.9; }
+}
+
+.wall-col-track {
+  animation: wall-drift linear infinite;
+  will-change: transform;
+}
+
+.wall-cursor {
+  animation: wall-blink 1.1s step-end infinite;
+}
+
+.wall-dot-overlay {
+  opacity: 0;
+  animation: wall-dot-flip 7s ease-in-out infinite;
+}
+
+.wall-bar {
+  transform-origin: bottom;
+  animation: wall-bar-pulse 3.4s ease-in-out infinite;
+}
+
+.wall-bar-x {
+  transform-origin: left;
+  animation: wall-bar-pulse-x 3.4s ease-in-out infinite;
+}
+
+.wall-sweep {
+  animation: wall-sweep 5.5s ease-in-out infinite;
+}
+
+.wall-stage-glow {
+  animation: wall-stage-glow 3.2s ease-in-out infinite;
+}
+
+.opswall-parallax {
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Single switch that pauses every animated node in the wall at once —
+   driven by OpsWall.tsx's IntersectionObserver. */
+.opswall--paused .wall-col-track,
+.opswall--paused .wall-cursor,
+.opswall--paused .wall-dot-overlay,
+.opswall--paused .wall-bar,
+.opswall--paused .wall-bar-x,
+.opswall--paused .wall-sweep,
+.opswall--paused .wall-stage-glow {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wall-col-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .wall-cursor {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .wall-bar,
+  .wall-bar-x {
+    animation: none !important;
+    transform: none !important;
+  }
+  .wall-dot-overlay,
+  .wall-sweep,
+  .wall-stage-glow {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .opswall-parallax {
     transition: none !important;
     transform: none !important;
   }
