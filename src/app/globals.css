@@ -191,6 +191,57 @@ body {
   }
 }
 
+/* ── Hero constellation — CSS-driven node pulse (src/components/Hero.tsx) ──
+   Previously ~23 framer-motion `<motion.circle>` instances animating
+   opacity/scale every frame on the main thread. Converted to plain CSS
+   @keyframes on opacity/transform so the compositor drives it with no
+   per-frame JS; each node's duration/delay is still computed per-node in
+   JS but only once (as animation-duration/animation-delay inline styles),
+   not on every tick. Hero.tsx's IntersectionObserver toggles the single
+   `.hero-constellation--paused` class (mirrors OpsWall's pattern) so the
+   pulse costs nothing once the hero scrolls out of view.
+
+   No inline opacity: 0 anywhere here — an element with the animation
+   removed simply keeps its default opacity (1), so the constellation can
+   never render blank. */
+@keyframes hero-node-pulse {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.85; }
+}
+
+@keyframes hero-node-glow-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(3.25); opacity: 0; }
+}
+
+.hero-node {
+  animation-name: hero-node-pulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.hero-node-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: hero-node-glow-pulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.hero-constellation--paused .hero-node,
+.hero-constellation--paused .hero-node-glow {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-node,
+  .hero-node-glow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* ============================================================
    About redesign — CSS-driven reveal animations (src/components/About.tsx)
 
@@ -300,14 +351,15 @@ body {
   100% { opacity: 0; }
 }
 
-@keyframes wall-bar-pulse {
-  0%, 100% { transform: scaleY(0.88); }
-  50% { transform: scaleY(1.08); }
-}
-
-@keyframes wall-bar-pulse-x {
-  0%, 100% { transform: scaleX(0.86); }
-  50% { transform: scaleX(1); }
+/* Single highlight sweeping across a sparkline's bars, replacing what
+   used to be 12 independently-pulsing bars per panel (see SparklinePanel
+   in OpsWall.tsx). The bars themselves are static. */
+@keyframes wall-spark-sweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  15% { opacity: 0.7; }
+  50% { opacity: 0.7; }
+  85% { opacity: 0; }
+  100% { transform: translateX(100%); opacity: 0; }
 }
 
 @keyframes wall-sweep {
@@ -337,14 +389,8 @@ body {
   animation: wall-dot-flip 7s ease-in-out infinite;
 }
 
-.wall-bar {
-  transform-origin: bottom;
-  animation: wall-bar-pulse 3.4s ease-in-out infinite;
-}
-
-.wall-bar-x {
-  transform-origin: left;
-  animation: wall-bar-pulse-x 3.4s ease-in-out infinite;
+.wall-spark-sweep {
+  animation: wall-spark-sweep 4.2s ease-in-out infinite;
 }
 
 .wall-sweep {
@@ -364,8 +410,7 @@ body {
 .opswall--paused .wall-col-track,
 .opswall--paused .wall-cursor,
 .opswall--paused .wall-dot-overlay,
-.opswall--paused .wall-bar,
-.opswall--paused .wall-bar-x,
+.opswall--paused .wall-spark-sweep,
 .opswall--paused .wall-sweep,
 .opswall--paused .wall-stage-glow {
   animation-play-state: paused !important;
@@ -380,10 +425,9 @@ body {
     animation: none !important;
     opacity: 1 !important;
   }
-  .wall-bar,
-  .wall-bar-x {
+  .wall-spark-sweep {
     animation: none !important;
-    transform: none !important;
+    opacity: 0 !important;
   }
   .wall-dot-overlay,
   .wall-sweep,

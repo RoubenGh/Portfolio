@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
@@ -61,9 +60,33 @@ function heroVars(vars: Record<string, string>): CSSProperties {
 export default function Hero() {
   const contentRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, SVGGElement | null>>({});
+  const svgRef = useRef<SVGSVGElement>(null);
   const pointerRef = useRef<{ x: number; y: number } | null>(null);
   const rafRef = useRef<number | null>(null);
   const [parallaxEnabled, setParallaxEnabled] = useState(false);
+  // Starts false (running) because the hero is the first thing on the
+  // page and is almost always in view on load — unlike OpsWall, which
+  // starts paused because it's below the fold. IntersectionObserver
+  // corrects this quickly if the hero is ever scrolled past (e.g. a
+  // deep link landing further down the page).
+  const [constellationPaused, setConstellationPaused] = useState(false);
+
+  // Pause the constellation's CSS animations the moment the hero
+  // scrolls out of view, same pattern as OpsWall's IntersectionObserver
+  // + `.opswall--paused` class — a visitor scrolled past the hero pays
+  // nothing for it.
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) setConstellationPaused(!entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // Only wire up the cursor-reactive constellation for devices that
   // actually have a precise, hover-capable pointer (i.e. not touch), and
@@ -215,7 +238,10 @@ export default function Hero() {
               {/* Network graph — nodes drift subtly toward the cursor
                   (desktop pointers only, see parallaxEnabled above). */}
               <svg
-                className="absolute inset-0 w-full h-full pointer-events-none"
+                ref={svgRef}
+                className={`hero-constellation absolute inset-0 w-full h-full pointer-events-none${
+                  constellationPaused ? " hero-constellation--paused" : ""
+                }`}
                 viewBox="0 0 820 380"
                 preserveAspectRatio="xMidYMid slice"
                 style={{ opacity: 0.4 }}
@@ -229,47 +255,46 @@ export default function Hero() {
                     strokeWidth="0.8"
                   />
                 ))}
-                {NET_NODES.map((node) => (
-                  <g
-                    key={node.id}
-                    ref={(el) => {
-                      nodeRefs.current[node.id] = el;
-                    }}
-                    style={{ transition: "transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)" }}
-                  >
-                    {node.glow && (
-                      <motion.circle
-                        cx={node.x} cy={node.y} r={4}
-                        fill="none"
-                        stroke="rgba(127,207,255,0.25)"
-                        strokeWidth="1"
-                        // Scale rather than animating the `r` attribute: framer-motion
-                        // feeds `r` values the SVG attribute rejects, which threw
-                        // "<circle> attribute r: Expected length" once per glow node.
-                        style={{ transformBox: "fill-box", transformOrigin: "center" }}
-                        animate={{ scale: [1, 3.25, 1], opacity: [0.4, 0, 0.4] }}
-                        transition={{
-                          duration: 3 + (node.id % 4) * 0.65,
-                          delay: node.id * 0.22,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    )}
-                    <motion.circle
-                      cx={node.x} cy={node.y}
-                      r={node.glow ? 2.5 : 1.8}
-                      fill="rgba(127,207,255,0.75)"
-                      animate={{ opacity: [0.15, 0.85, 0.15] }}
-                      transition={{
-                        duration: 3 + (node.id % 4) * 0.65,
-                        delay: node.id * 0.22,
-                        repeat: Infinity,
-                        ease: "easeInOut",
+                {NET_NODES.map((node) => {
+                  // Per-node timing variation, computed once at render time
+                  // (not per-frame) and applied as plain CSS animation
+                  // properties — the pulse itself runs on the compositor,
+                  // no JS involved once mounted. See the "Hero constellation"
+                  // block in globals.css for the keyframes.
+                  const duration = 3 + (node.id % 4) * 0.65;
+                  const delay = node.id * 0.22;
+                  const timing: CSSProperties = {
+                    animationDuration: `${duration}s`,
+                    animationDelay: `${delay}s`,
+                  };
+                  return (
+                    <g
+                      key={node.id}
+                      ref={(el) => {
+                        nodeRefs.current[node.id] = el;
                       }}
-                    />
-                  </g>
-                ))}
+                      style={{ transition: "transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)" }}
+                    >
+                      {node.glow && (
+                        <circle
+                          cx={node.x} cy={node.y} r={4}
+                          fill="none"
+                          stroke="rgba(127,207,255,0.25)"
+                          strokeWidth="1"
+                          className="hero-node-glow"
+                          style={timing}
+                        />
+                      )}
+                      <circle
+                        cx={node.x} cy={node.y}
+                        r={node.glow ? 2.5 : 1.8}
+                        fill="rgba(127,207,255,0.75)"
+                        className="hero-node"
+                        style={timing}
+                      />
+                    </g>
+                  );
+                })}
               </svg>
 
               {/* Headline — per-line masked reveal. Each line rises out of

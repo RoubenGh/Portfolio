@@ -35,7 +35,16 @@ function cssVars(vars: Record<string, string>): CSSProperties {
  *  - Panel count is capped at 9 live instances (3 columns x 3 panels),
  *    with the 3rd column hidden below `md` so a narrow viewport only
  *    ever renders 6.
+ *  - Individually-animated-element count is kept low on top of that: the
+ *    sparkline panel animates one highlight sweep across its bar group
+ *    instead of pulsing each of its 12 bars, the process-list panel's
+ *    progress fills are static (no animation at all), and the status-grid
+ *    panel only flips its first two dots amber instead of all six. This
+ *    cut the wall's animated-node count from ~54 to ~19 when fully doubled
+ *    for the drift loop, without changing what any panel visually reads
+ *    as at a glance.
  *
+
  * Visibility contract: every panel's real content (host names, log
  * lines, bar heights, dot fills) is drawn with static, non-animated
  * class-level styles and NO inline `opacity: 0` — the animated layers on
@@ -167,10 +176,16 @@ function StatusGridPanel({ title, services }: { title: string; services: string[
                 className="absolute inset-0 rounded-full"
                 style={{ background: DOT.green }}
               />
-              <span
-                className="wall-dot-overlay absolute inset-0 rounded-full"
-                style={{ background: DOT.amber, animationDelay: `${i * 0.9}s` }}
-              />
+              {/* Only the first two dots per grid actually flip amber —
+                  enough to read as "live" without animating all six.
+                  The rest stay a static green dot (still fully visible,
+                  just not decorated). */}
+              {i < 2 && (
+                <span
+                  className="wall-dot-overlay absolute inset-0 rounded-full"
+                  style={{ background: DOT.amber, animationDelay: `${i * 0.9}s` }}
+                />
+              )}
             </span>
             <span className="text-[var(--text-faint)] truncate">{s}</span>
           </div>
@@ -192,18 +207,28 @@ function SparklinePanel({
 }) {
   return (
     <PanelFrame title={title} dot="green">
-      <div className="flex items-end gap-[3px] h-[42px]">
+      {/* Bars are static (no per-bar animation) — a single highlight
+          sweeps across the whole group instead of 12 independently
+          pulsing bars, same "live data" read for a fraction of the
+          animated-element cost. */}
+      <div className="relative flex items-end gap-[3px] h-[42px]">
         {values.map((v, i) => (
           <span
             key={i}
-            className="wall-bar flex-1 rounded-[1px]"
+            className="flex-1 rounded-[1px]"
             style={{
               height: `${v}%`,
               background: "rgba(127,207,255,0.35)",
-              animationDelay: `${i * 0.12}s`,
             }}
           />
         ))}
+        <span
+          className="wall-spark-sweep absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(127,207,255,0.4), transparent)",
+          }}
+        />
       </div>
       <div className="text-[var(--text-faint)]">{caption}</div>
     </PanelFrame>
@@ -273,19 +298,21 @@ function ProcessListPanel({
 }) {
   return (
     <PanelFrame title={host} dot="green">
-      {procs.map((p, i) => (
+      {procs.map((p) => (
         <div key={p.name} className="flex items-center gap-1.5">
           <span className="text-[var(--text-faint)] w-[54px] shrink-0 truncate">{p.name}</span>
           <span
             className="flex-1 h-[3px] rounded-full overflow-hidden"
             style={{ background: "rgba(242,242,242,0.07)" }}
           >
+            {/* Static fill — a throbbing progress bar reads less like
+                real process usage than a steady one, so this dropped its
+                per-bar animation rather than being converted. */}
             <span
-              className="wall-bar-x block h-full rounded-full"
+              className="block h-full rounded-full"
               style={{
                 width: `${p.pct}%`,
                 background: "rgba(127,207,255,0.42)",
-                animationDelay: `${i * 0.3}s`,
               }}
             />
           </span>

@@ -733,10 +733,7 @@ export function PipelineFlow({
 }: {
   stages: { label: string; sub?: string }[];
 }) {
-  const connCount = stages.length - 1;
-  const travelDuration = 1.5;
   const stagger = 0.65;
-  const repeatDelay = connCount * stagger;
 
   return (
     <Reveal variant="up-sm">
@@ -779,22 +776,21 @@ export function PipelineFlow({
                     className="w-full h-px"
                     style={{ background: "rgba(242,242,242,0.08)" }}
                   />
-                  <motion.div
-                    className="absolute top-1/2 -translate-y-1/2 rounded-full"
+                  {/* CSS-driven travel dot (was a framer-motion
+                      repeat: Infinity animate). Travel/hold ratio is
+                      fixed (see .csPipelineDot in CaseStudy.module.css)
+                      rather than reproducing the exact stage-count-based
+                      repeatDelay the JS version used — visually
+                      equivalent, no per-frame JS. */}
+                  <div
+                    className={`${styles.csPipelineDot} absolute top-1/2 -translate-y-1/2 rounded-full`}
                     style={{
                       width: "5px",
                       height: "5px",
                       background: "rgba(127,207,255,0.85)",
                       left: 0,
                       boxShadow: "0 0 6px rgba(127,207,255,0.6)",
-                    }}
-                    animate={{ x: [0, 43] }}
-                    transition={{
-                      duration: travelDuration,
-                      delay: i * stagger,
-                      repeat: Infinity,
-                      repeatDelay,
-                      ease: "easeInOut",
+                      animationDelay: `${i * stagger}s`,
                     }}
                   />
                 </div>

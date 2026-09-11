@@ -36,3 +36,30 @@
     transform: none !important;
   }
 }
+
+/* ============================================================
+   Pipeline flow travel dot (PipelineFlow in CaseStudy.tsx) — was a
+   framer-motion `animate={{x:[0,43]}}` loop with `repeat: Infinity`,
+   i.e. continuous main-thread JS for as many dots as there are
+   connectors between stages. Converted to a CSS @keyframes animation on
+   transform/opacity; each dot's stagger comes from an inline
+   animation-delay (computed once, not per-frame).
+   ============================================================ */
+@keyframes csPipelineDot {
+  0% { transform: translateX(0); opacity: 1; }
+  35% { transform: translateX(43px); opacity: 1; }
+  40% { transform: translateX(43px); opacity: 0; }
+  100% { transform: translateX(43px); opacity: 0; }
+}
+
+.csPipelineDot {
+  animation: csPipelineDot 4.3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csPipelineDot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translateX(43px) !important;
+  }
+}
