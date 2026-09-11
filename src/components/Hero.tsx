@@ -243,7 +243,11 @@ export default function Hero() {
                         fill="none"
                         stroke="rgba(127,207,255,0.25)"
                         strokeWidth="1"
-                        animate={{ r: [4, 13, 4], opacity: [0.4, 0, 0.4] }}
+                        // Scale rather than animating the `r` attribute: framer-motion
+                        // feeds `r` values the SVG attribute rejects, which threw
+                        // "<circle> attribute r: Expected length" once per glow node.
+                        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+                        animate={{ scale: [1, 3.25, 1], opacity: [0.4, 0, 0.4] }}
                         transition={{
                           duration: 3 + (node.id % 4) * 0.65,
                           delay: node.id * 0.22,
