@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import FadeIn from "./FadeIn";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 const ease = [0.165, 0.84, 0.44, 1] as const;
 
@@ -18,7 +18,7 @@ const terminalLines = [
   { prompt: false, text: "postgres-main     Up 31 days" },
   { prompt: false, text: "redis-cache       Up 31 days" },
   { prompt: true, text: "systemctl status traefik" },
-  { prompt: false, text: "\u25cf traefik.service - Traefik Proxy" },
+  { prompt: false, text: "● traefik.service - Traefik Proxy" },
   { prompt: false, text: "   Active: active (running) since Mar 01" },
   { prompt: true, text: "tail -f /var/log/nginx/access.log" },
   { prompt: false, text: "200 GET /api/tickets 12ms" },
@@ -88,6 +88,27 @@ const cardBase = {
   boxShadow:
     "0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(242,242,242,0.04), inset 0 0 20px rgba(0,0,0,0.2)",
 };
+
+/**
+ * SSR/hydration-safe reduced-motion read — same pattern as FadeIn.tsx and
+ * Work.tsx's useSafeReducedMotion. useReducedMotion() resolves to `null` on
+ * the server and the real value on the client's first paint, so reading it
+ * directly desyncs server/client markup; gate behind a mounted flag.
+ */
+function useSafeReducedMotion() {
+  const prefersReducedMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted && !!prefersReducedMotion;
+}
+
+/** Inline style helper for the CSS custom properties the about.css
+ *  keyframes/entrance classes read (--about-delay, --about-rise-y).
+ *  Typed loosely because React's CSSProperties doesn't know about custom
+ *  properties. Mirrors Hero.tsx's heroVars helper. */
+function aboutVars(vars: Record<string, string>): CSSProperties {
+  return vars as CSSProperties;
+}
 
 /* ── Animated terminal ── */
 function AnimatedTerminal({ height = "200px" }: { height?: string }) {
@@ -226,7 +247,7 @@ function ScrollingCode({ height = "170px" }: { height?: string }) {
       >
         {doubled.map((line, i) => (
           <div key={i} style={{ color: line.color, height: `${lineHeight}px` }}>
-            {line.text || "\u00A0"}
+            {line.text || " "}
           </div>
         ))}
       </motion.div>
@@ -282,10 +303,18 @@ function StatusCard({ className = "", style = {} }: { className?: string; style?
 }
 
 /* ── Terminal card (reusable) ── */
-function TerminalCard({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
+function TerminalCard({
+  className = "",
+  style = {},
+  height = "160px",
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+  height?: string;
+}) {
   return (
     <div
-      className={`rounded-[14px] overflow-hidden ${className}`}
+      className={`rounded-[14px] overflow-hidden relative ${className}`}
       style={{ ...cardBase, ...style }}
     >
       <div
@@ -299,7 +328,7 @@ function TerminalCard({ className = "", style = {} }: { className?: string; styl
           prod-web-03
         </span>
       </div>
-      <AnimatedTerminal height="160px" />
+      <AnimatedTerminal height={height} />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -339,7 +368,15 @@ function DashboardCard({ className = "", style = {} }: { className?: string; sty
 }
 
 /* ── Code card (reusable) ── */
-function CodeCard({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) {
+function CodeCard({
+  className = "",
+  style = {},
+  height = "140px",
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+  height?: string;
+}) {
   return (
     <div
       className={`rounded-[14px] overflow-hidden relative ${className}`}
@@ -353,7 +390,7 @@ function CodeCard({ className = "", style = {} }: { className?: string; style?: 
           streamGuidance.ts
         </span>
       </div>
-      <ScrollingCode height="140px" />
+      <ScrollingCode height={height} />
       <div
         className="absolute top-[30px] left-0 right-0 h-[20px] pointer-events-none"
         style={{ background: "linear-gradient(180deg, #181818, transparent)" }}
@@ -362,6 +399,182 @@ function CodeCard({ className = "", style = {} }: { className?: string; style?: 
         className="absolute bottom-0 left-0 right-0 h-[30px] pointer-events-none"
         style={{ background: "linear-gradient(0deg, #0e0e0e, transparent)" }}
       />
+    </div>
+  );
+}
+
+/**
+ * Desktop overlapping card stack — gives the previously-inert mockup two
+ * kinds of life:
+ *  1. A cursor-reactive 3D tilt on the whole stack (fine pointers only,
+ *     same matchMedia + mounted-gated approach as Hero's constellation
+ *     parallax — checked once on mount so it can't cause a hydration
+ *     mismatch), applied imperatively via a ref so it never fights with
+ *     React's render cycle.
+ *  2. Per-card scroll parallax via framer-motion's useScroll/useTransform
+ *     (same primitive as Work.tsx's ParallaxImage), so the four cards
+ *     drift at different rates as the section scrolls through view.
+ * Entrance (opacity/rise) is handled by the plain-CSS `.about-reveal`
+ * class on each card's OUTER wrapper — never on the element framer-motion
+ * controls — so the two animation systems never contend for the same
+ * `transform` property on the same node.
+ */
+function DesktopCardStack() {
+  const reduced = useSafeReducedMotion();
+  const groupRef = useRef<HTMLDivElement>(null);
+  const tiltRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef<{ x: number; y: number } | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const [tiltEnabled, setTiltEnabled] = useState(false);
+
+  useEffect(() => {
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reducedPref = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTiltEnabled(fine && !reducedPref);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const applyTilt = () => {
+    rafRef.current = null;
+    const el = tiltRef.current;
+    if (!el) return;
+    const p = pointerRef.current;
+    if (!p) {
+      el.style.transform = "";
+      return;
+    }
+    const rotateX = (-p.y * 5).toFixed(2);
+    const rotateY = (p.x * 7).toFixed(2);
+    el.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const rect = groupRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    pointerRef.current = {
+      x: ((e.clientX - rect.left) / rect.width) * 2 - 1,
+      y: ((e.clientY - rect.top) / rect.height) * 2 - 1,
+    };
+    if (rafRef.current == null) rafRef.current = requestAnimationFrame(applyTilt);
+  };
+
+  const handlePointerLeave = () => {
+    pointerRef.current = null;
+    if (rafRef.current == null) rafRef.current = requestAnimationFrame(applyTilt);
+  };
+
+  const { scrollYProgress } = useScroll({ target: groupRef, offset: ["start end", "end start"] });
+  const yStatus = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [20, -20]);
+  const yDashboard = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [14, -14]);
+  const yTerminal = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [-10, 10]);
+  const yCode = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [-22, 22]);
+
+  return (
+    <div
+      ref={groupRef}
+      className="hidden md:block relative mt-12 group/cards"
+      style={{ height: "360px", perspective: "1100px" }}
+      onPointerMove={tiltEnabled ? handlePointerMove : undefined}
+      onPointerLeave={tiltEnabled ? handlePointerLeave : undefined}
+    >
+      <div ref={tiltRef} className="about-tilt-group relative w-full h-full">
+        {/* Card 0: Status — deepest */}
+        <div
+          className="about-reveal about-card-wrap absolute"
+          style={{
+            top: "0px",
+            left: "188px",
+            width: "168px",
+            zIndex: 0,
+            ...aboutVars({ "--about-delay": "0.15s", "--about-rise-y": "38px" }),
+          }}
+        >
+          <motion.div
+            className="rounded-[14px] overflow-hidden"
+            style={{ rotate: "8deg", opacity: 0.48, y: yStatus }}
+            whileHover={{ scale: 1.03, rotate: 0, opacity: 1 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-5 group-hover/cards:-translate-y-3">
+              <StatusCard />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Card 2: Dashboard — back right */}
+        <div
+          className="about-reveal about-card-wrap absolute"
+          style={{
+            top: "8px",
+            left: "150px",
+            width: "215px",
+            zIndex: 1,
+            ...aboutVars({ "--about-delay": "0.32s", "--about-rise-y": "38px" }),
+          }}
+        >
+          <motion.div
+            className="rounded-[14px] overflow-hidden"
+            style={{ rotate: "3.5deg", opacity: 0.62, y: yDashboard }}
+            whileHover={{ scale: 1.03, rotate: 0, opacity: 1 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-3 group-hover/cards:-translate-y-2">
+              <DashboardCard />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Card 1: Terminal — center front */}
+        <div
+          className="about-reveal about-card-wrap absolute"
+          style={{
+            top: "26px",
+            left: "5px",
+            width: "288px",
+            zIndex: 3,
+            ...aboutVars({ "--about-delay": "0.2s", "--about-rise-y": "38px" }),
+          }}
+        >
+          <motion.div
+            className="rounded-[14px] overflow-hidden"
+            style={{ rotate: "-1.5deg", y: yTerminal }}
+            whileHover={{ scale: 1.03, rotate: 0 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-2 group-hover/cards:-translate-y-1">
+              <TerminalCard height="200px" />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Card 3: Code — front bottom */}
+        <div
+          className="about-reveal about-card-wrap absolute"
+          style={{
+            top: "168px",
+            left: "20px",
+            width: "263px",
+            zIndex: 4,
+            ...aboutVars({ "--about-delay": "0.45s", "--about-rise-y": "38px" }),
+          }}
+        >
+          <motion.div
+            className="rounded-[14px] overflow-hidden"
+            style={{ rotate: "1.5deg", y: yCode }}
+            whileHover={{ scale: 1.03, rotate: 0 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-0.5 group-hover/cards:translate-y-2">
+              <CodeCard height="170px" />
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -382,15 +595,21 @@ export default function About() {
       />
 
       <div className="relative mx-auto max-w-[880px] px-4 md:px-0">
-        <FadeIn>
+        <div
+          className="about-reveal"
+          style={aboutVars({ "--about-delay": "0s", "--about-rise-y": "14px" })}
+        >
           <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] block mb-14">
             About
           </span>
-        </FadeIn>
+        </div>
 
         {/* ── Mobile fanned card stack ── */}
         <div className="md:hidden mb-14">
-          <FadeIn delay={0.1}>
+          <div
+            className="about-reveal"
+            style={aboutVars({ "--about-delay": "0.1s", "--about-rise-y": "32px" })}
+          >
             <div className="relative" style={{ height: "270px" }}>
               {/* Back card: Code (deepest) */}
               <div
@@ -478,168 +697,66 @@ export default function About() {
                 />
               </div>
             </div>
-          </FadeIn>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-6">
           <div className="md:col-span-5">
-            <FadeIn delay={0.08}>
-              <p className="text-[26px] md:text-[32px] font-medium leading-[1.12] tracking-[-0.8px] text-[var(--text-primary)]">
-                Engineer building
-                <br />
-                systems that
-                <br />
-                <span
-                  className="gradient-text-fade inline-block"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontStyle: "italic",
-                    fontWeight: 400,
-                    letterSpacing: "-0.5px",
-                  }}
-                >
-                  run themselves.
+            {/* Heading — per-line masked reveal, same technique as the
+                Hero headline (see globals.css: .about-line-mask /
+                .about-line-inner mirror .hero-line-mask / .hero-line-inner)
+                so the two headlines read as one family. */}
+            <div
+              className="about-reveal"
+              style={aboutVars({ "--about-delay": "0.05s", "--about-rise-y": "22px" })}
+            >
+              <p
+                aria-label="Engineer building systems that run themselves."
+                className="text-[26px] md:text-[32px] font-medium leading-[1.12] tracking-[-0.8px] text-[var(--text-primary)]"
+              >
+                <span aria-hidden="true">
+                  <span className="about-line-mask">
+                    <span
+                      className="about-line-inner"
+                      style={aboutVars({ "--about-delay": "0.15s" })}
+                    >
+                      Engineer building
+                    </span>
+                  </span>
+                  <span className="about-line-mask">
+                    <span
+                      className="about-line-inner"
+                      style={aboutVars({ "--about-delay": "0.24s" })}
+                    >
+                      systems that
+                    </span>
+                  </span>
+                  <span className="about-line-mask">
+                    <span
+                      className="about-line-inner gradient-text-fade inline-block"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontStyle: "italic",
+                        fontWeight: 400,
+                        letterSpacing: "-0.5px",
+                        ...aboutVars({ "--about-delay": "0.33s" }),
+                      }}
+                    >
+                      run themselves.
+                    </span>
+                  </span>
                 </span>
               </p>
-            </FadeIn>
-
-            {/* ── Desktop overlapping cards ── */}
-            <div className="hidden md:block relative mt-12 group/cards" style={{ height: "360px" }}>
-              {/* Card 0: Status — deepest */}
-              <FadeIn delay={0.15} y={40}>
-                <motion.div
-                  className="absolute rounded-[14px] overflow-hidden z-[0]"
-                  style={{
-                    ...cardBase,
-                    top: "0px",
-                    left: "188px",
-                    width: "168px",
-                    rotate: "8deg",
-                    opacity: 0.48,
-                  }}
-                  whileHover={{ scale: 1.03, rotate: 0, opacity: 1, zIndex: 10 }}
-                  transition={{ duration: 0.4, ease }}
-                >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-5 group-hover/cards:-translate-y-3">
-                    <StatusCard />
-                  </div>
-                </motion.div>
-              </FadeIn>
-
-              {/* Card 2: Dashboard — back right */}
-              <FadeIn delay={0.35} y={40}>
-                <motion.div
-                  className="absolute rounded-[14px] overflow-hidden z-[1]"
-                  style={{
-                    ...cardBase,
-                    top: "8px",
-                    left: "150px",
-                    width: "215px",
-                    rotate: "3.5deg",
-                    opacity: 0.62,
-                  }}
-                  whileHover={{ scale: 1.03, rotate: 0, opacity: 1, zIndex: 10 }}
-                  transition={{ duration: 0.4, ease }}
-                >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-3 group-hover/cards:-translate-y-2">
-                    <div
-                      className="px-3.5 py-2.5"
-                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
-                    >
-                      <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
-                        Dashboard
-                      </span>
-                    </div>
-                    <div className="rounded-b-[14px] overflow-hidden">
-                      <img
-                        src="/images/ai-ticketing/dashboard.png"
-                        alt=""
-                        className="w-full h-auto block"
-                        style={{ opacity: 0.8 }}
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              </FadeIn>
-
-              {/* Card 1: Terminal — center front */}
-              <FadeIn delay={0.2} y={40}>
-                <motion.div
-                  className="absolute rounded-[14px] overflow-hidden z-[3]"
-                  style={{
-                    ...cardBase,
-                    top: "26px",
-                    left: "5px",
-                    width: "288px",
-                    rotate: "-1.5deg",
-                  }}
-                  whileHover={{ scale: 1.03, rotate: 0, zIndex: 10 }}
-                  transition={{ duration: 0.4, ease }}
-                >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:-translate-x-2 group-hover/cards:-translate-y-1">
-                    <div
-                      className="flex items-center gap-1.5 px-3.5 py-2.5"
-                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
-                    >
-                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,95,87,0.7)" }} />
-                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(255,189,46,0.7)" }} />
-                      <div className="w-[7px] h-[7px] rounded-full" style={{ background: "rgba(39,201,63,0.7)" }} />
-                      <span className="ml-2 text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
-                        prod-web-03
-                      </span>
-                    </div>
-                    <AnimatedTerminal />
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: "radial-gradient(ellipse at 30% 20%, rgba(127,207,255,0.03), transparent 60%)",
-                      }}
-                    />
-                  </div>
-                </motion.div>
-              </FadeIn>
-
-              {/* Card 3: Code — front bottom */}
-              <FadeIn delay={0.5} y={40}>
-                <motion.div
-                  className="absolute rounded-[14px] overflow-hidden z-[4]"
-                  style={{
-                    ...cardBase,
-                    top: "168px",
-                    left: "20px",
-                    width: "263px",
-                    rotate: "1.5deg",
-                  }}
-                  whileHover={{ scale: 1.03, rotate: 0, zIndex: 10 }}
-                  transition={{ duration: 0.4, ease }}
-                >
-                  <div className="transition-transform duration-500 ease-out group-hover/cards:translate-x-0.5 group-hover/cards:translate-y-2">
-                    <div
-                      className="flex items-center gap-1.5 px-3.5 py-2.5"
-                      style={{ borderBottom: "1px solid rgba(242,242,242,0.04)" }}
-                    >
-                      <span className="text-[10px] text-[var(--text-faint)] tracking-[0.05em]">
-                        streamGuidance.ts
-                      </span>
-                    </div>
-                    <ScrollingCode />
-                    <div
-                      className="absolute top-[30px] left-0 right-0 h-[20px] pointer-events-none"
-                      style={{ background: "linear-gradient(180deg, #181818, transparent)" }}
-                    />
-                    <div
-                      className="absolute bottom-0 left-0 right-0 h-[30px] pointer-events-none"
-                      style={{ background: "linear-gradient(0deg, #0e0e0e, transparent)" }}
-                    />
-                  </div>
-                </motion.div>
-              </FadeIn>
             </div>
+
+            <DesktopCardStack />
           </div>
 
           <div className="md:col-span-6 md:col-start-7">
-            <FadeIn delay={0.16}>
+            <div
+              className="about-reveal"
+              style={aboutVars({ "--about-delay": "0.1s", "--about-rise-y": "18px" })}
+            >
               <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 I work on production infrastructure and applications that
                 support real users at scale. That includes everything from
@@ -647,48 +764,84 @@ export default function About() {
                 pipelines, and legacy systems that need to stay online no
                 matter what.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
+            </div>
+
+            <div
+              className="about-reveal mt-5"
+              style={aboutVars({ "--about-delay": "0.05s", "--about-rise-y": "18px" })}
+            >
+              <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 Most of my experience comes from operating live systems, not
                 just building them. Debugging broken payment flows, tracing
-                down infrastructure issues, and keeping hundreds of
-                environments stable has shaped how I approach engineering:
-                keep it simple, make it reliable, and remove as many failure
-                points as possible.
+                down infrastructure issues, and keeping{" "}
+                <span className="text-[var(--text-secondary)]">
+                  hundreds of environments
+                </span>{" "}
+                stable has shaped how I approach engineering: keep it simple,
+                make it reliable, and remove as many failure points as
+                possible.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.24}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
+            </div>
+
+            <div
+              className="about-reveal mt-5"
+              style={aboutVars({ "--about-delay": "0.05s", "--about-rise-y": "18px" })}
+            >
+              <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 I tend to focus on turning messy, manual processes into clean,
                 repeatable systems. Whether it&apos;s internal tools, data
                 pipelines, or full application workflows, the goal is always
                 the same: make it predictable, scalable, and low maintenance.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.28}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
+            </div>
+
+            <div
+              className="about-reveal mt-5"
+              style={aboutVars({ "--about-delay": "0.05s", "--about-rise-y": "18px" })}
+            >
+              <p className="text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
                 <span className="text-[var(--text-secondary)]">RLA Studios</span>{" "}
                 came out of that same mindset. What started as creative work
                 evolved into building systems behind it, automating everything
                 from client intake to delivery so it can scale without becoming
                 operational overhead.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.32}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
+            </div>
+
+            {/* Pull-quote — the same sentence, re-set as a breakout instead
+                of a seventh line of body copy. No words added or removed. */}
+            <div
+              className="about-reveal mt-8"
+              style={aboutVars({ "--about-delay": "0.05s", "--about-rise-y": "14px" })}
+            >
+              <p
+                className="relative pl-5 md:pl-6 text-[18px] md:text-[21px] leading-[1.45] tracking-[-0.3px] text-[var(--text-primary)]"
+                style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontWeight: 400 }}
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-[3px] bottom-[3px] w-[2px]"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, rgba(127,207,255,0.55), rgba(127,207,255,0))",
+                  }}
+                />
                 I&apos;m less interested in perfect architecture diagrams and
                 more in systems that actually hold up in production, under
                 load, with real users.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.36}>
-              <p className="mt-5 text-[14px] md:text-[15px] leading-[1.7] text-[var(--text-body)]">
+            </div>
+
+            <div
+              className="about-reveal mt-8"
+              style={aboutVars({ "--about-delay": "0.05s", "--about-rise-y": "14px" })}
+            >
+              <p className="text-[14px] leading-[1.7] text-[var(--text-muted)]">
                 Outside of work, I&apos;m usually watching tennis or F1, which
                 probably explains why I care a bit too much about performance,
                 consistency, and things working exactly the way they should.
               </p>
-            </FadeIn>
+            </div>
           </div>
         </div>
       </div>

@@ -190,3 +190,96 @@ body {
     transform: none !important;
   }
 }
+
+/* ============================================================
+   About redesign — CSS-driven reveal animations (src/components/About.tsx)
+
+   Same rationale as the Hero block above: plain CSS @keyframes instead of
+   framer-motion initial/whileInView, so the heading, prose, pull-quote and
+   card stack all reach a fully visible end state even if JS never
+   hydrates or fails to load. Easing matches the site-wide cubic-bezier.
+
+   About sits below the fold, so — unlike Hero — this reveal is timed to
+   page load rather than scroll position: by the time a reader scrolls
+   down to it the animation has already finished and the section is at
+   rest. (An earlier version of this rule opted into the CSS Scroll-Driven
+   Animations `view()` timeline so each element would reveal as it
+   individually scrolled into view. It was reverted: in this project's
+   verification environment, `animation-timeline: view()` reliably made
+   the animated elements fail to paint/composite on capture — confirmed by
+   toggling `animation-timeline: auto` back on with everything else held
+   constant. Given the hard requirement that this content must always be
+   visible, the proven-reliable document-timeline approach wins over the
+   nicer-but-unverifiable scroll-linked one.)
+   ============================================================ */
+@keyframes about-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--about-rise-y, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes about-line-rise {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.about-reveal {
+  opacity: 0;
+  animation: about-rise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation-delay: var(--about-delay, 0s);
+}
+
+.about-line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.about-line-inner {
+  display: block;
+  transform: translateY(112%);
+  animation: about-line-rise 0.85s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation-delay: var(--about-delay, 0s);
+}
+
+/* Cursor-reactive tilt on the desktop card stack (About.tsx's
+   DesktopCardStack). The rotateX/rotateY transform itself is set
+   imperatively via a ref in JS — this class only supplies the smoothing
+   transition and 3D context, and is inert (no-op) until JS writes a
+   transform, so it never hides content on its own. */
+.about-tilt-group {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform-style: preserve-3d;
+}
+
+/* Lets a hovered card in the stack rise above its siblings using plain
+   CSS, decoupled from the framer-motion whileHover transform on the card
+   inside it (see the "z-index vs. nested stacking context" note in
+   About.tsx) — keeps the stacking concern out of the animated element. */
+.about-card-wrap:hover,
+.about-card-wrap:focus-within {
+  z-index: 10 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-reveal,
+  .about-line-inner {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .about-tilt-group {
+    transition: none !important;
+    transform: none !important;
+  }
+}
