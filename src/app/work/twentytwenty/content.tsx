@@ -93,7 +93,7 @@ export default function TwentyTwentyContent() {
                   Free and open source. Install it in about a minute.
                 </span>
                 <span className="block mt-1.5 text-[13px] leading-[1.6] text-[var(--text-body)]">
-                  Linux (.deb, .AppImage, .rpm) &nbsp;·&nbsp; Windows (.msi, .exe) &nbsp;·&nbsp; macOS (universal .dmg)
+                  Linux (.deb, .rpm, .AppImage) &nbsp;·&nbsp; Windows (.msi, .exe) &nbsp;·&nbsp; macOS (universal .dmg)
                 </span>
               </div>
 
@@ -363,8 +363,8 @@ export default function TwentyTwentyContent() {
               <section id="caught" className="mb-20 md:mb-28 scroll-mt-32">
                 <SectionHeading
                   number="08"
-                  title="What The Process Caught"
-                  subtitle="Nine defects found before release. The two worst were invisible to every automated check."
+                  title="What The Process Caught, And What It Missed"
+                  subtitle="Nine defects found before release. The one that mattered most got through anyway."
                 />
                 <SectionBody>
                   <p>
@@ -378,6 +378,18 @@ export default function TwentyTwentyContent() {
                   </p>
                   <p>
                     The rest were ordinary but would have shipped: an idle check that would have downgraded itself to a dumb timer the first time the user touched the mouse, a session lookup that fails specifically when the app is launched at login, a macOS parser that would have reported the display permanently awake, and a wrong Win32 call for closing a handle.
+                  </p>
+                  <p>
+                    And then one got out. On a packaged build the overlay came up completely blank and swallowed the keyboard and mouse with it. Every control that dismisses it lives in that page, so when the page failed to draw, Escape, Snooze and Skip ceased to exist at the same moment. There was no way out of the session.
+                  </p>
+                  <p>
+                    The first fix addressed the cause: a build that resolved the page against a development server that is not running in a shipped app. It was the right diagnosis, it was verified, and it was not enough. Within the hour the same symptom returned from an unrelated cause. The AppImage carries its own graphics libraries, and against a driver that disagrees with them the renderer dies before its first frame. Same blank window, same trap, nothing in common with the first bug.
+                  </p>
+                  <p>
+                    <strong className="text-[var(--text-secondary)]">The second fix stopped chasing causes.</strong> The overlay no longer captures anything on the strength of having been created. It opens click-through, unfocused and not on top, and is promoted to a real overlay only once the page reports that a frame was actually composited. If that report does not arrive in two and a half seconds, the window is destroyed and the break arrives as a notification explaining why. Both known causes now land in the same safe place, as will the next one, because the check asks whether the page drew rather than why it did not.
+                  </p>
+                  <p>
+                    The lesson was not about graphics drivers. It was that the verification had been shaped for convenience: the overlay was tested with its fullscreen and always-on-top flags removed so it would not hijack the screen under test, and launched directly rather than through the installer. Those were exactly the four variables that turn a blank window into a trap. A test made safe had been made incapable of finding the bug.
                   </p>
                 </SectionBody>
 
@@ -394,8 +406,8 @@ export default function TwentyTwentyContent() {
                   },
                   {
                     number: "03",
-                    title: "A human still looks",
-                    description: "The two worst bugs were only findable by running the real app and looking at a real screen. Nothing replaces that step.",
+                    title: "Design for the failure, not the cause",
+                    description: "The worst bug had two unrelated causes and the same symptom. What fixed it was refusing to let the overlay capture input until it proved it had drawn something.",
                   },
                 ]} />
               </section>
