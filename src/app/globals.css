@@ -107,3 +107,86 @@ body {
   background: rgba(242, 242, 242, 0.1);
   border-radius: 2px;
 }
+
+/* ============================================================
+   Hero redesign — CSS-driven reveal animations (src/components/Hero.tsx)
+
+   These entrance/reveal effects are plain CSS @keyframes rather than
+   framer-motion. The browser runs them the moment the stylesheet is
+   parsed, independent of React hydration, so the headline, CTA and
+   scroll cue always reach a fully visible end state — even if JS fails
+   to load or hydrate entirely. Do not convert these back to a JS-driven
+   initial-opacity-0 pattern; that is the exact failure mode this
+   project shipped once before (see AGENTS.md-adjacent commit history).
+
+   Easing matches the framer-motion curve used everywhere else on the
+   site: cubic-bezier(0.165, 0.84, 0.44, 1).
+   ============================================================ */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--hero-rise-y, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-line-rise {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 0.15;
+  }
+}
+
+.hero-anim {
+  opacity: 0;
+  animation: hero-rise 0.9s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+.hero-line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero-line-inner {
+  display: block;
+  transform: translateY(112%);
+  animation: hero-line-rise 0.85s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+/* Scroll cue: entrance handled by .hero-anim on the wrapper; the bounce
+   loop lives on a separate child element (.hero-scroll-line) so the two
+   animations never target the same properties on the same element. */
+.hero-scroll-line {
+  animation: hero-scroll-bounce 2.4s ease-in-out infinite;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim,
+  .hero-line-inner,
+  .hero-scroll-line {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

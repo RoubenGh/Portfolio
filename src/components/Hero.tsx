@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
+// Shared easing curve used site-wide by framer-motion. Kept here for the
+// continuous node-glow loops below; the entrance/reveal animations were
+// moved to plain CSS (see the "Hero" block at the end of globals.css) so
+// the hero is guaranteed to reach a fully visible state even if React
+// never hydrates. The CSS keyframes use the same cubic-bezier values.
 const ease = [0.165, 0.84, 0.44, 1] as const;
 
 const NET_NODES: { id: number; x: number; y: number; glow?: boolean }[] = [
@@ -33,7 +40,89 @@ const NET_EDGES = [
   [13,14],[14,15],[15,16],[16,17],
 ];
 
+// viewBox dimensions of the constellation svg — used to map pointer
+// position into the same coordinate space as the node data above.
+const VB_W = 820;
+const VB_H = 380;
+// Cursor-parallax tuning: nodes within MAX_DIST (viewBox units) of the
+// pointer drift toward it by up to MAX_OFFSET units, falling off with the
+// square of distance so the effect stays tight around the cursor instead
+// of nudging the whole graph.
+const MAX_DIST = 260;
+const MAX_OFFSET = 9;
+
+/** Inline style helper for the CSS custom properties the hero.css
+ *  keyframes read (--hero-delay, --hero-rise-y). Typed loosely because
+ *  React's CSSProperties doesn't know about custom properties. */
+function heroVars(vars: Record<string, string>): CSSProperties {
+  return vars as CSSProperties;
+}
+
 export default function Hero() {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<Record<number, SVGGElement | null>>({});
+  const pointerRef = useRef<{ x: number; y: number } | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const [parallaxEnabled, setParallaxEnabled] = useState(false);
+
+  // Only wire up the cursor-reactive constellation for devices that
+  // actually have a precise, hover-capable pointer (i.e. not touch), and
+  // never for users who asked for reduced motion. Checked once on mount —
+  // this only toggles whether the pointer handlers are attached, so it
+  // can't cause a hydration mismatch (the SSR/first-paint markup is
+  // identical either way).
+  useEffect(() => {
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setParallaxEnabled(fine && !reduced);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const applyParallax = () => {
+    rafRef.current = null;
+    const p = pointerRef.current;
+    for (const node of NET_NODES) {
+      const el = nodeRefs.current[node.id];
+      if (!el) continue;
+      if (!p) {
+        el.style.transform = "";
+        continue;
+      }
+      const dx = p.x - node.x;
+      const dy = p.y - node.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      const falloff = Math.max(0, 1 - dist / MAX_DIST);
+      const strength = falloff * falloff * MAX_OFFSET;
+      const ox = (dx / dist) * strength;
+      const oy = (dy / dist) * strength;
+      el.style.transform = `translate(${ox.toFixed(2)}px, ${oy.toFixed(2)}px)`;
+    }
+  };
+
+  const handlePointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!contentRef.current) return;
+    const rect = contentRef.current.getBoundingClientRect();
+    pointerRef.current = {
+      x: ((e.clientX - rect.left) / rect.width) * VB_W,
+      y: ((e.clientY - rect.top) / rect.height) * VB_H,
+    };
+    if (rafRef.current == null) {
+      rafRef.current = requestAnimationFrame(applyParallax);
+    }
+  };
+
+  const handlePointerLeave = () => {
+    pointerRef.current = null;
+    if (rafRef.current == null) {
+      rafRef.current = requestAnimationFrame(applyParallax);
+    }
+  };
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
@@ -44,12 +133,11 @@ export default function Hero() {
           "radial-gradient(circle closest-corner at 50% 0%, rgba(242,242,242,0.04), transparent)",
       }}
     >
-      {/* Hero window card */}
-      <motion.div
-        initial={{ opacity: 0, y: 56 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.1, ease }}
-        className="relative mx-auto w-full max-w-[840px] px-4 md:px-0"
+      {/* Hero window card — CSS-driven entrance (see globals.css) so it
+          reaches full opacity even if JS never hydrates. */}
+      <div
+        className="hero-anim relative mx-auto w-full max-w-[840px] md:max-w-[1120px] px-4 md:px-0"
+        style={heroVars({ "--hero-rise-y": "48px", "--hero-delay": "0s" })}
       >
         {/* Outer bezel */}
         <div
@@ -118,10 +206,14 @@ export default function Hero() {
 
             {/* Window content */}
             <div
+              ref={contentRef}
+              onPointerMove={parallaxEnabled ? handlePointerMove : undefined}
+              onPointerLeave={parallaxEnabled ? handlePointerLeave : undefined}
               className="relative px-7 pt-14 pb-28 md:px-12 md:pt-16 md:pb-40"
               style={{ background: "rgba(10,10,10,0.65)" }}
             >
-              {/* Network graph */}
+              {/* Network graph — nodes drift subtly toward the cursor
+                  (desktop pointers only, see parallaxEnabled above). */}
               <svg
                 className="absolute inset-0 w-full h-full pointer-events-none"
                 viewBox="0 0 820 380"
@@ -138,7 +230,13 @@ export default function Hero() {
                   />
                 ))}
                 {NET_NODES.map((node) => (
-                  <g key={node.id}>
+                  <g
+                    key={node.id}
+                    ref={(el) => {
+                      nodeRefs.current[node.id] = el;
+                    }}
+                    style={{ transition: "transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)" }}
+                  >
                     {node.glow && (
                       <motion.circle
                         cx={node.x} cy={node.y} r={4}
@@ -170,11 +268,18 @@ export default function Hero() {
                 ))}
               </svg>
 
-              {/* Headline */}
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease }}
+              {/* Headline — per-line masked reveal. Each line rises out of
+                  an overflow-hidden mask on its own stagger (CSS keyframes,
+                  see globals.css) instead of the whole block fading in at
+                  once. Technique follows the "SplitText"-style reveal
+                  popularized by React Bits (reactbits.dev, MIT + Commons
+                  Clause) but is hand-rolled at the line level rather than
+                  copied/split per character: that keeps a single real text
+                  node per line (selection stays intact) and lets us put the
+                  full sentence in one aria-label so the accessible name
+                  doesn't fragment across the three lines. */}
+              <h1
+                aria-label="I build & operate production systems at scale."
                 className="text-[clamp(36px,7.5vw,72px)] font-medium tracking-[-2px]"
                 style={{
                   lineHeight: "0.92",
@@ -182,32 +287,78 @@ export default function Hero() {
                     "0 4px 8px rgba(0,87,255,0.08), 0 -3px 8px rgba(255,90,0,0.05), 0 -4px 20px rgba(255,255,255,0.12)",
                 }}
               >
-                I build &amp; operate
-                <br />
-                production systems
-                <br />
-                <span
-                  className="gradient-text-fade inline-block mt-1"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontStyle: "italic",
-                    fontWeight: 400,
-                    letterSpacing: "-1px",
-                  }}
-                >
-                  at scale.
+                <span aria-hidden="true">
+                  <span className="hero-line-mask">
+                    <span
+                      className="hero-line-inner"
+                      style={heroVars({ "--hero-delay": "0.2s" })}
+                    >
+                      I build &amp; operate
+                    </span>
+                  </span>
+                  <span className="hero-line-mask">
+                    <span
+                      className="hero-line-inner"
+                      style={heroVars({ "--hero-delay": "0.32s" })}
+                    >
+                      production systems
+                    </span>
+                  </span>
+                  <span className="hero-line-mask">
+                    <span
+                      className="hero-line-inner gradient-text-fade inline-block mt-1"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontStyle: "italic",
+                        fontWeight: 400,
+                        letterSpacing: "-1px",
+                        ...heroVars({ "--hero-delay": "0.44s" }),
+                      }}
+                    >
+                      at scale.
+                    </span>
+                  </span>
                 </span>
-              </motion.h1>
+              </h1>
 
-              {/* Bio — pushed right on desktop, full-width on mobile */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.6, ease }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 md:mt-16"
-              >
-                <div className="hidden md:block" />
-                <div>
+              {/* Composition row — CTA fills the previously-dead
+                  lower-left quadrant, tagline rebalanced to the right. */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14 md:mt-16 md:items-end">
+                <div className="flex">
+                  <a
+                    href="#work"
+                    className="hero-anim group inline-flex items-center gap-2 rounded-full pl-5 pr-4 py-2.5 text-[13px] font-medium tracking-[0.1px] text-[var(--text-primary)] hover:text-white transition-colors duration-300"
+                    style={{
+                      background: "rgba(242,242,242,0.04)",
+                      border: "1px solid rgba(242,242,242,0.1)",
+                      backdropFilter: "blur(20px)",
+                      boxShadow:
+                        "0 4px 24px rgba(0,0,0,0.25), inset 0 0.5px 0 rgba(242,242,242,0.06)",
+                      ...heroVars({ "--hero-rise-y": "16px", "--hero-delay": "0.7s" }),
+                    }}
+                  >
+                    View work
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="group-hover:translate-y-0.5 group-hover:translate-x-0.5 transition-transform duration-300"
+                    >
+                      <path
+                        d="M7 17L17 7M17 7H8M17 7V16"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </a>
+                </div>
+                <div
+                  className="hero-anim"
+                  style={heroVars({ "--hero-rise-y": "16px", "--hero-delay": "0.6s" })}
+                >
                   <p className="text-[15px] md:text-[17px] font-medium leading-[1.45] text-[var(--text-primary)]">
                     Systems Engineer &amp; Founder.
                     <br className="hidden md:block" />{" "}
@@ -217,7 +368,26 @@ export default function Hero() {
                     Keeping hundreds of environments running.
                   </p>
                 </div>
-              </motion.div>
+              </div>
+
+              {/* Scroll cue — anchored to the bottom of the frame itself
+                  rather than floating in the section's outer margin. */}
+              <div
+                aria-hidden="true"
+                className="hero-anim absolute bottom-5 md:bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                style={heroVars({ "--hero-rise-y": "10px", "--hero-delay": "0.95s" })}
+              >
+                <span className="text-[9px] uppercase tracking-[0.2em] text-[var(--text-faint)]">
+                  Scroll
+                </span>
+                <span
+                  className="hero-scroll-line w-px h-6"
+                  style={{
+                    background: "linear-gradient(to bottom, var(--color-fg), transparent)",
+                    ...heroVars({ "--hero-delay": "1.75s" }),
+                  }}
+                />
+              </div>
 
               {/* Grain texture — barely visible */}
               <div
@@ -233,7 +403,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Bottom fade */}
       <div
@@ -242,15 +412,6 @@ export default function Hero() {
           background:
             "linear-gradient(to bottom, transparent, var(--color-bg) 75%)",
         }}
-      />
-
-      {/* Scroll line — replaces generic arrow */}
-      <motion.div
-        initial={{ opacity: 0, scaleY: 0 }}
-        animate={{ opacity: 0.25, scaleY: 1 }}
-        transition={{ delay: 1.6, duration: 0.8, ease }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 w-px h-8 origin-top"
-        style={{ background: "linear-gradient(to bottom, var(--color-fg), transparent)" }}
       />
     </section>
   );
