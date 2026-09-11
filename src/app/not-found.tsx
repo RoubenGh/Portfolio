@@ -41,7 +41,7 @@ export default function NotFound() {
             animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s both",
           }}
         >
-          This page doesn&apos;t exist. The servers are healthy though — checked
+          This page doesn&apos;t exist. The servers are healthy though, checked
           twice.
         </p>
         <div
