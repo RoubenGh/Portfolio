@@ -9,16 +9,15 @@ export default function NotFound() {
       <div className="text-center max-w-[580px]">
         <span
           className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] block mb-8"
-          style={{ opacity: 0.7, animation: "fadeInUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards" }}
+          style={{ animation: "fadeInUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both" }}
         >
           404
         </span>
         <h1
           className="text-[clamp(52px,12vw,100px)] font-medium leading-[0.9] tracking-[-3px]"
           style={{
-            opacity: 0,
-            animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s forwards",
             color: "var(--text-primary)",
+            animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s both",
           }}
         >
           Lost in
@@ -39,8 +38,7 @@ export default function NotFound() {
           className="mt-8 text-[14px] md:text-[15px] leading-[1.6]"
           style={{
             color: "var(--text-body)",
-            opacity: 0,
-            animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s forwards",
+            animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s both",
           }}
         >
           This page doesn&apos;t exist. The servers are healthy though — checked
@@ -49,8 +47,7 @@ export default function NotFound() {
         <div
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-3"
           style={{
-            opacity: 0,
-            animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s forwards",
+            animation: "fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s both",
           }}
         >
           <Link
